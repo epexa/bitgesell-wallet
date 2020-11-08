@@ -29,19 +29,20 @@ document.addEventListener('DOMContentLoaded', () => {
 				{ render: (row, display, column) => {
 					let btns = '';
 					btns += `<a class="btn btn-success btn-sm mr-1" href="#transactions/${column.address}">Transactions</a>`;
-					btns += `<button class="btn btn-info btn-sm mr-1 passwords-list-btn" data-address="${column.address}">QR Code</button>`;
+					btns += `<button class="btn btn-info btn-sm mr-1 qr-code-btn" data-address="${column.address}">QR Code</button>`;
 					btns += `<a class="btn btn-danger btn-sm mr-1" href="#send/${column.address}">Send</a>`;
-					btns += `<a class="btn btn-warning btn-sm mr-1" target="_blank" href="https://bitgesellexplorer.com/address/${column.address}">Open in explorer</a>`;
+					btns += `<a class="btn btn-warning btn-sm mr-1" target="_blank" href="https://bgl.bitaps.com/${column.address}">Open in explorer</a>`;
 					btns += `<button class="btn btn-primary btn-sm mr-1 copy-address-btn">Copy address</button>`;
 					return btns;
 				}, class: 'text-right' },
 			],
 			fnDrawCallback: () => {
-				document.querySelectorAll('.passwords-list-btn').forEach(($btn) => {
+				document.querySelectorAll('.qr-code-btn').forEach(($btn) => {
 					$btn.addEventListener('click', () => {
 						addressQRcode.clear();
 						addressQRcode.makeCode(`bitgesell:${$btn.dataset.address}`);
 						$saveQrAddress.href = $addressQrcode.querySelector('canvas').toDataURL('image/png').replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+						$bitgesellAddress.value = $btn.dataset.address;
 						$qrCodeModal.Modal.show();
 					});
 				});

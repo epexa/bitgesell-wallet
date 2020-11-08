@@ -1,10 +1,4 @@
-const jsbgl = async () => {
-	await jsbtc.asyncInit(window);
-};
-jsbgl()
-		.then(() => {
-			console.log('jsbgl loaded!');
-		});
+jsbtc.asyncInit(window);
 
 const locationDefault = 'welcome';
 

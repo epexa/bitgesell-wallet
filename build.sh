@@ -3,7 +3,7 @@
 npm test &&
 
 
-DIST_FOLDER=../frontend-js-core-dist
+DIST_FOLDER=../bitgesell-wallet-js-frontend-core-dist
 
 mkdir -p $DIST_FOLDER &&
 
@@ -45,17 +45,17 @@ rm $DIST_FOLDER/app.js &&
 html-minifier --collapse-whitespace --remove-comments \
 src/header.html \
 src/main.html \
-src/login.html \
-src/welcome.html \
-src/create-wallet.html \
-src/set-password.html \
-src/restore.html \
 src/my-addresses.html \
 src/new-address.html \
 src/transactions.html \
 src/dashboard.html \
 src/send.html \
 src/footer.html \
+src/welcome.html \
+src/create-wallet.html \
+src/restore.html \
+src/set-password.html \
+src/login.html \
 -o $DIST_FOLDER/index.html &&
 
 cleancss \

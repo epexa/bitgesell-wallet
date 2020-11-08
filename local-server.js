@@ -20,7 +20,7 @@ const htmlFiles = {
 const serverParams = { address: '192.168.1.254', port: 80 };
 
 let workDir = '/src/';
-if (process.env.NODE_ENV && process.env.NODE_ENV == 'dist') workDir = '/dist/';
+if (process.env.NODE_ENV && process.env.NODE_ENV == 'dist') workDir = '/../bitgesell-wallet-js-frontend-core-dist/';
 
 const fs = require('fs');
 const path = require('path');

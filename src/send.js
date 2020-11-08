@@ -81,7 +81,7 @@ const send = (fromPublicAddresss, toPublicAddress, toAmount, feeAmount) => {
 				}
 				else {
 					console.log('error', json.error);
-					alert(json.error);
+					alert(json.error.message);
 				}
 				// callback(json);
 			});
