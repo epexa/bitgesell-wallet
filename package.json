@@ -1,16 +1,21 @@
 {
   "name": "bitgesell-wallet-js-frontend-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Bitgesell Wallet JS Frontend Core",
   "main": "local-server.js",
   "author": "epexa",
   "license": "Proprietary",
-  "private": true,
+  "config": {
+    "IP": "192.168.1.254",
+    "PORT": "80",
+    "DIST_FOLDER": "../bitgesell-wallet-js-frontend-core-dist"
+  },
   "scripts": {
     "test": "eslint 'src/*.js'",
-    "start": "npm test && node local-server.js",
+    "local-server": "IP=$npm_package_config_IP PORT=$npm_package_config_PORT node local-server.js",
+    "start": "npm test && npm run local-server",
     "build": "./build.sh",
-    "build-run": "npm run build && NODE_ENV=dist node local-server.js"
+    "dist-start": "npm run build && DIST_FOLDER=$npm_package_config_DIST_FOLDER npm run local-server"
   },
   "husky": {
     "hooks": {

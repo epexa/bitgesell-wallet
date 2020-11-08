@@ -76,6 +76,7 @@ const send = (fromPublicAddresss, toPublicAddress, toAmount, feeAmount) => {
 					console.log('new txId', json.result);
 					storage.addresses[fromPublicAddresss].txId = json.result;
 					storage.addresses[fromPublicAddresss].balance = newFromAmount;
+					getBalanceSum();
 					saveToCryptoStorage();
 					alert(json.result);
 				}

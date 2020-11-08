@@ -3,15 +3,29 @@ jsbtc.asyncInit(window);
 const locationDefault = 'welcome';
 
 let storage = {
-	balance: '0.00000000',
+	balance: 0,
 	addresses: {},
 };
 
+/*
 storage.addresses['bgl1qqx2f5uwjvyd6hutps5788f56hxy8cylya39svk'] = {
 	private: 'L5CndARnT9S9cnzCSQAWnMwTH4Gg6n4wy9MaXCoAPVXH5YR8mdoq',
 	txId: '603a9fec0079bf819ad8519cc491b60fc25dfc19b7dd29702d74b8cae25f9b54',
 	balance: 3699396000,
 	input_count: 0,
+};
+getBalanceSum();
+saveToCryptoStorage();
+myAddressesTableDraw();
+*/
+
+const getBalanceSum = () => {
+	let balanceSum = 0;
+	for (const [ key, value ] of Object.entries(storage.addresses)) {
+		balanceSum += value.balance;
+	}
+	storage.balance = balanceSum;
+	$amountSum.innerHTML = humanAmountFormat(storage.balance);
 };
 
 const saveToCryptoStorage = () => {
@@ -51,6 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#export-wallet-btn',
 		'#logout-btn',
 	);
+
+	getBalanceSum();
 
 	const $nodeAddressInput = $nodeAddress.querySelector('.form-control[name="node-address"]');
 
@@ -111,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		window.location.hash = 'login';
 	});
 
-	$amountSum.innerHTML = humanAmountFormat(storage.balance);
+	getBalanceSum();
 
 });
 

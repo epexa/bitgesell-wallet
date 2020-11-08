@@ -1,82 +1,77 @@
-const htmlFiles = {
-	'/': [
-		'header',
-		'main',
-		'dashboard',
-		'my-addresses',
-		'new-address',
-		'send',
-		'transactions',
-		'footer',
-		'welcome',
-		'restore',
-		'create-wallet',
-		'set-password',
-		'login',
-	],
-};
-
-// const serverParams = { address: '127.0.0.1', port: 8081 };
-const serverParams = { address: '192.168.1.254', port: 80 };
+const htmlFiles = [
+	'header',
+	'main',
+	'dashboard',
+	'my-addresses',
+	'new-address',
+	'send',
+	'transactions',
+	'footer',
+	'welcome',
+	'restore',
+	'create-wallet',
+	'set-password',
+	'login',
+];
 
 let workDir = '/src/';
-if (process.env.NODE_ENV && process.env.NODE_ENV == 'dist') workDir = '/../bitgesell-wallet-js-frontend-core-dist/';
+if (process.env.DIST_FOLDER) workDir = `/${process.env.DIST_FOLDER}/`;
 
-const fs = require('fs');
-const path = require('path');
 const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
 
-server.listen(serverParams.port, serverParams.address, () => {
+if ( ! process.env.IP || ! process.env.PORT) {
+	console.error('Need to specify IP and PORT environments (example: IP=192.168.23.42 PORT=80 node local-server.js) !');
+	process.exit();
+}
+server.listen(process.env.PORT, process.env.IP, () => {
 	console.log(`Server running at http://${server.address().address}:${server.address().port} from ${workDir}`);
 });
 
-app.use(express.static(`${__dirname}/public/`));
 app.use(express.static(__dirname + workDir));
 
-const templateJs = (file) => { return `<script defer src="${file}"></script>`; };
-const templateCss = (file) => { return `<link rel="stylesheet" href="${file}">`; };
+if (workDir === '/src/') {
+	const fs = require('fs');
+	const path = require('path');
 
-const generatePathFiles = async (filePath = '') => {
-	const fullFilePath = workDir + filePath;
-	let files;
-	try {
-		files = fs.readdirSync(path.join(__dirname, fullFilePath));
-	}
-	catch (err) {
-		return console.error(`unable read files ${fullFilePath}:`, err);
-	}
-	let pathCssFiles = '';
-	let pathJsFiles = '';
-	for await (const file of files) {
-		const fileExt = path.extname(file).substr(1);
-		if (fileExt === 'js') pathJsFiles += templateJs(filePath + file);
-		else if (fileExt === 'css') pathCssFiles += templateCss(filePath + file);
-	}
-	return { css: pathCssFiles, js: pathJsFiles };
-};
+	const templateJs = (file) => { return `<script defer src="${file}"></script>`; };
+	const templateCss = (file) => { return `<link rel="stylesheet" href="${file}">`; };
 
-app.get('/', async (req, res) => {
-	const pathFiles = {
-		css: '',
-		js: '',
+	let pathJsFiles = ``;
+	let pathCssFiles = ``;
+
+	const generatePathFiles = async (filePath = '') => {
+		const fullFilePath = workDir + filePath;
+		let files;
+		try {
+			files = fs.readdirSync(path.join(__dirname, fullFilePath));
+		}
+		catch (err) {
+			return console.error(`unable read files ${fullFilePath}:`, err);
+		}
+		for await (const file of files) {
+			const fileExt = path.extname(file).substr(1);
+			if (fileExt === 'js') pathJsFiles += templateJs(filePath + file);
+			else if (fileExt === 'css') pathCssFiles += templateCss(filePath + file);
+		}
 	};
 
-	let generatedFiles = await generatePathFiles(`${req.path}lib/`);
-	pathFiles.css += generatedFiles.css;
-	pathFiles.js += generatedFiles.js;
+	(async () => {
+		await generatePathFiles('lib/');
+		await generatePathFiles();
+	})();
 
-	generatedFiles = await generatePathFiles(req.path);
-	pathFiles.css += generatedFiles.css;
-	pathFiles.js += generatedFiles.js;
+	app.use(express.static(`${__dirname}/public/`));
 
-	let outputStr = '';
-	outputStr += pathFiles.css;
-	htmlFiles['/'].forEach((htmlFile) => {
-		outputStr += fs.readFileSync(`${__dirname + workDir + req.path + htmlFile}.html`);
+	app.get('/', (req, res) => {
+		let outputStr = '';
+		outputStr += pathCssFiles;
+		htmlFiles.forEach((htmlFile) => {
+			outputStr += fs.readFileSync(`${__dirname + workDir + htmlFile}.html`);
+		});
+		outputStr += pathJsFiles;
+		res.setHeader('Content-Type', 'text/html');
+		res.send(outputStr);
 	});
-	outputStr += pathFiles.js;
-	res.setHeader('Content-Type', 'text/html');
-	res.send(outputStr);
-});
+}

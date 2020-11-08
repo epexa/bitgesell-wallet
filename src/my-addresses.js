@@ -101,26 +101,7 @@ const getAddressInfo = (address, callback) => {
 	fetch(`https://api.smartbit.com.au/v1/blockchain/address/${address}/?limit=1`)
 			.then((response) => { return response.json(); })
 			.then((json) => {
-				const addressInfo = {
-					balance: parseFloat(json.address.total.balance).toFixed(8),
-					input_count: json.address.total.input_count,
-				};
-				if (json.address.transactions) addressInfo.lastTxid = json.address.transactions[0].txid;
-				callback(addressInfo);
+				console.log(json);
 			});
-};
-
-const getAllAddressInfo = () => {
-	storage.balance = '0.00000000';
-	for (const key in storage.myAddresses) {
-		getAddressInfo(storage.myAddresses[key].address, (addressInfo) => {
-			console.log(addressInfo);
-			storage.myAddresses[key].balance = addressInfo.balance;
-			storage.myAddresses[key].input_count = addressInfo.input_count;
-			storage.myAddresses[key].lastTxid = addressInfo.lastTxid;
-			storage.balance = (parseFloat(storage.balance) + parseFloat(addressInfo.balance)).toFixed(8);
-			// myAddresses[storage.myAddresses[key].address] = storage.myAddresses[key];
-		});
-	}
 };
 

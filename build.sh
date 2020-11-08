@@ -62,7 +62,6 @@ cleancss \
 src/lib/bootstrap.min.css \
 src/lib/sweetalert2.min.css \
 src/lib/animate.min.css \
-src/lib/loading.css \
 src/lib/dataTables.bootstrap4.min.css \
 src/lib/responsive.bootstrap4.min.css \
 src/custom.css \
