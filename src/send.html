@@ -1,0 +1,28 @@
+<div class="d-none" id="send">
+	<div class="container col-md-4">
+		<div class="my-4">
+			<h1 class="h3 mb-3 font-weight-normal text-center">Send Bitgesell</h1>
+		</div>
+		<form>
+			<div class="form-group">
+				<label for="send-from-val">From your address:</label>
+				<select class="form-control form-control-lg" id="send-from-val" name="from" required="">
+					<option value="">Select your Bitgesell address</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="send-recipient-val">Recipient address:</label>
+				<input type="text" class="form-control form-control-lg" id="send-recipient-val" name="to" required="" placeholder="Bitgesell address">
+			</div>
+			<div class="form-group">
+				<label for="send-amount-val">Amount:</label>
+				<input type="text" class="form-control form-control-lg" id="send-amount-val" name="amount" required="" placeholder="0.00000000">
+			</div>
+			<div class="form-group">
+				<label for="send-amount-val">Fee:</label>
+				<input type="text" class="form-control form-control-lg" id="send-fee-val" name="fee" required="" placeholder="0.00100000" value="0.00100000">
+			</div>
+			<button type="submit" class="btn btn-success btn-lg btn-block">Send BGL</button>
+		</form>
+	</div>
+</div>

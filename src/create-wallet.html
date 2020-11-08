@@ -1,0 +1,21 @@
+<div class="d-none" id="create-wallet">
+	<div class="container col-md-4">
+		<div class="text-center my-4">
+			<h1 class="h3 mb-3 font-weight-normal">Create Wallet</h1>
+		</div>
+		<div class="my-4">
+			<h2 class="h4 mb-3 font-weight-normal">Backup Your Wallet</h2>
+			<h2 class="h5 mb-3 font-weight-normal">Your backup phrase will allow you to recover your crypto if you lose access to your wallet.</h2>
+		</div>
+		<form>
+			<div class="form-group">
+				<label for="backup-phrase">Please write down these 12 words in order and keep them somwhere safe:</label>
+				<textarea class="form-control form-control-lg" id="backup-phrase" name="backup-phrase" rows="3" readonly="" required=""></textarea>
+			</div>
+			<h2 class="h5 mb-3 font-weight-normal text-danger">Never share it with anyone!</h2>
+			<button type="button" class="btn btn-success btn-lg btn-block" id="copy-backup-phrase">Copy seed worlds to clipboard</button>
+			<a class="btn btn-info btn-lg btn-block" id="save-backup-phrase" download="Bitgesell-backup-phrase.txt" href="#">Save seed worlds as file</a>
+			<button type="button" class="btn btn-danger btn-lg btn-block mt-5" id="create-wallet-btn">I've copied it somewhere safe</button>
+		</form>
+	</div>
+</div>

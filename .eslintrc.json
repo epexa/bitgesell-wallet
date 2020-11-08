@@ -1,0 +1,44 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 9
+  },
+  "extends": "google",
+  "rules": {
+    "no-unused-vars": 0,
+    "no-tabs": 0,
+    "one-var": 0,
+    "brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
+    "max-len": 0,
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxBOF": 1 }],
+    "padded-blocks": 0,
+    "curly": 0,
+    "object-curly-spacing": ["error", "always"],
+    "block-spacing": ["error", "always"],
+    "array-bracket-spacing": ["error", "always"],
+    "prefer-template": 2,
+    "new-cap": 0,
+    "guard-for-in": 0,
+    "indent": [
+      "error", "tab", {
+        "CallExpression": {
+          "arguments": 1
+        },
+        "FunctionDeclaration": {
+          "body": 1,
+          "parameters": 2
+        },
+        "FunctionExpression": {
+          "body": 1,
+          "parameters": 2
+        },
+        "MemberExpression": 2,
+        "ObjectExpression": 1,
+        "SwitchCase": 1,
+        "ignoredNodes": [
+          "ConditionalExpression",
+          "VariableDeclarator"
+        ]
+      }
+    ]
+  }
+}
