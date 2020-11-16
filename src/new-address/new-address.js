@@ -42,33 +42,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-const generateBGLAddress = () => {
-	const mnemonic = 'young crime force door joy subject situate hen pen sweet brisk snake nephew sauce point skate life truly hockey scout assault lab impulse boss';
-	const seed = mnemonicToSeed(mnemonic, { hex: true });
-	console.log(seed);
-	const xPrivateKey = createMasterXPrivateKey(seed, { hex: true });
-	console.log(xPrivateKey);
-	console.log(isXPrivateKeyValid(xPrivateKey));
-	const xPublicKey = xPrivateToXPublicKey(xPrivateKey, { hex: true });
-	console.log(xPublicKey);
-	console.log(isXPublicKeyValid(xPublicKey));
-	// const publicKey = publicKeyToAddress(xPublicKey);
-	// const publicKey = hashToAddress(xPublicKey);
-	// Error: hex encoding required :hex
-	const publicKey = xPublicKey;
-	// console.log(isAddressValid(publicKey));
-	return publicKey;
-
-};
-
 const newAddressGenerate = () => {
 	$qrCodeModal.Modal.hide();
 	window.scrollTo({ top: 0, behavior: 'smooth' });
 	const $form = $newAddress.querySelector('form');
 	$form.reset();
-	$newAddressVal.value = generateBGLAddress();
+	$newAddressVal.value = generateAddress(storage.entropy, Object.keys(storage.addresses).length).address;
 	newAddressQRcode.clear();
 	newAddressQRcode.makeCode(`bitgesell:${$newAddressVal.value}`);
 	$saveQrNewAddress.href = $newAddressQrcode.querySelector('canvas').toDataURL('image/png').replace(/^data:image\/[^;]/, 'data:application/octet-stream');
 };
-

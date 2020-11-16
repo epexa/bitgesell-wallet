@@ -42,16 +42,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-const createWallet = () => {
-	const entropy = generateEntropy();
+const generateAddress = (entropy, indexAddress = 0) => {
 	const mnemonic = entropyToMnemonic(entropy);
-	$backupPhrase.value = mnemonic;
 	const wallet = new Wallet({ from: mnemonic });
-	const address = wallet.getAddress(0);
+	const address = wallet.getAddress(indexAddress);
 	storage.addresses[address.address] = {
 		private: address.privateKey,
 		balance: 0,
 		input_count: 0,
 	};
 	saveToCryptoStorage();
+	return { mnemonic: mnemonic, address: address.address };
+};
+
+const createWallet = () => {
+	const entropy = generateEntropy();
+	storage.entropy = entropy;
+	const newAddress = generateAddress(entropy, 0);
+	$backupPhrase.value = newAddress.mnemonic;
 };
