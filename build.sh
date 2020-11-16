@@ -12,15 +12,15 @@ cp -r public/* $DIST_FOLDER/ &&
 babel \
 src/utils.js \
 src/app.js \
-src/login.js \
-src/welcome.js \
-src/create-wallet.js \
-src/set-password.js \
-src/restore.js \
-src/my-addresses.js \
-src/new-address.js \
-src/transactions.js \
-src/send.js \
+src/login/login.js \
+src/welcome/welcome.js \
+src/create-wallet/create-wallet.js \
+src/set-password/set-password.js \
+src/restore/restore.js \
+src/my-addresses/my-addresses.js \
+src/new-address/new-address.js \
+src/transactions/transactions.js \
+src/send/send.js \
 -o $DIST_FOLDER/app.js &&
 
 uglifyjs \
@@ -45,17 +45,17 @@ rm $DIST_FOLDER/app.js &&
 html-minifier --collapse-whitespace --remove-comments \
 src/header.html \
 src/main.html \
-src/my-addresses.html \
-src/new-address.html \
-src/transactions.html \
+src/my-addresses/my-addresses.html \
+src/new-address/new-address.html \
+src/transactions/transactions.html \
 src/dashboard.html \
-src/send.html \
+src/send/send.html \
 src/footer.html \
-src/welcome.html \
-src/create-wallet.html \
-src/restore.html \
-src/set-password.html \
-src/login.html \
+src/welcome/welcome.html \
+src/create-wallet/create-wallet.html \
+src/restore/restore.html \
+src/set-password/set-password.html \
+src/login/login.html \
 -o $DIST_FOLDER/index.html &&
 
 cleancss \

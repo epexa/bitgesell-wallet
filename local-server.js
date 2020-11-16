@@ -2,16 +2,16 @@ const htmlFiles = [
 	'header',
 	'main',
 	'dashboard',
-	'my-addresses',
-	'new-address',
-	'send',
-	'transactions',
+	'my-addresses/my-addresses',
+	'new-address/new-address',
+	'send/send',
+	'transactions/transactions',
 	'footer',
-	'welcome',
-	'restore',
-	'create-wallet',
-	'set-password',
-	'login',
+	'welcome/welcome',
+	'restore/restore',
+	'create-wallet/create-wallet',
+	'set-password/set-password',
+	'login/login',
 ];
 
 let workDir = '/src/';
@@ -52,17 +52,22 @@ if (workDir === '/src/') {
 		}
 		for await (const file of files) {
 			const fileExt = path.extname(file).substr(1);
-			if (fileExt === 'js') pathJsFiles += templateJs(filePath + file);
-			else if (fileExt === 'css') pathCssFiles += templateCss(filePath + file);
+			if (fileExt === 'js') pathJsFiles += templateJs(file);
+			else if (fileExt === 'css') pathCssFiles += templateCss(file);
+			else if ( ! fileExt) {
+				app.use(express.static(__dirname + fullFilePath + file));
+				generatePathFiles(filePath + file);
+			}
 		}
 	};
 
 	(async () => {
-		await generatePathFiles('lib/');
+		await generatePathFiles('../lib/');
 		await generatePathFiles();
 	})();
 
 	app.use(express.static(`${__dirname}/public/`));
+	app.use(express.static(`${__dirname}/lib/`));
 
 	app.get('/', (req, res) => {
 		let outputStr = '';
