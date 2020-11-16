@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			toast: true,
 			position: 'top',
 			timer: 3000,
+			timerProgressBar: true,
 			icon: 'success',
 			title: 'New your address added!',
 		});

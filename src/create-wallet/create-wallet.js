@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
 				cancelButton: 'btn btn-outline-danger btn-lg',
 			},
 			showCloseButton: true,
-			showLoaderOnConfirm: true,
 		}).then((result) => {
 			if (result.value) {
 				window.location.hash = 'dashboard';

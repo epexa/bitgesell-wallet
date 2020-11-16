@@ -14,9 +14,14 @@ const sendFormInit = () => {
 	window.scrollTo({ top: 0, behavior: 'smooth' });
 	const $form = $send.querySelector('form');
 	$form.reset();
+	while ($sendFromVal.length > 1) {
+		$sendFromVal.remove(1);
+	}
 	for (const [ key ] of Object.entries(storage.addresses)) {
 		$sendFromVal.add(new Option(key, key));
 	}
+	const selectedAddress = window.location.hash.substring(6);
+	$sendFromVal.value = selectedAddress;
 };
 
 const send = (fromPublicAddresss, toPublicAddress, toAmount, feeAmount) => {
@@ -77,13 +82,36 @@ const send = (fromPublicAddresss, toPublicAddress, toAmount, feeAmount) => {
 					if ( ! json.error) {
 						console.log('new txId', json.result);
 						storage.addresses[fromPublicAddresss].balance = newFromAmount;
+						storage.addresses[fromPublicAddresss].input_count++;
 						getBalanceSum();
 						saveToCryptoStorage();
-						alert(json.result);
+						Swal.fire({
+							showCloseButton: true,
+							icon: 'success',
+							title: 'Your transaction has been created!',
+							html: `<b class="text-danger">Transaction ID:</b><input type="text" class="form-control-plaintext form-control-sm font-weight-bold" value="${json.result}" readonly="">It can take about an hour to process the transaction.`,
+							customClass: {
+								cancelButton: 'btn btn-success btn-lg',
+							},
+							showConfirmButton: false,
+							showCancelButton: true,
+							cancelButtonText: 'Great!',
+						});
 					}
 					else {
 						console.log('error', json.error);
-						alert(json.error.message);
+						Swal.fire({
+							showCloseButton: true,
+							icon: 'danger',
+							title: 'Error creating transaction!',
+							html: `<p class="text-danger">${json.error.message}</p>Change the parameters and try again!`,
+							customClass: {
+								cancelButton: 'btn btn-danger btn-lg',
+							},
+							showConfirmButton: false,
+							showCancelButton: true,
+							cancelButtonText: 'Ok',
+						});
 					}
 					// callback(json);
 				});

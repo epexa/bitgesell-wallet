@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const getAddressInfo = (address, callback) => {
-	fetch(`//bitgesellexplorer.com/ext/getaddress/${address}`)
+	fetch(`http${urlSecure}://bitgesellexplorer.com/ext/getaddress/${address}`)
 			.then((response) => { return response.json(); })
 			.then((json) => {
 				console.log(json);
@@ -123,7 +123,7 @@ const getAddressInfo = (address, callback) => {
 };
 
 const getAddressBalance = (address, callback) => {
-	fetch(`//bitgesellexplorer.com/ext/getbalance/${address}`)
+	fetch(`http${urlSecure}://bitgesellexplorer.com/ext/getbalance/${address}`)
 			.then((response) => { return response.json(); })
 			.then((json) => {
 				console.log(json);

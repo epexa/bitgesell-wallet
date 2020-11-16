@@ -2,6 +2,8 @@ jsbtc.asyncInit(window);
 
 const locationDefault = 'welcome';
 
+const urlSecure = window.location.protocol === 'https:' ? 's' : '';
+
 let storage = {
 	balance: 0,
 	addresses: {},
@@ -79,7 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		window.location.reload();
 	});
 
-	$createNewWalletBtn.addEventListener('click', () => {
+	$createNewWalletBtn.addEventListener('click', (e) => {
+		e.preventDefault();
 		Swal.fire({
 			title: 'Are you sure want to create a new wallet?',
 			html: 'The current local wallet will be deleted from the current device.<br><b class="text-danger">Please take care of current wallet backup.</b>',
@@ -91,7 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
 				cancelButton: 'btn btn-outline-danger btn-lg',
 			},
 			showCloseButton: true,
-			showLoaderOnConfirm: true,
 		}).then((result) => {
 			if (result.value) {
 				Swal.fire({
@@ -100,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					toast: true,
 					position: 'top',
 					timer: 3000,
+					timerProgressBar: true,
 					icon: 'success',
 					title: 'You deleted the previous local wallet from this device!',
 				});
@@ -115,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			toast: true,
 			position: 'top',
 			timer: 3000,
+			timerProgressBar: true,
 			icon: 'success',
 			title: 'You logout!',
 		});
@@ -229,6 +233,7 @@ const copyToBuffer = ($select, deselect = true) => {
 		toast: true,
 		position: 'top',
 		timer: 3000,
+		timerProgressBar: true,
 		icon: 'success',
 		title: 'Copied to clipboard!',
 	});
