@@ -4,12 +4,19 @@ document.addEventListener('DOMContentLoaded', () => {
 		$.extend({}, dataTableParams, {
 			columns: [
 				{ data: 'id' },
-				{ data: 'address', render: (data) => { return `<input type="text" class="form-control-plaintext form-control-sm offset-3 col-6 address" value="${data}" readonly="">`; }, width: '42%', class: 'text-center' },
-				{ data: 'input_count', class: 'text-center' },
-				{ data: 'balance', render: (data) => { return humanAmountFormat(data); }, class: 'text-center' },
+				{ data: 'tx_id', render: (data) => { return `<input type="text" class="form-control-plaintext form-control-sm offset-3 col-6" value="${data}" readonly="">`; }, width: '62%', class: 'text-center' },
+				{ data: 'type', render: (data) => {
+					let className = 'danger';
+					let text = 'Sended';
+					if (data === 'vout') {
+						className = 'success';
+						text = 'Received';
+					}
+					return `<span class="badge badge-${className}">${text}</span>`;
+				}, class: 'text-center' },
 				{ render: (row, display, column) => {
 					let btns = '';
-					btns += `<a class="btn btn-warning btn-sm mr-1" target="_blank" href="https://bitgesellexplorer.com/address/${column.address}">Open in explorer</a>`;
+					btns += `<a class="btn btn-warning btn-sm mr-1" target="_blank" href="https://bgl.bitaps.com/${column.tx_id}">Open in explorer</a>`;
 					return btns;
 				}, class: 'text-right' },
 			],
@@ -20,21 +27,31 @@ document.addEventListener('DOMContentLoaded', () => {
 	);
 
 	window.transactionsTableDraw = () => {
-		const transactionsData = [
-			{ id: 1, address: 'bgl1qqx2f5uwjvyd6hutps5788f56hxy8cylya39svk', input_count: 0, balance: 0 },
-			{ id: 2, address: 'bgl1qqx2f5uwjvyd6hutps5788f56hxy8cylya39svk', input_count: 0, balance: 0 },
-			{ id: 3, address: 'bgl1qqx2f5uwjvyd6hutps5788f56hxy8cylya39svk', input_count: 0, balance: 0 },
-		];
 		transactionsTable.clear();
-		transactionsTable.rows.add(transactionsData);
 		transactionsTable.draw(false);
+		const address = window.location.hash.substring(14);
+		getAddressInfo(address, (apiAddressInfo) => {
+			const transactionsData = [];
+			let countAddresses = 0;
+			apiAddressInfo.last_txs = apiAddressInfo.last_txs.reverse();
+			for (const key in apiAddressInfo.last_txs) {
+				countAddresses++;
+				const value = apiAddressInfo.last_txs[key];
+				transactionsData.push({
+					id: countAddresses,
+					type: value.type,
+					tx_id: value.addresses,
+				});
+			}
+			transactionsTable.rows.add(transactionsData);
+			transactionsTable.draw(false);
+		});
 	};
 
-	const hash = window.location.hash.substring(1);
+	const hash = window.location.hash.substring(1, 13);
 	if (hash === 'transactions') {
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 		transactionsTableDraw();
 	}
 
 });
-
