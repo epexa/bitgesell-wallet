@@ -61,7 +61,3 @@ const dataTableParams = {
 	ajax: '',
 	stateSave: true,
 };
-
-const humanDateFormat = (date) => {
-	return dayjs(date * 1000).format('DD.MM.YYYY HH:mm');
-};

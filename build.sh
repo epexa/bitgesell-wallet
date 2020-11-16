@@ -31,10 +31,6 @@ lib/4-dataTables.responsive.min.js \
 lib/5-responsive.bootstrap.min.js \
 lib/bootstrap-native-v4.min.js \
 lib/sweetalert2.min.js \
-lib/dayjs.min.js \
-lib/bootstrap-native-v4.min.js \
-lib/sweetalert2.min.js \
-lib/dayjs.min.js \
 lib/qrcode.js \
 lib/satoshi-bitcoin.js \
 $DIST_FOLDER/app.js \
