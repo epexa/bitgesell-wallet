@@ -77,6 +77,22 @@ document.addEventListener('DOMContentLoaded', () => {
 		myAddressesTable.clear();
 		myAddressesTable.rows.add(myAddressesData);
 		myAddressesTable.draw(false);
+
+		myAddressesTable.rows().every((index) => {
+			const row = myAddressesTable.row(index);
+			const data = row.data();
+			console.log(data.balance);
+			getAddressBalance(data.address, (apiAddressBalance) => {
+				if ( ! apiAddressBalance.error) {
+					const newBalance = sb.toSatoshi(apiAddressBalance);
+					data.balance = newBalance;
+					row.data(data);
+					storage.addresses[data.address].balance = newBalance;
+					getBalanceSum();
+					saveToCryptoStorage();
+				}
+			});
+		});
 	};
 
 	const hash = window.location.hash.substring(1);
@@ -106,3 +122,11 @@ const getAddressInfo = (address, callback) => {
 			});
 };
 
+const getAddressBalance = (address, callback) => {
+	fetch(`//bitgesellexplorer.com/ext/getbalance/${address}`)
+			.then((response) => { return response.json(); })
+			.then((json) => {
+				console.log(json);
+				callback(json);
+			});
+};
