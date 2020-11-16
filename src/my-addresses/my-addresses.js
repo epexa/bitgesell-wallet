@@ -97,11 +97,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const getAddressInfo = (address, callback) => {
-	// https://blockchain.info/rawaddr/1G7ifTs1qXnz1BpqhXMRx9hkx3hk1KzwM7
-	fetch(`https://api.smartbit.com.au/v1/blockchain/address/${address}/?limit=1`)
+	fetch(`//bitgesellexplorer.com/ext/getaddress/${address}`)
 			.then((response) => { return response.json(); })
 			.then((json) => {
 				console.log(json);
+				if ( ! json.error) callback(json);
+				else alert(json.error);
 			});
 };
 

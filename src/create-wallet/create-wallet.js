@@ -43,13 +43,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const createWallet = () => {
-	const mnemonic = 'young crime force door joy subject situate hen pen sweet brisk snake nephew sauce point skate life truly hockey scout assault lab impulse boss';
-	const seed = mnemonicToSeed(mnemonic, { hex: true });
-	console.log(seed);
-	const xPrivateKey = createMasterXPrivateKey(seed, { hex: true });
-	console.log(xPrivateKey);
-	console.log(isXPrivateKeyValid(xPrivateKey));
-	const xPublicKey = xPrivateToXPublicKey(xPrivateKey);
-	console.log(isXPublicKeyValid(xPublicKey));
+	const entropy = generateEntropy();
+	const mnemonic = entropyToMnemonic(entropy);
 	$backupPhrase.value = mnemonic;
+	const wallet = new Wallet({ from: mnemonic });
+	const address = wallet.getAddress(0);
+	storage.addresses[address.address] = {
+		private: address.privateKey,
+		balance: 0,
+		input_count: 0,
+	};
+	saveToCryptoStorage();
 };

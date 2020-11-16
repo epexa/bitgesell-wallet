@@ -8,12 +8,6 @@ let storage = {
 };
 
 /*
-storage.addresses['bgl1qqx2f5uwjvyd6hutps5788f56hxy8cylya39svk'] = {
-	private: 'L5CndARnT9S9cnzCSQAWnMwTH4Gg6n4wy9MaXCoAPVXH5YR8mdoq',
-	txId: '603a9fec0079bf819ad8519cc491b60fc25dfc19b7dd29702d74b8cae25f9b54',
-	balance: 3699396000,
-	input_count: 0,
-};
 getBalanceSum();
 saveToCryptoStorage();
 myAddressesTableDraw();
