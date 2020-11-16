@@ -58,15 +58,17 @@ const send = (fromPublicAddresss, toPublicAddress, toAmount, feeAmount) => {
 
 		const body = `{"jsonrpc":"1.0","id":"curltext","method":"sendrawtransaction","params":["${newTx}"]}`;
 
-		fetch('http://161.35.123.34:8332', {
+		const url = new URL(localStorage.nodeAddress);
+		const fetchParams = {
 			method: 'POST',
-			mode: 'no-cors',
+			// mode: 'no-cors',
 			headers: {
 				'Content-Type': 'application/json',
-				'Authorization': `Basic ${btoa('bgl_user:12345678')}`,
 			},
 			body: body,
-		})
+		};
+		if (url.username && url.password) fetchParams.headers['Authorization'] = `Basic ${btoa(`${url.username}:${url.password}`)}`;
+		fetch(url.origin, fetchParams)
 				.then((response) => {
 					return response.json();
 				})
