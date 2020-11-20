@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (isMnemonicCheckSumValid(data.phrase)) {
 			const entropy = mnemonicToEntropy(data.phrase);
 			storage.entropy = entropy;
-			storage.addresses = [];
+			storage.addresses = {};
 			const newAddress = generateAddress(entropy, 0);
 			$form.reset();
 			window.location.hash = 'dashboard';

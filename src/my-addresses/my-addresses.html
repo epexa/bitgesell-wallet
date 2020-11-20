@@ -1,7 +1,12 @@
 <div class="d-none" id="my-addresses">
 
-	<div class="btn-group centered-group visible-sr d-inline-flex my-3" role="group">
-		<a class="btn btn-success" href="#new-address">Add new address</a>
+	<div class="row">
+		<div class="col">
+			<a class="btn btn-success" href="#new-address">Add new address</a>
+		</div>
+		<div class="col">
+			<button class="btn btn-info float-right" id="import-address-btn">Import address</button>
+		</div>
 	</div>
 
 	<table class="table table-hover" id="my-addresses-table">
@@ -36,6 +41,26 @@
 						</div>
 						<button type="button" class="btn btn-success btn-lg btn-block" id="copy-address">Copy Bitgesell address to clipboard</button>
 						<a class="btn btn-danger btn-lg btn-block mt-5" href="#new-address">Add new address</a>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal" id="import-address-modal" tabindex="-1" role="dialog" data-backdrop="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Import address</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label class="my-1 mr-2" for="import-wif">Your WIF:</label>
+							<input type="text" class="form-control my-1 mr-sm-2" id="import-wif" name="wif" placeholder="L5JZPiWpmFxudXxUwq6sLsCWbVHMEKA4XtFdVMrga1dqWvR5hJs2" required="">
+						</div>
+						<button type="submit" class="btn btn-success btn-lg btn-block">Import address</button>
 					</form>
 				</div>
 			</div>

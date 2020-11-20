@@ -7,9 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#copy-address',
 		'#add-new-address-btn',
 		'#qr-code-modal',
+		'#import-address-btn',
+		'#import-address-modal',
 	);
 
 	new Modal($qrCodeModal);
+	new Modal($importAddressModal);
 
 	const addressQRcode = new QRCode($addressQrcode, {
 		width: 256,
@@ -108,6 +111,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	$copyAddress.addEventListener('click', () => {
 		copyToBuffer($bitgesellAddress);
+	});
+
+	$importAddressBtn.addEventListener('click', () => {
+		$importAddressModal.Modal.show();
+	});
+
+	formSave($importAddressModal.querySelector('form'), (data) => {
+		if (isWifValid(data.wif)) {
+			const address = new Address(data.wif);
+			if ( ! storage.addresses[address.address]) {
+				storage.addresses[address.address] = {
+					private: data.wif,
+					balance: 0,
+					input_count: 0,
+				};
+				saveToCryptoStorage();
+				$importAddressModal.Modal.hide();
+				myAddressesTableDraw();
+				Swal.fire({
+					showCloseButton: true,
+					icon: 'success',
+					title: 'Your address is imported!',
+					customClass: {
+						confirmButton: 'btn btn-success btn-lg',
+					},
+					confirmButtonText: 'Nice!',
+				});
+			}
+			else {
+				Swal.fire({
+					showCloseButton: true,
+					icon: 'error',
+					title: 'This address has already been imported!',
+					customClass: {
+						cancelButton: 'btn btn-danger btn-lg',
+					},
+					showConfirmButton: false,
+					showCancelButton: true,
+					cancelButtonText: 'Ok',
+				});
+			}
+		}
+		else {
+			Swal.fire({
+				showCloseButton: true,
+				icon: 'error',
+				title: 'WIF is not correct!',
+				html: `Please check your WIF.`,
+				customClass: {
+					cancelButton: 'btn btn-danger btn-lg',
+				},
+				showConfirmButton: false,
+				showCancelButton: true,
+				cancelButtonText: 'Ok',
+			});
+		}
 	});
 
 });
