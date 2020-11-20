@@ -102,7 +102,7 @@ const send = (fromPublicAddresss, toPublicAddress, toAmount, feeAmount) => {
 						console.log('error', json.error);
 						Swal.fire({
 							showCloseButton: true,
-							icon: 'danger',
+							icon: 'error',
 							title: 'Error creating transaction!',
 							html: `<p class="text-danger">${json.error.message}</p>Change the parameters and try again!`,
 							customClass: {

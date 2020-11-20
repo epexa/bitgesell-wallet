@@ -57,6 +57,7 @@ const generateAddress = (entropy, indexAddress = 0) => {
 const createWallet = () => {
 	const entropy = generateEntropy();
 	storage.entropy = entropy;
+	storage.addresses = [];
 	const newAddress = generateAddress(entropy, 0);
 	$backupPhrase.value = newAddress.mnemonic;
 };

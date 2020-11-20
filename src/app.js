@@ -174,7 +174,7 @@ window.addEventListener('hashchange', () => {
 					break;
 				}
 				case 'dashboard': {
-					hide($createWallet, $myAddresses, $newAddress, $send, $transactions);
+					hide($createWallet, $myAddresses, $newAddress, $send, $transactions, $restore);
 					show($main, $dashboard);
 					break;
 				}

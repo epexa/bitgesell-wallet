@@ -26,6 +26,7 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 - [x] sent transaction (with specify fee)
 - [x] generate receiving address
 - [x] transactions history
+- [x] supports restore wallet from mnemonic seed
 - [x] good UI
 
 ------------
