@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#import-address-modal',
 	);
 
-	new Modal($qrCodeModal);
-	new Modal($importAddressModal);
+	new BSN.Modal($qrCodeModal);
+	new BSN.Modal($importAddressModal);
 
 	const addressQRcode = new QRCode($addressQrcode, {
 		width: 256,

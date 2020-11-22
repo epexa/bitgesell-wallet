@@ -24,12 +24,12 @@ src/send/send.js \
 -o $DIST_FOLDER/app.js &&
 
 uglifyjs \
-lib/1-jquery-3.2.1.min.js \
+lib/1-jquery.slim.min.js \
 lib/2-jquery.dataTables.min.js \
 lib/3-dataTables.bootstrap4.min.js \
 lib/4-dataTables.responsive.min.js \
 lib/5-responsive.bootstrap.min.js \
-lib/bootstrap-native-v4.min.js \
+lib/bootstrap-native.min.js \
 lib/sweetalert2.min.js \
 lib/qrcode.js \
 lib/satoshi-bitcoin.js \
@@ -57,7 +57,6 @@ src/login/login.html \
 cleancss \
 lib/bootstrap.min.css \
 lib/sweetalert2.min.css \
-lib/animate.min.css \
 lib/dataTables.bootstrap4.min.css \
 lib/responsive.bootstrap4.min.css \
 src/custom.css \

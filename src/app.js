@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (localStorage.nodeAddress) $nodeAddressInput.value = localStorage.nodeAddress;
 	else localStorage.nodeAddress = $nodeAddressInput.value;
 
-	new Modal($nodeAddressModal);
+	new BSN.Modal($nodeAddressModal);
 
 	$nodeAddressModalBtn.addEventListener('click', () => {
 		$nodeAddressModal.Modal.show();
