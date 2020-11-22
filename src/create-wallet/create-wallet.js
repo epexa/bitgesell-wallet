@@ -2,19 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	initHtmlElements(
 		'#backup-phrase',
-		'#copy-backup-phrase',
 		'#save-backup-phrase',
 		'#create-wallet-btn',
 	);
-
-	$backupPhrase.addEventListener('click', () => {
-		$backupPhrase.select();
-		copyToBuffer($backupPhrase, false);
-	});
-
-	$copyBackupPhrase.addEventListener('click', () => {
-		copyToBuffer($backupPhrase);
-	});
 
 	$saveBackupPhrase.addEventListener('click', () => {
 		$saveBackupPhrase.href = `data:text/plain;charset=utf-8,${encodeURIComponent($backupPhrase.value)}`;

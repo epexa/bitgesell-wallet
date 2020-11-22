@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#address-qrcode',
 		'#save-qr-address',
 		'#bitgesell-address',
-		'#copy-address',
 		'#add-new-address-btn',
 		'#qr-code-modal',
 		'#import-address-btn',
@@ -39,8 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
 					return btns;
 				}, class: 'text-right' },
 			],
-			fnDrawCallback: () => {
-				document.querySelectorAll('.qr-code-btn').forEach(($btn) => {
+			fnDrawCallback: (oSettings) => {
+				oSettings.nTable.querySelectorAll('.qr-code-btn').forEach(($btn) => {
 					$btn.addEventListener('click', () => {
 						addressQRcode.clear();
 						addressQRcode.makeCode(`bitgesell:${$btn.dataset.address}`);
@@ -49,13 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
 						$qrCodeModal.Modal.show();
 					});
 				});
-				document.querySelectorAll('.copy-address-btn').forEach(($btn) => {
+				oSettings.nTable.querySelectorAll('.copy-address-btn').forEach(($btn) => {
 					$btn.addEventListener('click', () => {
 						const $select = $btn.closest('tr').querySelectorAll('td')[1].querySelector('input');
 						copyToBuffer($select);
 					});
 				});
-				document.querySelectorAll('.address').forEach(($input) => {
+				oSettings.nTable.querySelectorAll('.address').forEach(($input) => {
 					$input.addEventListener('click', () => {
 						$input.select();
 						copyToBuffer($input, false);
@@ -84,16 +83,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		myAddressesTable.rows().every((index) => {
 			const row = myAddressesTable.row(index);
 			const data = row.data();
-			console.log(data.balance);
+			// console.log(data.balance);
 			getAddressBalance(data.address, (apiAddressBalance) => {
-				if ( ! apiAddressBalance.error) {
-					const newBalance = sb.toSatoshi(apiAddressBalance);
-					data.balance = newBalance;
-					row.data(data);
-					storage.addresses[data.address].balance = newBalance;
-					getBalanceSum();
-					saveToCryptoStorage();
-				}
+				const newBalance = sb.toSatoshi(apiAddressBalance);
+				data.balance = newBalance;
+				row.data(data);
+				storage.addresses[data.address].balance = newBalance;
+				getBalanceSum();
+				saveToCryptoStorage();
 			});
 		});
 	};
@@ -104,20 +101,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		myAddressesTableDraw();
 	}
 
-	$bitgesellAddress.addEventListener('click', () => {
-		$bitgesellAddress.select();
-		copyToBuffer($bitgesellAddress, false);
-	});
-
-	$copyAddress.addEventListener('click', () => {
-		copyToBuffer($bitgesellAddress);
-	});
-
 	$importAddressBtn.addEventListener('click', () => {
 		$importAddressModal.Modal.show();
 	});
 
-	formSave($importAddressModal.querySelector('form'), (data) => {
+	formHandler($importAddressModal.querySelector('form'), (data) => {
 		if (isWifValid(data.wif)) {
 			const address = new Address(data.wif);
 			if ( ! storage.addresses[address.address]) {
@@ -170,22 +158,3 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 });
-
-const getAddressInfo = (address, callback) => {
-	fetch(`http${urlSecure}://bitgesellexplorer.com/ext/getaddress/${address}`)
-			.then((response) => { return response.json(); })
-			.then((json) => {
-				console.log(json);
-				if ( ! json.error) callback(json);
-				else alert(json.error);
-			});
-};
-
-const getAddressBalance = (address, callback) => {
-	fetch(`http${urlSecure}://bitgesellexplorer.com/ext/getbalance/${address}`)
-			.then((response) => { return response.json(); })
-			.then((json) => {
-				console.log(json);
-				callback(json);
-			});
-};

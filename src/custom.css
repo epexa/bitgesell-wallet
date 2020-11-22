@@ -42,3 +42,11 @@ footer {
   margin-left: auto;
   margin-right: auto;
 }
+
+.swal2-title {
+  word-break: break-word;
+  display: block !important;
+}
+.swal2-top-end {
+  max-width: 33%;
+}

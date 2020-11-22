@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#send-from-val',
 	);
 
-	formSave($send.querySelector('form'), (data) => {
+	formHandler($send.querySelector('form'), (data) => {
 		send(data.from, data.to, data.amount, data.fee);
 	});
 
@@ -34,9 +34,7 @@ const send = (fromPublicAddresss, toPublicAddress, toAmount, feeAmount) => {
 		const fromAmount = sb.toSatoshi(apiAddressInfo.balance);
 		const newFromAmount = fromAmount - toAmount - feeAmount;
 		const txId = apiAddressInfo.last_txs.reverse()[0].addresses;
-
-		console.log('send tx', privateKey, fromPublicAddresss, toPublicAddress, fromAmount, toAmount, feeAmount, newFromAmount, txId);
-
+		// console.log('send tx', privateKey, fromPublicAddresss, toPublicAddress, fromAmount, toAmount, feeAmount, newFromAmount, txId);
 		const tx = new Transaction();
 		tx.addInput({
 			txId: txId,
@@ -56,13 +54,9 @@ const send = (fromPublicAddresss, toPublicAddress, toAmount, feeAmount) => {
 			sigHashType: SIGHASH_ALL,
 			value: fromAmount,
 		});
-		console.log('newFromAmount', newFromAmount);
-		console.log('newFromAmount human format', sb.toBitcoin(newFromAmount));
 		const newTx = tx.serialize();
-		console.log('newTx', newTx);
 
 		const body = `{"jsonrpc":"1.0","id":"curltext","method":"sendrawtransaction","params":["${newTx}"]}`;
-
 		const url = new URL(localStorage.nodeAddress);
 		const fetchParams = {
 			method: 'POST',
@@ -73,49 +67,30 @@ const send = (fromPublicAddresss, toPublicAddress, toAmount, feeAmount) => {
 			body: body,
 		};
 		if (url.username && url.password) fetchParams.headers['Authorization'] = `Basic ${btoa(`${url.username}:${url.password}`)}`;
-		fetch(url.origin, fetchParams)
-				.then((response) => {
-					return response.json();
-				})
-				.then((json) => {
-					// console.log(json);
-					if ( ! json.error) {
-						console.log('new txId', json.result);
-						storage.addresses[fromPublicAddresss].balance = newFromAmount;
-						storage.addresses[fromPublicAddresss].input_count++;
-						getBalanceSum();
-						saveToCryptoStorage();
-						Swal.fire({
-							showCloseButton: true,
-							icon: 'success',
-							title: 'Your transaction has been created!',
-							html: `<b class="text-danger">Transaction ID:</b><input type="text" class="form-control-plaintext form-control-sm font-weight-bold" value="${json.result}" readonly="">It can take about an hour to process the transaction.`,
-							customClass: {
-								cancelButton: 'btn btn-success btn-lg',
-							},
-							showConfirmButton: false,
-							showCancelButton: true,
-							cancelButtonText: 'Great!',
-						});
-					}
-					else {
-						console.log('error', json.error);
-						Swal.fire({
-							showCloseButton: true,
-							icon: 'error',
-							title: 'Error creating transaction!',
-							html: `<p class="text-danger">${json.error.message}</p>Change the parameters and try again!`,
-							customClass: {
-								cancelButton: 'btn btn-danger btn-lg',
-							},
-							showConfirmButton: false,
-							showCancelButton: true,
-							cancelButtonText: 'Ok',
-						});
-					}
-					// callback(json);
-				});
+		fetchQuery(url.origin, (responseJson) => {
+			// console.log('new txId', responseJson.result);
+			storage.addresses[fromPublicAddresss].balance = newFromAmount;
+			storage.addresses[fromPublicAddresss].input_count++;
+			getBalanceSum();
+			saveToCryptoStorage();
+			Swal.fire({
+				showCloseButton: true,
+				icon: 'success',
+				title: 'Your transaction has been created!',
+				html: `<b class="text-danger">Transaction ID:</b><input type="text" class="form-control-plaintext form-control-sm font-weight-bold" value="${responseJson.result}" readonly="">It can take about an hour to process the transaction.`,
+				customClass: {
+					cancelButton: 'btn btn-success btn-lg',
+				},
+				showConfirmButton: false,
+				showCancelButton: true,
+				cancelButtonText: 'Great!',
+			});
+		}, fetchParams, (responseJson) => {
+			return {
+				title: 'Error in creating a transaction!',
+				message: `<p class="text-danger">${responseJson.error.message}</p>Change the parameters and try again!`,
+			};
+		});
 
 	});
-
 };

@@ -35,7 +35,7 @@ const show = (...agrs) => {
 	});
 };
 
-const formSave = ($formName, callback) => {
+const formHandler = ($formName, callback) => {
 	$formName.addEventListener('submit', (e) => {
 		e.preventDefault();
 		const data = {};

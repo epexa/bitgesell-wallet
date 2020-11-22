@@ -9,12 +9,6 @@ let storage = {
 	addresses: {},
 };
 
-/*
-getBalanceSum();
-saveToCryptoStorage();
-myAddressesTableDraw();
-*/
-
 const getBalanceSum = () => {
 	let balanceSum = 0;
 	for (const [ key, value ] of Object.entries(storage.addresses)) {
@@ -36,7 +30,6 @@ if (localStorage.cryptoStorage) {
 else {
 	saveToCryptoStorage();
 }
-// getAllAddressInfo();
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -123,6 +116,19 @@ document.addEventListener('DOMContentLoaded', () => {
 			title: 'You logout!',
 		});
 		window.location.hash = 'login';
+	});
+
+	document.querySelectorAll('.copy-val').forEach(($input) => {
+		$input.addEventListener('click', () => {
+			$input.select();
+			copyToBuffer($input, false);
+		});
+	});
+	document.querySelectorAll('.copy-btn').forEach(($btn) => {
+		$btn.addEventListener('click', () => {
+			const $input = $btn.parentElement.querySelector('.copy-val');
+			copyToBuffer($input);
+		});
 	});
 
 	getBalanceSum();
@@ -239,4 +245,62 @@ const copyToBuffer = ($select, deselect = true) => {
 	});
 	$select.blur();
 	if (deselect) setTimeout(() => window.getSelection().removeAllRanges(), 3000);
+};
+
+const fetchQuery = (url, callback, fetchParams = null, errorFunc = null, swalToast = false, notShowError = null) => {
+	fetch(url, fetchParams)
+			.then((response) => { return response.json(); })
+			.then((responseJson) => {
+				// console.log(responseJson);
+				if ( ! responseJson.error) callback(responseJson);
+				else if ( ! notShowError || notShowError !== responseJson.error) {
+					let errorObj = {};
+					if (errorFunc) errorObj = errorFunc(responseJson);
+					if ( ! errorObj.title) errorObj.title = `Error in response HTTP query to: <a target="_blank" href="${url}">${url}</a>`;
+					if ( ! errorObj.message) errorObj.message = responseJson.error;
+					const swalParams = {
+						showCloseButton: true,
+						icon: 'error',
+						title: errorObj.title,
+						html: errorObj.message,
+						customClass: {
+							cancelButton: 'btn btn-danger btn-lg',
+						},
+						showConfirmButton: false,
+						showCancelButton: true,
+						cancelButtonText: 'Ok',
+					};
+					if (swalToast) {
+						swalParams.toast = true;
+						swalParams.position = 'top-end';
+						swalParams.timer = 5000;
+						swalParams.timerProgressBar = true;
+						swalParams.showCancelButton = false;
+					}
+					Swal.fire(swalParams);
+				}
+			});
+
+};
+
+const getAddressInfo = (address, callback) => {
+	const url = `http${urlSecure}://bitgesellexplorer.com/ext/getaddress/${address}`;
+	fetchQuery(url, (responseJson) => {
+		callback(responseJson);
+	}, null, () => {
+		return {
+			title: `Error in get address info query: <a target="_blank" href="${url}">${url}</a>`,
+		};
+	});
+};
+
+const getAddressBalance = (address, callback) => {
+	const url = `http${urlSecure}://bitgesellexplorer.com/ext/getbalance/${address}`;
+	fetchQuery(url, (responseJson) => {
+		callback(responseJson);
+	}, null, () => {
+		return {
+			title: `Error in get address balance query: <a target="_blank" href="${url}">${url}</a>`,
+		};
+	}, true, 'address not found.');
 };

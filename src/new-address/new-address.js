@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#new-address-qrcode',
 		'#save-qr-new-address',
 		'#new-address-val',
-		'#new-address-copy',
 		'#add-new-address-btn',
 	);
 
@@ -16,15 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		colorDark: '#000000',
 		colorLight: '#ffffff',
 		correctLevel: QRCode.CorrectLevel.H,
-	});
-
-	$newAddressVal.addEventListener('click', () => {
-		$newAddressVal.select();
-		copyToBuffer($newAddressVal, false);
-	});
-
-	$newAddressCopy.addEventListener('click', () => {
-		copyToBuffer($newAddressVal);
 	});
 
 	$addNewAddressBtn.addEventListener('click', () => {

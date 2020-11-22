@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const $form = $restore.querySelector('form');
 
-	formSave($form, (data) => {
+	formHandler($form, (data) => {
 		if (isMnemonicCheckSumValid(data.phrase)) {
 			const entropy = mnemonicToEntropy(data.phrase);
 			storage.entropy = entropy;
