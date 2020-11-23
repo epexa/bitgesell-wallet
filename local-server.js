@@ -1,7 +1,7 @@
 const htmlFiles = [
 	'header',
 	'main',
-	'dashboard',
+	'dashboard/dashboard',
 	'my-addresses/my-addresses',
 	'new-address/new-address',
 	'send/send',

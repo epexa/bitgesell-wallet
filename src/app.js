@@ -1,6 +1,6 @@
 jsbtc.asyncInit(window);
 
-const locationDefault = 'welcome';
+const locationDefault = 'dashboard';
 
 const urlSecure = window.location.protocol === 'https:' ? 's' : '';
 
@@ -26,9 +26,12 @@ const saveToCryptoStorage = () => {
 if (localStorage.cryptoStorage) {
 	// need AES descrypt
 	storage = JSON.parse(localStorage.cryptoStorage);
+	if (storage.entropy) window.location.hash = locationDefault;
+	else window.location.hash = 'welcome';
 }
 else {
 	saveToCryptoStorage();
+	window.location.hash = 'welcome';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -50,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#node-address',
 		'#node-address-modal-btn',
 		'#amount-sum',
-		'#create-new-wallet-btn',
 		'#export-wallet-btn',
 		'#logout-btn',
 	);
@@ -72,36 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		e.preventDefault();
 		localStorage.nodeAddress = $nodeAddressInput.value;
 		window.location.reload();
-	});
-
-	$createNewWalletBtn.addEventListener('click', (e) => {
-		e.preventDefault();
-		Swal.fire({
-			title: 'Are you sure want to create a new wallet?',
-			html: 'The current local wallet will be deleted from the current device.<br><b class="text-danger">Please take care of current wallet backup.</b>',
-			icon: 'question',
-			showCancelButton: true,
-			customClass: {
-				actions: 'btn-group',
-				confirmButton: 'btn btn-success btn-lg',
-				cancelButton: 'btn btn-outline-danger btn-lg',
-			},
-			showCloseButton: true,
-		}).then((result) => {
-			if (result.value) {
-				Swal.fire({
-					showCloseButton: true,
-					showConfirmButton: false,
-					toast: true,
-					position: 'top',
-					timer: 3000,
-					timerProgressBar: true,
-					icon: 'success',
-					title: 'You deleted the previous local wallet from this device!',
-				});
-				window.location.hash = 'welcome';
-			}
-		});
 	});
 
 	$logoutBtn.addEventListener('click', () => {
@@ -140,90 +112,14 @@ window.addEventListener('hashchange', () => {
 	if (hash) {
 		const params = hash.split('/');
 		if (params[0]) {
-			switch (params[0]) {
-				case 'main': {
-					show($main);
-					break;
-				}
-				case 'welcome': {
-					// check wallet
-					hide($main, $restore);
-					show($welcome);
-					break;
-				}
-				case 'restore': {
-					// check wallet
-					hide($main, $welcome);
-					show($restore);
-					break;
-				}
-				case 'create-wallet': {
-					// check wallet
-					hide($main, $welcome);
-					show($createWallet);
-					createWallet();
-					break;
-				}
-				case 'set-password': {
-					// check wallet
-					hide($main, $createWallet);
-					show($setPassword);
-					break;
-				}
-				case 'login': {
-					// check wallet
-					hide($main);
-					show($login);
-					setTimeout(() => {
-						$login.querySelector('input').focus();
-					}, 100);
-					break;
-				}
-				case 'dashboard': {
-					hide($createWallet, $myAddresses, $newAddress, $send, $transactions, $restore);
-					show($main, $dashboard);
-					break;
-				}
-				case 'my-addresses': {
-					hide($dashboard, $newAddress, $send, $transactions);
-					show($main, $myAddresses);
-					if (typeof myAddressesTableDraw !== 'undefined') myAddressesTableDraw();
-					break;
-				}
-				case 'new-address': {
-					hide($myAddresses, $send, $transactions);
-					show($main, $newAddress);
-					newAddressGenerate();
-					break;
-				}
-				case 'send': {
-					hide($myAddresses, $newAddress, $transactions);
-					show($main, $send);
-					sendFormInit();
-					break;
-				}
-				case 'transactions': {
-					hide($dashboard, $newAddress, $send, $myAddresses);
-					show($main, $transactions);
-					// address = window.location.hash.substring(15);
-					// .querySelector('input[name="address"]').value = address;
-					if (typeof transactionsTableDraw !== 'undefined') transactionsTableDraw();
-					break;
-				}
-				default: {
-					// need 404 page
-					window.location.hash = locationDefault;
-				}
-			}
+			const screenName = camelCase(`navigate-${params[0]}`); // navigateDashboard();
+			if (window[screenName]) window[screenName]();
+			else window.location.hash = locationDefault;
 		}
 	}
-	else window.location.hash = locationDefault;
 });
-
 document.addEventListener('DOMContentLoaded', () => {
-
 	window.dispatchEvent(new CustomEvent('hashchange'));
-
 });
 
 const humanAmountFormat = (amount) => {

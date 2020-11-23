@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			showCloseButton: true,
 		}).then((result) => {
 			if (result.value) {
-				window.location.hash = 'dashboard';
+				window.location.hash = locationDefault;
 			}
 		});
 	});
@@ -50,4 +50,43 @@ const createWallet = () => {
 	storage.addresses = {};
 	const newAddress = generateAddress(entropy, 0);
 	$backupPhrase.value = newAddress.mnemonic;
+};
+
+const goCreateWalletScreen = () => {
+	hide($main, $welcome);
+	show($createWallet);
+	createWallet();
+};
+
+window.navigateCreateWallet = () => {
+	if (storage.entropy) {
+		Swal.fire({
+			title: 'Are you sure want to create a new wallet?',
+			html: 'The current local wallet will be deleted from the current device.<br><b class="text-danger">Please take care of current wallet backup.</b>',
+			icon: 'question',
+			showCancelButton: true,
+			customClass: {
+				actions: 'btn-group',
+				confirmButton: 'btn btn-success btn-lg',
+				cancelButton: 'btn btn-outline-danger btn-lg',
+			},
+			showCloseButton: true,
+		}).then((result) => {
+			if (result.value) {
+				Swal.fire({
+					showCloseButton: true,
+					showConfirmButton: false,
+					toast: true,
+					position: 'top',
+					timer: 3000,
+					timerProgressBar: true,
+					icon: 'success',
+					title: 'You deleted the previous local wallet from this device!',
+				});
+				goCreateWalletScreen();
+			}
+			else window.location.hash = locationDefault;
+		});
+	}
+	else goCreateWalletScreen();
 };

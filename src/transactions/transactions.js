@@ -55,3 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 });
+
+window.navigateTransactions = () => {
+	hide($welcome, $dashboard, $newAddress, $send, $myAddresses);
+	show($main, $transactions);
+	transactionsTableDraw();
+};

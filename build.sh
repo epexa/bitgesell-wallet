@@ -20,6 +20,7 @@ src/restore/restore.js \
 src/my-addresses/my-addresses.js \
 src/new-address/new-address.js \
 src/transactions/transactions.js \
+src/dashboard/dashboard.js \
 src/send/send.js \
 -o $DIST_FOLDER/app.js &&
 
@@ -44,7 +45,7 @@ src/main.html \
 src/my-addresses/my-addresses.html \
 src/new-address/new-address.html \
 src/transactions/transactions.html \
-src/dashboard.html \
+src/dashboard/dashboard.html \
 src/send/send.html \
 src/footer.html \
 src/welcome/welcome.html \

@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			storage.addresses = {};
 			const newAddress = generateAddress(entropy, 0);
 			$form.reset();
-			window.location.hash = 'dashboard';
+			window.location.hash = locationDefault;
 			Swal.fire({
 				showCloseButton: true,
 				icon: 'success',
@@ -38,3 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 });
+
+window.navigateRestore = () => {
+	hide($main, $welcome);
+	show($restore);
+};

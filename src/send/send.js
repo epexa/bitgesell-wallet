@@ -94,3 +94,9 @@ const send = (fromPublicAddresss, toPublicAddress, toAmount, feeAmount) => {
 
 	});
 };
+
+window.navigateSend = () => {
+	hide($welcome, $myAddresses, $newAddress, $transactions);
+	show($main, $send);
+	sendFormInit();
+};

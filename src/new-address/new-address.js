@@ -43,3 +43,9 @@ const newAddressGenerate = () => {
 	newAddressQRcode.makeCode(`bitgesell:${$newAddressVal.value}`);
 	$saveQrNewAddress.href = $newAddressQrcode.querySelector('canvas').toDataURL('image/png').replace(/^data:image\/[^;]/, 'data:application/octet-stream');
 };
+
+window.navigateNewAddress = () => {
+	hide($welcome, $myAddresses, $send, $transactions);
+	show($main, $newAddress);
+	newAddressGenerate();
+};
