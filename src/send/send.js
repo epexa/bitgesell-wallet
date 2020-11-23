@@ -1,14 +1,66 @@
+const sendParams = {};
+let addressInfoFromApi;
+
 document.addEventListener('DOMContentLoaded', () => {
 
 	initHtmlElements(
 		'#send-from-val',
+		'#send-balance',
+		'#send-to-val',
+		'#send-amount-val',
+		'#send-fee-val',
+		'#send-form-btn',
+		'#send-new-balance',
 	);
 
-	formHandler($send.querySelector('form'), (data) => {
-		send(data.from, data.to, data.amount, data.fee);
+	$sendFromVal.addEventListener('change', getAddressInfoFromApi);
+
+	$sendToVal.addEventListener('change', () => {
+		const isValid = isAddressValid($sendToVal.value);
+		if (isValid) {
+			$sendToVal.classList.remove('is-invalid');
+			$sendToVal.classList.add('is-valid');
+		}
+		else {
+			$sendToVal.classList.remove('is-valid');
+			$sendToVal.classList.add('is-invalid');
+		}
+	});
+
+	const calcAmountSpent = () => {
+		sendParams.toAmount = sb.toSatoshi($sendAmountVal.value);
+		sendParams.feeAmount = sb.toSatoshi($sendFeeVal.value);
+		const amountSpent = sendParams.toAmount + sendParams.feeAmount;
+		$sendFormBtn.innerHTML = `Send <span class="badge badge-info">${sb.toBitcoin(amountSpent)}</span> BGL`;
+
+		if (sendParams.fromAmount) {
+			sendParams.newFromAmount = sendParams.fromAmount - sendParams.toAmount - sendParams.feeAmount;
+			$sendNewBalance.querySelector('span').innerText = sb.toBitcoin(sendParams.newFromAmount);
+			show($sendNewBalance);
+		}
+		else hide($sendNewBalance);
+	};
+	$sendAmountVal.addEventListener('input', calcAmountSpent);
+	$sendFeeVal.addEventListener('input', calcAmountSpent);
+
+	formHandler($send.querySelector('form'), () => {
+		send();
 	});
 
 });
+
+const getAddressInfoFromApi = () => {
+	hide($sendBalance, $sendNewBalance);
+	if ($sendFromVal.value) {
+		getAddressInfo($sendFromVal.value, (responseJson) => {
+			addressInfoFromApi = responseJson;
+			sendParams.fromAmount = sb.toSatoshi(addressInfoFromApi.balance);
+			$sendBalance.querySelector('span').innerText = addressInfoFromApi.balance;
+			show($sendBalance);
+			if (sendParams.newFromAmount) show($sendNewBalance);
+		});
+	}
+};
 
 const sendFormInit = () => {
 	window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -22,81 +74,75 @@ const sendFormInit = () => {
 	}
 	const selectedAddress = window.location.hash.substring(6);
 	$sendFromVal.value = selectedAddress;
+	getAddressInfoFromApi();
 };
 
-const send = (fromPublicAddresss, toPublicAddress, toAmount, feeAmount) => {
-	toAmount = sb.toSatoshi(toAmount);
-	feeAmount = sb.toSatoshi(feeAmount);
-	const addressInfo = storage.addresses[fromPublicAddresss];
-	const privateKey = addressInfo.private;
+const send = () => {
+	const fromPublicAddresss = $sendFromVal.value;
+	const toPublicAddress = $sendToVal.value;
+	const privateKey = storage.addresses[fromPublicAddresss].private;
+	const txId = addressInfoFromApi.last_txs.reverse()[0].addresses;
+	// console.log('send tx', privateKey, fromPublicAddresss, toPublicAddress, sendParams.fromAmount, sendParams.toAmount, sendParams.feeAmount, sendParams.newFromAmount, txId);
+	const tx = new Transaction();
+	tx.addInput({
+		txId: txId,
+		vOut: 1,
+		address: fromPublicAddresss,
+	});
+	tx.addOutput({
+		value: sendParams.toAmount,
+		address: toPublicAddress,
+	});
+	tx.addOutput({
+		value: sendParams.newFromAmount,
+		address: fromPublicAddresss,
+	});
+	tx.signInput(0, {
+		privateKey: privateKey,
+		sigHashType: SIGHASH_ALL,
+		value: sendParams.fromAmount,
+	});
+	const newTx = tx.serialize();
 
-	getAddressInfo(fromPublicAddresss, (apiAddressInfo) => {
-		const fromAmount = sb.toSatoshi(apiAddressInfo.balance);
-		const newFromAmount = fromAmount - toAmount - feeAmount;
-		const txId = apiAddressInfo.last_txs.reverse()[0].addresses;
-		// console.log('send tx', privateKey, fromPublicAddresss, toPublicAddress, fromAmount, toAmount, feeAmount, newFromAmount, txId);
-		const tx = new Transaction();
-		tx.addInput({
-			txId: txId,
-			vOut: 1,
-			address: fromPublicAddresss,
-		});
-		tx.addOutput({
-			value: toAmount,
-			address: toPublicAddress,
-		});
-		tx.addOutput({
-			value: newFromAmount,
-			address: fromPublicAddresss,
-		});
-		tx.signInput(0, {
-			privateKey: privateKey,
-			sigHashType: SIGHASH_ALL,
-			value: fromAmount,
-		});
-		const newTx = tx.serialize();
-
-		const body = `{"jsonrpc":"1.0","id":"curltext","method":"sendrawtransaction","params":["${newTx}"]}`;
-		const url = new URL(localStorage.nodeAddress);
-		const fetchParams = {
-			method: 'POST',
-			// mode: 'no-cors',
-			headers: {
-				'Content-Type': 'application/json',
+	const body = `{"jsonrpc":"1.0","id":"curltext","method":"sendrawtransaction","params":["${newTx}"]}`;
+	const url = new URL(localStorage.nodeAddress);
+	const fetchParams = {
+		method: 'POST',
+		// mode: 'no-cors',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: body,
+	};
+	if (url.username && url.password) fetchParams.headers['Authorization'] = `Basic ${btoa(`${url.username}:${url.password}`)}`;
+	fetchQuery(url.origin, (responseJson) => {
+		// console.log('new txId', responseJson.result);
+		storage.addresses[fromPublicAddresss].balance = sendParams.newFromAmount;
+		storage.addresses[fromPublicAddresss].input_count++;
+		getBalanceSum();
+		saveToCryptoStorage();
+		Swal.fire({
+			showCloseButton: true,
+			icon: 'success',
+			title: 'Your transaction has been created!',
+			html: `<b class="text-danger">Transaction ID:</b><input type="text" class="form-control-plaintext form-control-sm font-weight-bold" value="${responseJson.result}" readonly="">It can take about an hour to process the transaction.`,
+			customClass: {
+				cancelButton: 'btn btn-success btn-lg',
 			},
-			body: body,
-		};
-		if (url.username && url.password) fetchParams.headers['Authorization'] = `Basic ${btoa(`${url.username}:${url.password}`)}`;
-		fetchQuery(url.origin, (responseJson) => {
-			// console.log('new txId', responseJson.result);
-			storage.addresses[fromPublicAddresss].balance = newFromAmount;
-			storage.addresses[fromPublicAddresss].input_count++;
-			getBalanceSum();
-			saveToCryptoStorage();
-			Swal.fire({
-				showCloseButton: true,
-				icon: 'success',
-				title: 'Your transaction has been created!',
-				html: `<b class="text-danger">Transaction ID:</b><input type="text" class="form-control-plaintext form-control-sm font-weight-bold" value="${responseJson.result}" readonly="">It can take about an hour to process the transaction.`,
-				customClass: {
-					cancelButton: 'btn btn-success btn-lg',
-				},
-				showConfirmButton: false,
-				showCancelButton: true,
-				cancelButtonText: 'Great!',
-			});
-		}, fetchParams, (responseJson) => {
-			return {
-				title: 'Error in creating a transaction!',
-				message: `<p class="text-danger">${responseJson.error.message}</p>Change the parameters and try again!`,
-			};
+			showConfirmButton: false,
+			showCancelButton: true,
+			cancelButtonText: 'Great!',
 		});
-
+	}, fetchParams, (responseJson) => {
+		return {
+			title: 'Error in creating a transaction!',
+			message: `<p class="text-danger">${responseJson.error.message}</p>Change the parameters and try again!`,
+		};
 	});
 };
 
 window.navigateSend = () => {
-	hide($welcome, $myAddresses, $newAddress, $transactions);
+	hide($welcome, $dashboard, $myAddresses, $newAddress, $transactions);
 	show($main, $send);
 	sendFormInit();
 };

@@ -40,7 +40,7 @@ const newAddressGenerate = () => {
 	$form.reset();
 	$newAddressVal.value = generateAddress(storage.entropy, Object.keys(storage.addresses).length).address;
 	newAddressQRcode.clear();
-	newAddressQRcode.makeCode(`bitgesell:${$newAddressVal.value}`);
+	newAddressQRcode.makeCode(`bgl:${$newAddressVal.value}`);
 	$saveQrNewAddress.href = $newAddressQrcode.querySelector('canvas').toDataURL('image/png').replace(/^data:image\/[^;]/, 'data:application/octet-stream');
 };
 

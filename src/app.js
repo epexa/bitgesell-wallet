@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#create-wallet',
 		'#set-password',
 		'#login',
-		'#user-email',
 		'#dashboard',
 		'#my-addresses',
 		'#new-address',
@@ -93,12 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.querySelectorAll('.copy-val').forEach(($input) => {
 		$input.addEventListener('click', () => {
 			$input.select();
-			copyToBuffer($input, false);
-		});
-	});
-	document.querySelectorAll('.copy-btn').forEach(($btn) => {
-		$btn.addEventListener('click', () => {
-			const $input = $btn.parentElement.querySelector('.copy-val');
 			copyToBuffer($input);
 		});
 	});
@@ -126,7 +119,7 @@ const humanAmountFormat = (amount) => {
 	return `<span class="font-weight-bold">${(sb.toBitcoin(amount))}</span> BGL`;
 };
 
-const copyToBuffer = ($select, deselect = true) => {
+const copyToBuffer = ($select) => {
 	$select.select();
 	document.execCommand('copy');
 	Swal.fire({
@@ -140,7 +133,6 @@ const copyToBuffer = ($select, deselect = true) => {
 		title: 'Copied to clipboard!',
 	});
 	$select.blur();
-	if (deselect) setTimeout(() => window.getSelection().removeAllRanges(), 3000);
 };
 
 const fetchQuery = (url, callback, fetchParams = null, errorFunc = null, swalToast = false, notShowError = null) => {

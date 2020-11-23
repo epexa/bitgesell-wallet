@@ -28,7 +28,7 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 - [x] transactions history
 - [x] supports restore wallet from mnemonic seed
 - [x] supports import address from WIF
-- [x] good UI
+- [x] good UX & UI
 
 ------------
 

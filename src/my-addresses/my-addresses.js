@@ -30,11 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
 				{ data: 'input_count', class: 'text-center' },
 				{ render: (row, display, column) => {
 					let btns = '';
-					btns += `<a class="btn btn-success btn-sm mr-1" href="#transactions/${column.address}">Transactions</a>`;
-					btns += `<button class="btn btn-info btn-sm mr-1 qr-code-btn" data-address="${column.address}">QR Code</button>`;
 					btns += `<a class="btn btn-danger btn-sm mr-1" href="#send/${column.address}">Send</a>`;
-					btns += `<a class="btn btn-warning btn-sm mr-1" target="_blank" href="https://bgl.bitaps.com/${column.address}">Open in explorer</a>`;
-					btns += `<button class="btn btn-primary btn-sm mr-1 copy-address-btn">Copy address</button>`;
+					btns += `<button class="btn btn-info btn-sm mr-1 qr-code-btn" data-address="${column.address}">Receive</button>`;
+					btns += `<a class="btn btn-warning btn-sm mr-1" target="_blank" href="https://bgl.bitaps.com/${column.address}">Explorer</a>`;
+					btns += `<a class="btn btn-success btn-sm mr-1" href="#transactions/${column.address}">Transactions</a>`;
 					return btns;
 				}, class: 'text-right' },
 			],
@@ -42,22 +41,16 @@ document.addEventListener('DOMContentLoaded', () => {
 				oSettings.nTable.querySelectorAll('.qr-code-btn').forEach(($btn) => {
 					$btn.addEventListener('click', () => {
 						addressQRcode.clear();
-						addressQRcode.makeCode(`bitgesell:${$btn.dataset.address}`);
+						addressQRcode.makeCode(`bgl:${$btn.dataset.address}`);
 						$saveQrAddress.href = $addressQrcode.querySelector('canvas').toDataURL('image/png').replace(/^data:image\/[^;]/, 'data:application/octet-stream');
 						$bitgesellAddress.value = $btn.dataset.address;
 						$qrCodeModal.Modal.show();
 					});
 				});
-				oSettings.nTable.querySelectorAll('.copy-address-btn').forEach(($btn) => {
-					$btn.addEventListener('click', () => {
-						const $select = $btn.closest('tr').querySelectorAll('td')[1].querySelector('input');
-						copyToBuffer($select);
-					});
-				});
 				oSettings.nTable.querySelectorAll('.address').forEach(($input) => {
 					$input.addEventListener('click', () => {
 						$input.select();
-						copyToBuffer($input, false);
+						copyToBuffer($input);
 					});
 				});
 			},
