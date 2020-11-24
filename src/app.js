@@ -100,18 +100,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-window.addEventListener('hashchange', () => {
-	const hash = window.location.hash.substring(1);
-	if (hash) {
-		const params = hash.split('/');
-		if (params[0]) {
-			const screenName = camelCase(`navigate-${params[0]}`); // navigateDashboard();
-			if (window[screenName]) window[screenName]();
-			else window.location.hash = locationDefault;
-		}
-	}
-});
 document.addEventListener('DOMContentLoaded', () => {
+	window.addEventListener('hashchange', () => {
+		const hash = window.location.hash.substring(1);
+		if (hash) {
+			const params = hash.split('/');
+			if (params[0]) {
+				const screenName = camelCase(`navigate-${params[0]}`); // navigateDashboard();
+				if (window[screenName]) window[screenName]();
+				else window.location.hash = locationDefault;
+			}
+		}
+	});
 	window.dispatchEvent(new CustomEvent('hashchange'));
 });
 
