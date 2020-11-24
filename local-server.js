@@ -26,7 +26,8 @@ if ( ! process.env.IP || ! process.env.PORT) {
 	process.exit();
 }
 server.listen(process.env.PORT, process.env.IP, () => {
-	console.log(`Server running at http://${server.address().address}:${server.address().port} from ${workDir}`);
+	const address = server.address().address;
+	console.log(`Server running at http://${address === '127.0.0.1' ? 'localhost' : address}:${server.address().port} from ${workDir}`);
 });
 
 app.use(express.static(__dirname + workDir));

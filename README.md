@@ -41,6 +41,13 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 1. `npm start`
 2. open in browser: http://[IP]:[PORT] (check console message)
 
+*[IP] and [PORT] are specified in [package.json](package.json#L8):*
+`"config": {
+    "IP": "127.0.0.1",
+    "PORT": "80",
+  },
+`
+
 - ### 3) BUILD
 1. `chmod 740 build.sh`
 2. `npm run build`

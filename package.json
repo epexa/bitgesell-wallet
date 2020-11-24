@@ -1,12 +1,12 @@
 {
   "name": "bitgesell-wallet-js-frontend-core",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Bitgesell Wallet JS Frontend Core",
   "main": "local-server.js",
   "author": "epexa",
   "license": "Proprietary",
   "config": {
-    "IP": "192.168.1.254",
+    "IP": "127.0.0.1",
     "PORT": "80",
     "DIST_FOLDER": "../bitgesell-wallet-js-frontend-core-dist"
   },
