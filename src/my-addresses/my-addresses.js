@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
 	initHtmlElements(
+		'#my-addresses-table',
 		'#address-qrcode',
 		'#save-qr-address',
 		'#bitgesell-address',
@@ -21,6 +22,24 @@ document.addEventListener('DOMContentLoaded', () => {
 		correctLevel: QRCode.CorrectLevel.H,
 	});
 
+	const addEventButtons = () => {
+		$myAddressesTable.querySelectorAll('.qr-code-btn').forEach(($btn) => {
+			$btn.addEventListener('click', () => {
+				addressQRcode.clear();
+				addressQRcode.makeCode(`bgl:${$btn.dataset.address}`);
+				$saveQrAddress.href = $addressQrcode.querySelector('canvas').toDataURL('image/png').replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+				$bitgesellAddress.value = $btn.dataset.address;
+				$qrCodeModal.Modal.show();
+			});
+		});
+		$myAddressesTable.querySelectorAll('.address').forEach(($input) => {
+			$input.addEventListener('click', () => {
+				$input.select();
+				copyToBuffer($input);
+			});
+		});
+	};
+
 	const myAddressesTable = $('#my-addresses-table').DataTable(
 		$.extend({}, dataTableParams, {
 			columns: [
@@ -37,23 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					return btns;
 				}, class: 'text-right' },
 			],
-			fnDrawCallback: (oSettings) => {
-				oSettings.nTable.querySelectorAll('.qr-code-btn').forEach(($btn) => {
-					$btn.addEventListener('click', () => {
-						addressQRcode.clear();
-						addressQRcode.makeCode(`bgl:${$btn.dataset.address}`);
-						$saveQrAddress.href = $addressQrcode.querySelector('canvas').toDataURL('image/png').replace(/^data:image\/[^;]/, 'data:application/octet-stream');
-						$bitgesellAddress.value = $btn.dataset.address;
-						$qrCodeModal.Modal.show();
-					});
-				});
-				oSettings.nTable.querySelectorAll('.address').forEach(($input) => {
-					$input.addEventListener('click', () => {
-						$input.select();
-						copyToBuffer($input);
-					});
-				});
-			},
+			fnDrawCallback: addEventButtons,
 		})
 	);
 
@@ -76,11 +79,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		myAddressesTable.rows().every((index) => {
 			const row = myAddressesTable.row(index);
 			const data = row.data();
-			// console.log(data.balance);
 			getAddressBalance(data.address, (apiAddressBalance) => {
 				data.balance = apiAddressBalance.balance;
 				data.input_count = apiAddressBalance.sentTxCount;
 				row.data(data);
+				addEventButtons();
 				storage.addresses[data.address].balance = data.balance;
 				storage.addresses[data.address].input_count = data.input_count;
 				getBalanceSum();

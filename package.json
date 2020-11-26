@@ -1,6 +1,6 @@
 {
   "name": "bitgesell-wallet-js-frontend-core",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Bitgesell Wallet JS Frontend Core",
   "main": "local-server.js",
   "author": "epexa",
