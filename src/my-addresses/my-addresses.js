@@ -78,10 +78,11 @@ document.addEventListener('DOMContentLoaded', () => {
 			const data = row.data();
 			// console.log(data.balance);
 			getAddressBalance(data.address, (apiAddressBalance) => {
-				const newBalance = sb.toSatoshi(apiAddressBalance);
-				data.balance = newBalance;
+				data.balance = apiAddressBalance.balance;
+				data.input_count = apiAddressBalance.sentTxCount;
 				row.data(data);
-				storage.addresses[data.address].balance = newBalance;
+				storage.addresses[data.address].balance = data.balance;
+				storage.addresses[data.address].input_count = data.input_count;
 				getBalanceSum();
 				saveToCryptoStorage();
 			});

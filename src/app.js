@@ -2,8 +2,6 @@ jsbtc.asyncInit(window);
 
 const locationDefault = 'dashboard';
 
-const urlSecure = window.location.protocol === 'https:' ? 's' : '';
-
 let storage = {
 	balance: 0,
 	addresses: {},
@@ -135,17 +133,17 @@ const copyToBuffer = ($select) => {
 	$select.blur();
 };
 
-const fetchQuery = (url, callback, fetchParams = null, errorFunc = null, swalToast = false, notShowError = null) => {
+const fetchQuery = (url, callback, fetchParams = null, errorFunc = null) => {
 	fetch(url, fetchParams)
 			.then((response) => { return response.json(); })
 			.then((responseJson) => {
 				// console.log(responseJson);
-				if ( ! responseJson.error) callback(responseJson);
-				else if ( ! notShowError || notShowError !== responseJson.error) {
+				if ( ! responseJson.error && ! responseJson.error_code) callback(responseJson);
+				else {
 					let errorObj = {};
 					if (errorFunc) errorObj = errorFunc(responseJson);
 					if ( ! errorObj.title) errorObj.title = `Error in response HTTP query to: <a target="_blank" href="${url}">${url}</a>`;
-					if ( ! errorObj.message) errorObj.message = responseJson.error;
+					if ( ! errorObj.message) errorObj.message = responseJson.error ? responseJson.error : responseJson.message;
 					const swalParams = {
 						showCloseButton: true,
 						icon: 'error',
@@ -158,13 +156,6 @@ const fetchQuery = (url, callback, fetchParams = null, errorFunc = null, swalToa
 						showCancelButton: true,
 						cancelButtonText: 'Ok',
 					};
-					if (swalToast) {
-						swalParams.toast = true;
-						swalParams.position = 'top-end';
-						swalParams.timer = 5000;
-						swalParams.timerProgressBar = true;
-						swalParams.showCancelButton = false;
-					}
 					Swal.fire(swalParams);
 				}
 			})
@@ -186,9 +177,9 @@ const fetchQuery = (url, callback, fetchParams = null, errorFunc = null, swalToa
 };
 
 const getAddressInfo = (address, callback) => {
-	const url = `http${urlSecure}://bitgesellexplorer.com/ext/getaddress/${address}`;
+	const url = `https://api.bitaps.com/bgl/v1/blockchain/address/transactions/${address}`;
 	fetchQuery(url, (responseJson) => {
-		callback(responseJson);
+		callback(responseJson.data);
 	}, null, () => {
 		return {
 			title: `Error in get address info query: <a target="_blank" href="${url}">${url}</a>`,
@@ -197,12 +188,12 @@ const getAddressInfo = (address, callback) => {
 };
 
 const getAddressBalance = (address, callback) => {
-	const url = `http${urlSecure}://bitgesellexplorer.com/ext/getbalance/${address}`;
+	const url = `https://api.bitaps.com/bgl/v1/blockchain/address/state/${address}`;
 	fetchQuery(url, (responseJson) => {
-		callback(responseJson);
+		callback(responseJson.data);
 	}, null, () => {
 		return {
 			title: `Error in get address balance query: <a target="_blank" href="${url}">${url}</a>`,
 		};
-	}, true, 'address not found.');
+	});
 };

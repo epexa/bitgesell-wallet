@@ -52,10 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
 const getAddressInfoFromApi = () => {
 	hide($sendBalance, $sendNewBalance);
 	if ($sendFromVal.value) {
-		getAddressInfo($sendFromVal.value, (responseJson) => {
-			addressInfoFromApi = responseJson;
-			sendParams.fromAmount = sb.toSatoshi(addressInfoFromApi.balance);
-			$sendBalance.querySelector('span').innerText = addressInfoFromApi.balance;
+		getAddressInfo(`${$sendFromVal.value}?limit=1`, (apiAddressInfo) => {
+			addressInfoFromApi = apiAddressInfo;
+			sendParams.fromAmount = storage.addresses[$sendFromVal.value].balance;
+			$sendBalance.querySelector('span').innerText = sb.toBitcoin(sendParams.fromAmount);
 			show($sendBalance);
 			if (sendParams.newFromAmount) show($sendNewBalance);
 		});
@@ -81,7 +81,7 @@ const send = () => {
 	const fromPublicAddresss = $sendFromVal.value;
 	const toPublicAddress = $sendToVal.value;
 	const privateKey = storage.addresses[fromPublicAddresss].private;
-	const txId = addressInfoFromApi.last_txs.reverse()[0].addresses;
+	const txId = addressInfoFromApi.list[0].txId;
 	// console.log('send tx', privateKey, fromPublicAddresss, toPublicAddress, sendParams.fromAmount, sendParams.toAmount, sendParams.feeAmount, sendParams.newFromAmount, txId);
 	const tx = new Transaction();
 	tx.addInput({

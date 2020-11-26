@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				{ data: 'type', render: (data) => {
 					let className = 'danger';
 					let text = 'Sended';
-					if (data === 'vout') {
+					if (data === 0) {
 						className = 'success';
 						text = 'Received';
 					}
@@ -33,14 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		getAddressInfo(address, (apiAddressInfo) => {
 			const transactionsData = [];
 			let countAddresses = 0;
-			apiAddressInfo.last_txs = apiAddressInfo.last_txs.reverse();
-			for (const key in apiAddressInfo.last_txs) {
+			apiAddressInfo.list = apiAddressInfo.list;
+			for (const key in apiAddressInfo.list) {
 				countAddresses++;
-				const value = apiAddressInfo.last_txs[key];
+				const value = apiAddressInfo.list[key];
 				transactionsData.push({
 					id: countAddresses,
-					type: value.type,
-					tx_id: value.addresses,
+					type: value.addressInputs,
+					tx_id: value.txId,
 				});
 			}
 			transactionsTable.rows.add(transactionsData);
