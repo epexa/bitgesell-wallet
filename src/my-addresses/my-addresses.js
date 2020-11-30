@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.navigateMyAddresses = () => {
-	hide($welcome, $dashboard, $newAddress, $send, $transactions);
+	hide($welcome, $dashboard, $newAddress, $send, $transactions, $setPassword);
 	show($main, $myAddresses);
 	myAddressesTableDraw();
 };

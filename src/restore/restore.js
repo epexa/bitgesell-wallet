@@ -40,6 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.navigateRestore = () => {
-	hide($main, $welcome);
-	show($restore);
+	if ( ! localPassword) window.location.hash = 'set-password';
+	else {
+		hide($main, $welcome, $setPassword);
+		show($restore);
+	}
 };

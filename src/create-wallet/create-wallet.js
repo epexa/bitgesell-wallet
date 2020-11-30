@@ -53,7 +53,7 @@ const createWallet = () => {
 };
 
 const goCreateWalletScreen = () => {
-	hide($main, $welcome);
+	hide($main, $welcome, $setPassword);
 	show($createWallet);
 	createWallet();
 };
@@ -88,5 +88,6 @@ window.navigateCreateWallet = () => {
 			else window.location.hash = locationDefault;
 		});
 	}
+	else if ( ! localPassword) window.location.hash = 'set-password';
 	else goCreateWalletScreen();
 };

@@ -23,6 +23,7 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 - [x] supports new wallet creation
 - [x] supports mnemonic seed in wallet creation
 - [x] private keys are stored on user-side only
+- [x] storage encrypted with AES-GCM 256-bit
 - [x] sent transaction (with specify fee)
 - [x] generate receiving address
 - [x] transactions history
@@ -62,6 +63,7 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 | Name | GitHub | jsDelivr | Version |
 |------|--------|----------|---------|
 | jsbgl | [GitHub](https://github.com/bitaps-com/jsbgl) | [jsDelivr](https://www.jsdelivr.com/package/npm/jsbgl?path=dist) | 1.0.17
+| aes4js | [GitHub](https://github.com/rndme/aes4js) | [jsDelivr](https://www.jsdelivr.com/package/npm/aes4js) | 1.0.0
 | satoshi-bitcoin | [GitHub](https://github.com/dawsbot/satoshi-bitcoin) | [jsDelivr](https://www.jsdelivr.com/package/npm/satoshi-bitcoin) | 1.0.4
 | Bootswatch | [GitHub](https://github.com/thomaspark/bootswatch) | [jsDelivr](https://www.jsdelivr.com/package/npm/bootswatch?path=dist%2Fflatly) | 4.5.3 |
 | Native JavaScript for Bootstrap | [GitHub](https://github.com/thednp/bootstrap.native) | [jsDelivr](https://www.jsdelivr.com/package/npm/bootstrap.native?path=dist) | 3.0.14

@@ -2,7 +2,7 @@ jsbtc.asyncInit(window);
 
 const locationDefault = 'dashboard';
 
-let storage = {
+let storage = { // eslint-disable-line prefer-const
 	balance: 0,
 	addresses: {},
 };
@@ -16,21 +16,28 @@ const getBalanceSum = () => {
 	$amountSum.innerHTML = humanAmountFormat(storage.balance);
 };
 
+const encryptedMimeType = 'data:application/octet-stream;base64,';
+
+let localPassword;
+
 const saveToCryptoStorage = () => {
-	// need AES encrypt
-	localStorage.cryptoStorage = JSON.stringify(storage);
+	aes4js.encrypt(localPassword, JSON.stringify(storage))
+			.then((encrypted) => {
+				localStorage.iv = JSON.stringify(encrypted.iv);
+				localStorage.cryptoStorage = encrypted.encrypted.replace(encryptedMimeType, '');
+			});
 };
 
 if (localStorage.cryptoStorage) {
-	// need AES descrypt
-	storage = JSON.parse(localStorage.cryptoStorage);
-	if (storage.entropy) window.location.hash = locationDefault;
-	else window.location.hash = 'welcome';
+	// start temp crutch for those who have used the wallet before
+	if ( ! localStorage.iv) {
+		storage = JSON.parse(localStorage.cryptoStorage);
+		window.location.hash = 'set-password';
+	}
+	// end temp crutch for those who have used the wallet before
+	else window.location.hash = 'login';
 }
-else {
-	saveToCryptoStorage();
-	window.location.hash = 'welcome';
-}
+else window.location.hash = 'welcome';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -74,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	$logoutBtn.addEventListener('click', () => {
-		Swal.fire({
+		/* Swal.fire({
 			showCloseButton: true,
 			showConfirmButton: false,
 			toast: true,
@@ -84,7 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			icon: 'success',
 			title: 'You logout!',
 		});
-		window.location.hash = 'login';
+		window.location.hash = 'login'; */
+		window.location.reload();
 	});
 
 	document.querySelectorAll('.copy-val').forEach(($input) => {
