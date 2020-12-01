@@ -168,7 +168,7 @@ const fetchQuery = (url, callback, fetchParams = null, errorFunc = null) => {
 				}
 			})
 			.catch((error) => {
-				if (error == 'TypeError: Failed to fetch') error += '<br><br>Maybe it is CORS! Check please <a class="btn btn-sm btn-info" target="_blank" href="https://github.com/epexa/bitgesell-wallet-js-frontend-core-dist#readme">manual here.</a>';
+				if (error == 'TypeError: Failed to fetch') error += '<br><br>Maybe it is CORS! Check please <a class="btn btn-sm btn-info" target="_blank" href="https://github.com/epexa/bitgesell-wallet-js-dist/blob/master/CORS.md#cors">manual here.</a>';
 				Swal.fire({
 					showCloseButton: true,
 					icon: 'error',
