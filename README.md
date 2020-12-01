@@ -1,7 +1,7 @@
-# Bitgesell Wallet JS Frontend Core
+# Bitgesell Wallet JS
 
 ## About
-Bitgesell Wallet JS - сross-platform wallet!
+[Bitgesell](https://bitgesell.ca) Wallet JS - сross-platform wallet!
 
 This frontend application that do not use backend.
 All work between the application and the blockchain (Node) conducts directly!
@@ -10,25 +10,36 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 
 ------------
 
+## Screenshots
+
+![my_addresses_screenshot](https://user-images.githubusercontent.com/2198826/100698149-bd7a7500-33d2-11eb-84b0-57eaa06afac8.png)
+
+------------
+
+## Build versions
+
+- ### Web: https://app.bglwallet.io (domain is linked to GitHub Pages, we do not use our server to delivery frontend). Alternative: https://raw.githack.com/epexa/bitgesell-wallet-js-dist/master/
+
+------------
+
 ## Technical advantages
 - Use official Bitgesell JavaScript library [“jsbgl”](https://github.com/bitaps-com/jsbgl).
 - It is written without using JS frontend frameworks (React, Vue.JS, etc.), which is why it has a very simple and clear codebase and code architecture.
-- Not used by third-party API. Used only official Node RPC and Explorer API.
+- Not used by third-party API. Used only [Node RPC](https://rpc.bglwallet.io) and [Explorer API](https://bgl.bitaps.com).
 
 ------------
 
 ## Features
 - [x] is it cross-platform (web-based)
-- [x] it require regular node is enough
-- [x] supports new wallet creation
-- [x] supports mnemonic seed in wallet creation
+- [x] new wallet creation
+- [x] mnemonic seed in wallet creation
 - [x] private keys are stored on user-side only
 - [x] storage encrypted with AES-GCM 256-bit
 - [x] sent transaction (with specify fee)
 - [x] generate receiving address
 - [x] transactions history
-- [x] supports restore wallet from mnemonic seed
-- [x] supports import address from WIF
+- [x] restore wallet from mnemonic seed
+- [x] import address from WIF
 - [x] good UX & UI
 
 ------------
@@ -42,7 +53,7 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 1. `npm start`
 2. open in browser: http://[IP]:[PORT] (check console message)
 
-*[IP] and [PORT] are specified in [package.json](package.json#L8):*
+*[IP] and [PORT] are specified in [package.json](package.json#L12):*
 `"config": {
     "IP": "127.0.0.1",
     "PORT": "80",
@@ -90,8 +101,10 @@ Patches are welcome! If you would like to contribute, but don't know what to wor
 ## Donations
 
 If you'd like to buy me a beer, I won't complain. I will thank you! =)
-- BGL: [bgl1qlmzckh904vze03n0lwzptt5dkmvf2vj3ev4qm9](bitgesell:bgl1qlmzckh904vze03n0lwzptt5dkmvf2vj3ev4qm9)
+- BGL: [bgl1qlmzckh904vze03n0lwzptt5dkmvf2vj3ev4qm9](bgl:bgl1qlmzckh904vze03n0lwzptt5dkmvf2vj3ev4qm9)
+- BTC: [3HAx7GndxNCeri72xPbuaAyAJT8w2v5XGt](btc:3HAx7GndxNCeri72xPbuaAyAJT8w2v5XGt)
 - ETH: [0xa88DcEB0139A56f5b054d22212C0445aD984f685](ethereum:0xa88DcEB0139A56f5b054d22212C0445aD984f685)
+- [Other cryptocurrencies (395+ coins)...](https://coinswitch.co/?ref=LLBEOO8IZD)
 
 ------------
 
