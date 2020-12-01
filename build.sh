@@ -2,8 +2,9 @@
 
 npm test &&
 
-
-DIST_FOLDER=../bitgesell-wallet-js-frontend-core-dist
+# DIST_FOLDER=$(node --eval="process.stdout.write(require('./package.json').config.DIST_FOLDER)")
+# DIST_FOLDER=$npm_package_config_DIST_FOLDER
+DIST_FOLDER=$1
 
 mkdir -p $DIST_FOLDER &&
 
