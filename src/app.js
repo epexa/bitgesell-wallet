@@ -55,10 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#transactions',
 		'#node-address-modal',
 		'#node-address',
-		'#node-address-modal-btn',
 		'#amount-sum',
 		'#export-wallet-btn',
-		'#logout-btn',
+		'#mobile-menu',
+		'#apple-mobile-menu',
 	);
 
 	getBalanceSum();
@@ -70,8 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	new BSN.Modal($nodeAddressModal);
 
-	$nodeAddressModalBtn.addEventListener('click', () => {
-		$nodeAddressModal.Modal.show();
+	document.querySelectorAll('.node-address-btn').forEach(($btn) => {
+		$btn.addEventListener('click', () => {
+			$nodeAddressModal.Modal.show();
+		});
 	});
 
 	$nodeAddress.addEventListener('submit', (e) => {
@@ -80,19 +82,21 @@ document.addEventListener('DOMContentLoaded', () => {
 		window.location.reload();
 	});
 
-	$logoutBtn.addEventListener('click', () => {
-		/* Swal.fire({
-			showCloseButton: true,
-			showConfirmButton: false,
-			toast: true,
-			position: 'top',
-			timer: 3000,
-			timerProgressBar: true,
-			icon: 'success',
-			title: 'You logout!',
+	document.querySelectorAll('.logout').forEach(($btn) => {
+		$btn.addEventListener('click', () => { // (csrf protect)
+			/* Swal.fire({
+				showCloseButton: true,
+				showConfirmButton: false,
+				toast: true,
+				position: 'top',
+				timer: 3000,
+				timerProgressBar: true,
+				icon: 'success',
+				title: 'You logout!',
+			});
+			window.location.hash = 'login'; */
+			window.location.reload();
 		});
-		window.location.hash = 'login'; */
-		window.location.reload();
 	});
 
 	document.querySelectorAll('.copy-val').forEach(($input) => {
@@ -115,6 +119,12 @@ document.addEventListener('DOMContentLoaded', () => {
 				const screenName = camelCase(`navigate-${params[0]}`); // navigateDashboard();
 				if (window[screenName]) window[screenName]();
 				else window.location.hash = locationDefault;
+				/* start highlight active link in apple mobile menu */
+				$appleMobileMenu.querySelectorAll('a').forEach(($li) => {
+					if (params[0] === $li.getAttribute('href').substring(1)) $li.classList.add('active');
+					else $li.classList.remove('active');
+				});
+				/* end highlight active link in apple mobile menu */
 			}
 		}
 	});
@@ -204,4 +214,9 @@ const getAddressBalance = (address, callback) => {
 			title: `Error in get address balance query: <a target="_blank" href="${url}">${url}</a>`,
 		};
 	});
+};
+
+window.navigateMobileMenu = () => {
+	hide($dashboard, $myAddresses, $send, $setPassword, $welcome, $newAddress, $transactions, $createWallet);
+	show($main, $mobileMenu);
 };

@@ -142,7 +142,7 @@ const send = () => {
 };
 
 window.navigateSend = () => {
-	hide($welcome, $dashboard, $myAddresses, $newAddress, $transactions, $setPassword);
+	hide($welcome, $dashboard, $myAddresses, $newAddress, $transactions, $setPassword, $mobileMenu);
 	show($main, $send);
 	sendFormInit();
 };

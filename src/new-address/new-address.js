@@ -45,7 +45,7 @@ const newAddressGenerate = () => {
 };
 
 window.navigateNewAddress = () => {
-	hide($welcome, $myAddresses, $send, $transactions, $setPassword);
+	hide($welcome, $myAddresses, $send, $transactions, $setPassword, $mobileMenu);
 	show($main, $newAddress);
 	newAddressGenerate();
 };

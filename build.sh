@@ -62,5 +62,6 @@ lib/bootstrap.min.css \
 lib/sweetalert2.min.css \
 lib/dataTables.bootstrap4.min.css \
 lib/responsive.bootstrap4.min.css \
+lib/icomoon.css \
 src/custom.css \
 -o $DIST_FOLDER/custom.min.css --skip-rebase

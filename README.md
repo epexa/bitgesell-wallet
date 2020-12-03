@@ -81,7 +81,7 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 | SweetAlert2 | [GitHub](https://github.com/sweetalert2/sweetalert2) | [jsDelivr](https://www.jsdelivr.com/package/npm/sweetalert2?path=dist) | 10.10.1
 | DataTables | [GitHub](https://github.com/DataTables/DataTablesSrc) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net?path=js) | 1.10.22
 | DataTables Bootstrap 4 | [GitHub](https://github.com/DataTables/Dist-DataTables-Bootstrap4) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net-bs4) | 1.10.22
-| DataTables Responsive Bootstrap 4 | [GitHub](https://github.com/DataTables/Responsive) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net-responsive?path=js) | 2.2.4
+| DataTables Responsive Bootstrap 4 | [GitHub](https://github.com/DataTables/Responsive) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net-responsive?path=js) | 2.2.6
 | jQuery slim (only for DataTables) | [GitHub](https://github.com/jquery/jquery) | [jsDelivr](https://www.jsdelivr.com/package/npm/jquery?path=dist) | 3.5.1
 
 ------------
