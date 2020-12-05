@@ -216,6 +216,17 @@ const getAddressBalance = (address, callback) => {
 	});
 };
 
+const getAddressUtxo = (address, callback) => {
+	const url = `https://api.bitaps.com/bgl/v1/blockchain/address/utxo/${address}`;
+	fetchQuery(url, (responseJson) => {
+		callback(responseJson.data);
+	}, null, () => {
+		return {
+			title: `Error in get address UTXO query: <a target="_blank" href="${url}">${url}</a>`,
+		};
+	});
+};
+
 window.navigateMobileMenu = () => {
 	hide($dashboard, $myAddresses, $send, $setPassword, $welcome, $newAddress, $transactions, $createWallet);
 	show($main, $mobileMenu);
