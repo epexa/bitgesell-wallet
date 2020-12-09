@@ -1,7 +1,7 @@
-# Bitgesell Wallet JS
+# Bitgesell Wallet
 
 ## About
-[Bitgesell](https://bitgesell.ca) Wallet JS - сross-platform wallet!
+[Bitgesell](https://bitgesell.ca) Wallet - сross-platform wallet!
 
 This frontend application that do not use backend.
 All work between the application and the blockchain (Node) conducts directly!
@@ -18,12 +18,18 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 
 ## Build versions
 
-- ### Web: https://app.bglwallet.io (domain is linked to GitHub Pages, we do not use our server to delivery frontend). Alternative: https://raw.githack.com/epexa/bitgesell-wallet-js-dist/master/
+- ### Web: https://app.bglwallet.io (domain is linked to GitHub Pages, we do not use our server to delivery frontend). Alternative: https://raw.githack.com/epexa/bitgesell-wallet-dist/master/
+- ### WebExtensions (Chrome Extension): https://chrome.google.com/webstore/detail/pncbphpmaelhiladbdaapmpcchknnpdb
+- ### Linux (Snap): https://snapcraft.io/bitgesell-wallet
+- ### Linux (AppImage): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.1/Bitgesell-Wallet-0.8.1.AppImage
+- ### Windows: https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.1/Bitgesell-Wallet-Setup-0.8.1.exe
+- ### Windows (portable): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.1/Bitgesell-Wallet-0.8.1.exe
+- ### Android: https://play.google.com/store/apps/details?id=io.bglwallet
 
 ------------
 
 ## Technical advantages
-- Use official Bitgesell JavaScript library [“jsbgl”](https://github.com/bitaps-com/jsbgl).
+- Use Bitgesell JavaScript library [“jsbgl”](https://github.com/bitaps-com/jsbgl).
 - It is written without using JS frontend frameworks (React, Vue.JS, etc.), which is why it has a very simple and clear codebase and code architecture.
 - Not used by third-party API. Used only [Node RPC](https://rpc.bglwallet.io) and [Explorer API](https://bgl.bitaps.com).
 
@@ -31,6 +37,7 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 
 ## Features
 - [x] is it cross-platform (web-based)
+- [x] responsive layout (mobile support)
 - [x] new wallet creation
 - [x] mnemonic seed in wallet creation
 - [x] private keys are stored on user-side only
@@ -47,7 +54,7 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 ## Help environment
 
 - ### 1) PRE
-1. `npm install`
+`npm install`
 
 - ### 2) DEVELOP
 1. `npm start`
@@ -61,8 +68,7 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 `
 
 - ### 3) BUILD
-1. `chmod 740 build.sh`
-2. `npm run build`
+`npm run build`
 
 - ### 4) RUN BUILDED
 1. `npm run dist-start`
