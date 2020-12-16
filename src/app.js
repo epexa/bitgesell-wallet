@@ -18,7 +18,9 @@ const getBalanceSum = () => {
 		balanceSum += value.balance;
 	}
 	storage.balance = balanceSum;
-	$amountSum.innerHTML = humanAmountFormat(storage.balance);
+	document.querySelectorAll('.amount-sum').forEach(($btn) => {
+		$btn.innerHTML = humanAmountFormat(storage.balance);
+	});
 };
 
 const encryptedMimeType = 'data:application/octet-stream;base64,';
@@ -60,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#transactions',
 		'#node-address-modal',
 		'#node-address',
-		'#amount-sum',
 		'#export-wallet-btn',
 		'#mobile-menu',
 		'#apple-mobile-menu',
@@ -116,7 +117,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	if ( ! localStorage.convert_price) localStorage.convert_price = 0;
 
 	const convertPrice = () => {
-		$amountSum.innerHTML = humanAmountFormat(storage.balance);
+		document.querySelectorAll('.amount-sum').forEach(($btn) => {
+			$btn.innerHTML = humanAmountFormat(storage.balance);
+		});
 		myAddressesTable.rows().every((index) => {
 			const row = myAddressesTable.row(index);
 			row.data(row.data());
@@ -130,11 +133,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (needConvertPrice()) convertPrice();
 	});
 
-	$amountSum.addEventListener('click', (e) => {
-		e.preventDefault();
-		if (needConvertPrice()) localStorage.convert_price = 0;
-		else localStorage.convert_price = 1;
-		convertPrice();
+	document.querySelectorAll('.amount-sum').forEach(($btn) => {
+		$btn.addEventListener('click', (e) => {
+			e.preventDefault();
+			if (needConvertPrice()) localStorage.convert_price = 0;
+			else localStorage.convert_price = 1;
+			convertPrice();
+		});
 	});
 
 });
