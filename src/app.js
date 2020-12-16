@@ -67,8 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#apple-mobile-menu',
 	);
 
-	getBalanceSum();
-
 	const $nodeAddressInput = $nodeAddress.querySelector('.form-control[name="node-address"]');
 
 	if (localStorage.nodeAddress) $nodeAddressInput.value = localStorage.nodeAddress;
@@ -112,9 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 
-	getBalanceSum();
-
-	if ( ! localStorage.convert_price) localStorage.convert_price = 0;
+	if ( ! localStorage.convertPrice) localStorage.convertPrice = 0;
 
 	const convertPrice = () => {
 		document.querySelectorAll('.amount-sum').forEach(($btn) => {
@@ -136,8 +132,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.querySelectorAll('.amount-sum').forEach(($btn) => {
 		$btn.addEventListener('click', (e) => {
 			e.preventDefault();
-			if (needConvertPrice()) localStorage.convert_price = 0;
-			else localStorage.convert_price = 1;
+			if (needConvertPrice()) localStorage.convertPrice = 0;
+			else localStorage.convertPrice = 1;
 			convertPrice();
 		});
 	});
@@ -166,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const needConvertPrice = () => {
-	if (parseInt(localStorage.convert_price) === 1) return true;
+	if (parseInt(localStorage.convertPrice) === 1) return true;
 	else return false;
 };
 

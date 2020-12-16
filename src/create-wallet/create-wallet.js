@@ -40,6 +40,7 @@ const generateAddress = (entropy, indexAddress = 0) => {
 		balance: 0,
 		input_count: 0,
 	};
+	getBalanceSum();
 	saveToCryptoStorage();
 	return { mnemonic: mnemonic, address: address.address };
 };
