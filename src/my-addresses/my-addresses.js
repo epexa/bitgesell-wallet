@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		correctLevel: QRCode.CorrectLevel.H,
 	});
 
-	const addEventButtons = () => {
+	window.addEventButtons = () => {
 		$myAddressesTable.querySelectorAll('.qr-code-btn').forEach(($btn) => {
 			$btn.addEventListener('click', () => {
 				addressQRcode.clear();
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	};
 
-	const myAddressesTable = $('#my-addresses-table').DataTable(
+	window.myAddressesTable = $('#my-addresses-table').DataTable(
 		$.extend({}, dataTableParams, {
 			columns: [
 				{ data: 'id' },

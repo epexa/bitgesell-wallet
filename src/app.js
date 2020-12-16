@@ -7,6 +7,11 @@ let storage = { // eslint-disable-line prefer-const
 	addresses: {},
 };
 
+const coinPrice = {
+	price: 0,
+	change: 0,
+};
+
 const getBalanceSum = () => {
 	let balanceSum = 0;
 	for (const [ key, value ] of Object.entries(storage.addresses)) {
@@ -108,6 +113,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	getBalanceSum();
 
+	if ( ! localStorage.convert_price) localStorage.convert_price = 0;
+
+	const convertPrice = () => {
+		$amountSum.innerHTML = humanAmountFormat(storage.balance);
+		myAddressesTable.rows().every((index) => {
+			const row = myAddressesTable.row(index);
+			row.data(row.data());
+			addEventButtons();
+		});
+	};
+
+	getCoinInfo((coinInfo) => {
+		coinPrice.price = coinInfo.market_data.current_price.usd;
+		coinPrice.change = coinInfo.market_data.price_change_percentage_24h.toFixed(1);
+		if (needConvertPrice()) convertPrice();
+	});
+
+	$amountSum.addEventListener('click', (e) => {
+		e.preventDefault();
+		if (needConvertPrice()) localStorage.convert_price = 0;
+		else localStorage.convert_price = 1;
+		convertPrice();
+	});
+
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -131,8 +160,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	window.dispatchEvent(new CustomEvent('hashchange'));
 });
 
+const needConvertPrice = () => {
+	if (parseInt(localStorage.convert_price) === 1) return true;
+	else return false;
+};
+
 const humanAmountFormat = (amount) => {
-	return `<span class="font-weight-bold">${(sb.toBitcoin(amount))}</span> BGL`;
+	let humanAmount = sb.toBitcoin(amount);
+	const needConvertPriceVal = needConvertPrice();
+	if (needConvertPriceVal) humanAmount = (humanAmount * coinPrice.price).toFixed(2);
+	return `<span class="font-weight-bold ${needConvertPriceVal ? `text-${coinPrice.change > 0 ? 'success' : 'danger'}" title="24 Hour Change: ${coinPrice.change}%` : ''}">${humanAmount}</span> ${needConvertPriceVal ? 'USD' : 'BGL'}`;
 };
 
 const copyToBuffer = ($select) => {
@@ -223,6 +260,17 @@ const getAddressUtxo = (address, callback) => {
 	}, null, () => {
 		return {
 			title: `Error in get address UTXO query: <a target="_blank" href="${url}">${url}</a>`,
+		};
+	});
+};
+
+const getCoinInfo = (callback) => {
+	const url = 'https://api.coingecko.com/api/v3/coins/bitgesell';
+	fetchQuery(url, (responseJson) => {
+		callback(responseJson);
+	}, null, () => {
+		return {
+			title: `Error in get coin info: <a target="_blank" href="${url}">${url}</a>`,
 		};
 	});
 };

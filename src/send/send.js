@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#send-balance',
 		'#send-to-val',
 		'#send-amount-val',
+		'#send-amount-price',
 		'#send-fee-val',
 		'#send-form-btn',
 		'#send-new-balance',
@@ -28,6 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const calcAmountSpent = () => {
 		sendParams.toAmount = sb.toSatoshi($sendAmountVal.value);
+		if ($sendAmountVal.value) {
+			$sendAmountPrice.querySelector('span').innerText = ($sendAmountVal.value * coinPrice.price).toFixed(2);
+			show($sendAmountPrice);
+		}
+		else hide($sendAmountPrice);
 		sendParams.feeAmount = sb.toSatoshi($sendFeeVal.value);
 		const amountSpent = sendParams.toAmount + sendParams.feeAmount;
 		$sendFormBtn.innerHTML = `Send <span class="badge badge-info">${sb.toBitcoin(amountSpent)}</span> BGL`;
@@ -52,7 +58,9 @@ const addressBalance = () => {
 	hide($sendBalance, $sendNewBalance);
 	if ($sendFromVal.value) {
 		sendParams.fromAmount = storage.addresses[$sendFromVal.value].balance;
-		$sendBalance.querySelector('span').innerText = sb.toBitcoin(sendParams.fromAmount);
+		const humanAmount = sb.toBitcoin(sendParams.fromAmount);
+		$sendBalance.querySelector('span').innerText = humanAmount;
+		$sendBalance.querySelector('span:nth-child(2)').innerText = (humanAmount * coinPrice.price).toFixed(2);
 		show($sendBalance);
 		if (sendParams.newFromAmount) show($sendNewBalance);
 	}
