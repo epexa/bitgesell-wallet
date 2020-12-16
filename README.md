@@ -19,11 +19,12 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 ## Build versions
 
 - ### Web: https://app.bglwallet.io (domain is linked to GitHub Pages, we do not use our server to delivery frontend). Alternative: https://raw.githack.com/epexa/bitgesell-wallet-dist/master/
-- ### WebExtensions (Chrome Extension): https://chrome.google.com/webstore/detail/pncbphpmaelhiladbdaapmpcchknnpdb
+- ### WebExtensions (Chrome Extension): https://chrome.google.com/webstore/detail/bitgesell-wallet/pncbphpmaelhiladbdaapmpcchknnpdb
 - ### Linux (Snap): https://snapcraft.io/bitgesell-wallet
-- ### Linux (AppImage): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.1/Bitgesell-Wallet-0.8.1.AppImage
-- ### Windows: https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.1/Bitgesell-Wallet-Setup-0.8.1.exe
-- ### Windows (portable): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.1/Bitgesell-Wallet-0.8.1.exe
+- ### Linux (AppImage): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.3/Bitgesell-Wallet-0.8.3.AppImage
+- ### Linux (deb): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.3/Bitgesell-Wallet-0.8.3.deb
+- ### Windows: https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.3/Bitgesell-Wallet-Setup-0.8.3.exe
+- ### Windows (portable): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.3/Bitgesell-Wallet-0.8.3.exe
 - ### Android: https://play.google.com/store/apps/details?id=io.bglwallet
 
 ------------
@@ -47,6 +48,7 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 - [x] transactions history
 - [x] restore wallet from mnemonic seed
 - [x] import address from WIF
+- [x] show balances in USD
 - [x] good UX & UI
 
 ------------

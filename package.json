@@ -1,17 +1,17 @@
 {
-  "name": "bitgesell-wallet-js",
-  "version": "0.8.1",
+  "name": "bitgesell-wallet",
+  "version": "0.8.3",
   "description": "Bitgesell Wallet JS",
   "homepage": "https://app.bglwallet.io",
-  "bugs": "https://github.com/epexa/bitgesell-wallet-js/issues",
+  "bugs": "https://github.com/epexa/bitgesell-wallet/issues",
   "license": "Proprietary",
   "author": "epexa",
   "main": "local-server.js",
-  "repository": "epexa/bitgesell-wallet-js",
+  "repository": "epexa/bitgesell-wallet",
   "config": {
     "IP": "127.0.0.1",
     "PORT": "80",
-    "DIST_FOLDER": "../bitgesell-wallet-js-dist"
+    "DIST_FOLDER": "../bitgesell-wallet-dist"
   },
   "scripts": {
     "test": "eslint 'src/*.js'",
