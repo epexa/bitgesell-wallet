@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					}
 					return `<span class="badge badge-${className}">${text}</span>`;
 				}, class: 'text-center' },
-				{ render: (row, display, column) => {
+				{ data: 'tx_id', render: (row, display, column) => {
 					let btns = '';
 					btns += `<a class="btn btn-warning btn-sm mr-1" target="_blank" href="https://bgl.bitaps.com/${column.tx_id}">Open in explorer</a>`;
 					return btns;
