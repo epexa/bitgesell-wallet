@@ -1,12 +1,12 @@
 # Bitgesell Wallet
 
 ## About
-[Bitgesell](https://bitgesell.ca) Wallet - сross-platform wallet!
+[Bitgesell](https://bitgesell.ca) Wallet - сross-platform wallet for BGL cryptocurrency!
 
-This frontend application that do not use backend.
-All work between the application and the blockchain (Node) conducts directly!
+This is a modern serverless wallet.
+All work between the app and the blockchain (Node) conducts directly!
 Works from a browser, from a saved page, from anywhere!
-It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile application (Cordova) for Android & iOS. As well as a Chrome extension.
+It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile app (Cordova) for Android & iOS. As well as a Chrome extension.
 
 ------------
 
@@ -22,7 +22,7 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 - ### WebExtensions (Chrome Extension): https://chrome.google.com/webstore/detail/bitgesell-wallet/pncbphpmaelhiladbdaapmpcchknnpdb
 - ### Linux (Snap): https://snapcraft.io/bitgesell-wallet
 - ### Linux (AppImage): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.3/Bitgesell-Wallet-0.8.3.AppImage
-- ### Linux (deb): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.3/Bitgesell-Wallet-0.8.3.deb
+- ### Linux (deb): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.3/bitgesell-wallet_0.8.3_amd64.deb
 - ### Windows: https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.3/Bitgesell-Wallet-Setup-0.8.3.exe
 - ### Windows (portable): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.3/Bitgesell-Wallet-0.8.3.exe
 - ### Android: https://play.google.com/store/apps/details?id=io.bglwallet
