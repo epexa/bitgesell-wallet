@@ -65,6 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#export-wallet-btn',
 		'#mobile-menu',
 		'#apple-mobile-menu',
+		'#theme',
+		'#theme-modal',
+		'#theme-val',
+		'#prev-theme',
+		'#next-theme',
 	);
 
 	const $nodeAddressInput = $nodeAddress.querySelector('.form-control[name="node-address"]');
@@ -137,6 +142,59 @@ document.addEventListener('DOMContentLoaded', () => {
 			convertPrice();
 		});
 	});
+
+	new BSN.Modal($themeModal);
+
+	$themeModal.addEventListener('shown.bs.modal', () => {
+		$themeModal.querySelector('.form-control').focus();
+	});
+
+	document.querySelectorAll('.theme-btn').forEach(($btn) => {
+		$btn.addEventListener('click', () => {
+			$themeModal.Modal.show();
+			if (window.location.hash.substring(1) === 'mobile-menu') window.location.hash = 'my-addresses';
+		});
+	});
+
+	const addOptionInSelect = ($select, value) => {
+		// $select.add(new Option(value[0].toUpperCase() + value.slice(1), value));
+		const $option = document.createElement('option');
+		$option.value = value;
+		$option.text = value[0].toUpperCase() + value.slice(1);
+		$select.appendChild($option);
+	};
+	for (const [ key, value ] of Object.entries(themes.light))
+		addOptionInSelect($themeVal.querySelector('optgroup'), value);
+	for (const [ key, value ] of Object.entries(themes.dark))
+		addOptionInSelect($themeVal.querySelector('optgroup:nth-child(2)'), value);
+
+	$themeVal.addEventListener('change', () => {
+		$theme.setAttribute('href', `themes/${$themeVal.value}.min.css`);
+		localStorage.theme = $themeVal.value;
+		if ($themeVal.selectedIndex > 0) $prevTheme.removeAttribute('disabled');
+		else $prevTheme.setAttribute('disabled', '');
+		if ($themeVal.selectedIndex < $themeVal.length - 1) $nextTheme.removeAttribute('disabled');
+		else $nextTheme.setAttribute('disabled', '');
+	});
+
+	$prevTheme.addEventListener('click', () => {
+		if ($themeVal.selectedIndex > 0) {
+			$themeVal.selectedIndex--;
+			trigger($themeVal, 'change');
+		}
+	});
+	$nextTheme.addEventListener('click', () => {
+		if ($themeVal.selectedIndex < $themeVal.length - 1) {
+			$themeVal.selectedIndex++;
+			trigger($themeVal, 'change');
+		}
+	});
+
+	if (localStorage.theme) {
+		$themeVal.value = localStorage.theme;
+		trigger($themeVal, 'change');
+	}
+	else $themeVal.value = 'flatly';
 
 });
 
@@ -274,6 +332,41 @@ const getCoinInfo = (callback) => {
 			title: `Error in get coin info: <a target="_blank" href="${url}">${url}</a>`,
 		};
 	});
+};
+
+const trigger = (element, event) => {
+	const evt = document.createEvent('HTMLEvents');
+	evt.initEvent(event, true, true);
+	return ! element.dispatchEvent(evt);
+};
+
+const themes = {
+	light: [
+		'cerulean',
+		'cosmo',
+		'default',
+		'flatly',
+		'journal',
+		'litera',
+		'lumen',
+		'lux',
+		'materia',
+		'minty',
+		'pulse',
+		'sandstone',
+		'simplex',
+		'sketchy',
+		'spacelab',
+		'united',
+		'yeti',
+	],
+	dark: [
+		'cyborg',
+		'darkly',
+		'slate',
+		'solar',
+		'superhero',
+	],
 };
 
 window.navigateMobileMenu = () => {

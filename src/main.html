@@ -12,10 +12,13 @@
 							<li class="nav-item mx-5"><a class="nav-link h5 font-weight-bold my-0" href="#send">Send</a></li>
 						</ul>
 						<form class="form-inline mr-4 mb-0">
-							<button class="btn btn-outline-warning mr-1 amount-sum">... BGL</button>
+							<button class="btn btn-dark mr-1 amount-sum">... BGL</button>
 						</form>
 						<form class="form-inline mr-4 mb-0">
-							<button class="btn btn-light btn-sm node-address-btn" type="button">Change Node RPC</button>
+							<button class="btn btn-light btn-sm theme-btn" type="button">Theme</button>
+						</form>
+						<form class="form-inline mr-4 mb-0">
+							<button class="btn btn-light btn-sm node-address-btn" type="button">Node RPC</button>
 						</form>
 						<ul class="navbar-nav my-2 my-lg-0">
 							<li class="nav-item dropdown">
@@ -57,11 +60,42 @@
 				</div>
 			</div>
 
+			<div class="modal" id="theme-modal" tabindex="-1" role="dialog" data-backdrop="false">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Theme</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<form id="theme-form">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<button class="btn btn-outline-primary" type="button" id="prev-theme">Previous</button>
+									</div>
+									<select class="form-control" id="theme-val" name="theme" placeholder="Select theme" required="">
+										<optgroup label="Light"></optgroup>
+										<optgroup label="Dark"></optgroup>
+									</select>
+									<div class="input-group-append">
+										<button class="btn btn-outline-primary" type="button" id="next-theme">Next</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<article>
 				<main role="main" class="container-fluid mt-3">
 
 					<div class="row mt-5 d-none" id="mobile-menu">
 						<div class="list-group list-group-flush">
+							<a class="list-group-item list-group-item-action theme-btn"><i class="icon icon-theme fa-fw mt-1 mr-1"></i> Change theme</a>
+							<li class="list-group-item"></li>
 							<a class="list-group-item list-group-item-action node-address-btn"><i class="icon icon-db fa-fw mt-1 mr-1"></i> Change Node RPC</a>
 							<li class="list-group-item"></li>
 							<a class="list-group-item list-group-item-action" href="#welcome"><i class="icon icon-credit-card mt-1 mr-1"></i> Create new wallet</a>

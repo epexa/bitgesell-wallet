@@ -71,7 +71,10 @@
           "ligatures": "eyedropper, color",
           "name": "eyedropper",
           "id": 10,
-          "order": 0
+          "order": 0,
+          "prevSize": 32,
+          "code": 59658,
+          "tempChar": ""
         },
         {
           "ligatures": "droplet, color2",
@@ -81,9 +84,12 @@
         },
         {
           "ligatures": "paint-format, format",
-          "name": "paint-format",
+          "name": "theme",
           "id": 12,
-          "order": 0
+          "order": 18,
+          "prevSize": 32,
+          "code": 59660,
+          "tempChar": ""
         },
         {
           "ligatures": "image, picture",
@@ -218,7 +224,7 @@
           "order": 7,
           "prevSize": 32,
           "code": 59682,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "ligatures": "profile, file2",
@@ -455,7 +461,7 @@
           "order": 6,
           "prevSize": 32,
           "code": 59721,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "ligatures": "compass2, direction2",
@@ -596,7 +602,7 @@
           "order": 10,
           "prevSize": 32,
           "code": 59744,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "ligatures": "upload, load",
@@ -1145,7 +1151,7 @@
           "order": 15,
           "prevSize": 32,
           "code": 59835,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "ligatures": "tree, branches",
@@ -1262,7 +1268,10 @@
           "ligatures": "eye, views",
           "name": "eye",
           "id": 206,
-          "order": 0
+          "order": 0,
+          "prevSize": 32,
+          "code": 59854,
+          "tempChar": ""
         },
         {
           "ligatures": "eye-plus, views2",
@@ -1304,7 +1313,10 @@
           "ligatures": "contrast",
           "name": "contrast",
           "id": 213,
-          "order": 0
+          "order": 0,
+          "prevSize": 32,
+          "code": 59861,
+          "tempChar": ""
         },
         {
           "ligatures": "brightness-contrast",
@@ -2249,7 +2261,7 @@
           "order": 16,
           "prevSize": 32,
           "code": 60018,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "ligatures": "pilcrow, wysiwyg21",
@@ -2972,7 +2984,7 @@
           "order": 11,
           "prevSize": 32,
           "code": 60137,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "ligatures": "IcoMoon, icomoon",
@@ -11461,7 +11473,7 @@
           "name": "db",
           "prevSize": 32,
           "code": 59648,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 1,
@@ -11469,7 +11481,7 @@
           "name": "credit-card",
           "prevSize": 32,
           "code": 59649,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 1,
@@ -11477,7 +11489,7 @@
           "name": "key",
           "prevSize": 32,
           "code": 59650,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 1,
@@ -11485,7 +11497,7 @@
           "name": "signout",
           "prevSize": 32,
           "code": 59651,
-          "tempChar": ""
+          "tempChar": ""
         }
       ],
       "id": 0,

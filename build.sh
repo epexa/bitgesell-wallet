@@ -58,7 +58,6 @@ src/login/login.html \
 -o $DIST_FOLDER/index.html &&
 
 cleancss \
-lib/bootstrap.min.css \
 lib/sweetalert2.min.css \
 lib/dataTables.bootstrap4.min.css \
 lib/responsive.bootstrap4.min.css \
