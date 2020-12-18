@@ -21,10 +21,10 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 - ### Web: https://app.bglwallet.io (domain is linked to GitHub Pages, we do not use our server to delivery frontend). Alternative: https://raw.githack.com/epexa/bitgesell-wallet-dist/master/
 - ### WebExtensions (Chrome Extension): https://chrome.google.com/webstore/detail/bitgesell-wallet/pncbphpmaelhiladbdaapmpcchknnpdb
 - ### Linux (Snap): https://snapcraft.io/bitgesell-wallet
-- ### Linux (AppImage): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.3/Bitgesell-Wallet-0.8.3.AppImage
-- ### Linux (deb): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.3/bitgesell-wallet_0.8.3_amd64.deb
-- ### Windows: https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.3/Bitgesell-Wallet-Setup-0.8.3.exe
-- ### Windows (portable): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.8.3/Bitgesell-Wallet-0.8.3.exe
+- ### Linux (AppImage): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.9.0/Bitgesell-Wallet-0.9.0.AppImage
+- ### Linux (deb): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.9.0/bitgesell-wallet_0.9.0_amd64.deb
+- ### Windows: https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.9.0/Bitgesell-Wallet-Setup-0.9.0.exe
+- ### Windows (portable): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.9.0/Bitgesell-Wallet-0.9.0.exe
 - ### Android: https://play.google.com/store/apps/details?id=io.bglwallet
 
 ------------
@@ -50,6 +50,7 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 - [x] import address from WIF
 - [x] show balances in USD
 - [x] good UX & UI
+- [x] 22 themes (17 light and 5 dark)
 
 ------------
 
