@@ -19,21 +19,28 @@ if (process.env.DIST_FOLDER) workDir = `/${process.env.DIST_FOLDER}/`;
 
 const express = require('express');
 const app = express();
-const server = require('http').createServer(app);
+const fs = require('fs');
 
 if ( ! process.env.IP || ! process.env.PORT) {
 	console.error('Need to specify IP and PORT environments (example: IP=192.168.23.42 PORT=80 node local-server.js) !');
 	process.exit();
 }
+
+let server;
+if (process.env.PORT !== '443') server = require('http').createServer(app);
+else server = require('https').createServer({
+	pfx: fs.readFileSync(`${__dirname}/localhost.pfx`),
+	passphrase: '12345',
+}, app);
+
 server.listen(process.env.PORT, process.env.IP, () => {
 	const address = server.address().address;
-	console.log(`Server running at http://${address === '127.0.0.1' ? 'localhost' : address}:${server.address().port} from ${workDir}`);
+	console.log(`Server running at http${process.env.PORT === '443' ? 's' : ''}://${address === '127.0.0.1' ? 'localhost' : address}:${server.address().port} from ${workDir}`);
 });
 
 app.use(express.static(__dirname + workDir));
 
 if (workDir === '/src/') {
-	const fs = require('fs');
 	const path = require('path');
 
 	const templateJs = (file) => { return `<script defer src="${file}"></script>`; };

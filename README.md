@@ -69,6 +69,7 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
     "PORT": "80",
   },
 `
+*If start on port 80 or 443 on Linux, then need start with sudo.*
 
 - ### 3) BUILD
 `npm run build`
