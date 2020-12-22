@@ -6,13 +6,13 @@
 This is a modern serverless wallet.
 All work between the app and the blockchain (Node) conducts directly!
 Works from a browser, from a saved page, from anywhere!
-It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile app (Cordova) for Android & iOS. As well as a Chrome extension.
+It also has a desktop version (desktop-app) for Linux, macOS, Windows and a mobile app (Cordova) for Android & iOS. As well as a Chrome extension.
 
 ------------
 
 ## Screenshots
 
-![my_addresses_screenshot](https://user-images.githubusercontent.com/2198826/100698149-bd7a7500-33d2-11eb-84b0-57eaa06afac8.png)
+![my_addresses_screenshot](https://user-images.githubusercontent.com/2198826/102730329-54ea3c80-436f-11eb-8fb8-38790f244daa.png)
 
 ------------
 
@@ -21,10 +21,10 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 - ### Web: https://app.bglwallet.io (domain is linked to GitHub Pages, we do not use our server to delivery frontend). Alternative: https://raw.githack.com/epexa/bitgesell-wallet-dist/master/
 - ### WebExtensions (Chrome Extension): https://chrome.google.com/webstore/detail/bitgesell-wallet/pncbphpmaelhiladbdaapmpcchknnpdb
 - ### Linux (Snap): https://snapcraft.io/bitgesell-wallet
-- ### Linux (AppImage): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.9.0/Bitgesell-Wallet-0.9.0.AppImage
-- ### Linux (deb): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.9.0/bitgesell-wallet_0.9.0_amd64.deb
-- ### Windows: https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.9.0/Bitgesell-Wallet-Setup-0.9.0.exe
-- ### Windows (portable): https://github.com/epexa/bitgesell-wallet-electron/releases/download/v0.9.0/Bitgesell-Wallet-0.9.0.exe
+- ### Linux (AppImage): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.1/Bitgesell-Wallet-0.9.1.AppImage
+- ### Linux (deb): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.1/bitgesell-wallet_0.9.1_amd64.deb
+- ### Windows: https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.1/Bitgesell-Wallet-Setup-0.9.1.exe
+- ### Windows (portable): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.1/Bitgesell-Wallet-portable.exe
 - ### Android: https://play.google.com/store/apps/details?id=io.bglwallet
 
 ------------
@@ -49,6 +49,7 @@ It also has a desktop version (Electron) for Linux, macOS, Windows and a mobile 
 - [x] restore wallet from mnemonic seed
 - [x] import address from WIF
 - [x] show balances in USD
+- [x] specify Node RPC
 - [x] good UX & UI
 - [x] 22 themes (17 light and 5 dark)
 
