@@ -72,6 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#next-theme',
 	);
 
+	document.onselectstart = new Function('return false;');
+	// document.oncontextmenu = new Function('return false;');
+
 	const $nodeAddressInput = $nodeAddress.querySelector('.form-control[name="node-address"]');
 
 	if (localStorage.nodeAddress) $nodeAddressInput.value = localStorage.nodeAddress;
