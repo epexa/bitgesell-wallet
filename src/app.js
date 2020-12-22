@@ -175,6 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		else $prevTheme.setAttribute('disabled', '');
 		if ($themeVal.selectedIndex < $themeVal.length - 1) $nextTheme.removeAttribute('disabled');
 		else $nextTheme.setAttribute('disabled', '');
+		geckoCome(true);
 	});
 
 	$prevTheme.addEventListener('click', () => {
