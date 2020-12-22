@@ -12,6 +12,7 @@ cp -r public/* $DIST_FOLDER/ &&
 
 babel \
 src/utils.js \
+src/api.js \
 src/app.js \
 src/login/login.js \
 src/welcome/welcome.js \

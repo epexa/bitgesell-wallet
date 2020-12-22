@@ -132,8 +132,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	};
 
 	getCoinInfo((coinInfo) => {
-		coinPrice.price = coinInfo.market_data.current_price.usd;
-		coinPrice.change = coinInfo.market_data.price_change_percentage_24h.toFixed(1);
+		coinPrice.price = coinInfo.bitgesell.usd;
+		coinPrice.change = coinInfo.bitgesell.usd_24h_change.toFixed(1);
 		if (needConvertPrice()) convertPrice();
 	});
 
@@ -251,90 +251,13 @@ const copyToBuffer = ($select) => {
 	$select.blur();
 };
 
-const fetchQuery = (url, callback, fetchParams = null, errorFunc = null) => {
-	fetch(url, fetchParams)
-			.then((response) => { return response.json(); })
-			.then((responseJson) => {
-				// console.log(responseJson);
-				if ( ! responseJson.error && ! responseJson.error_code) callback(responseJson);
-				else {
-					let errorObj = {};
-					if (errorFunc) errorObj = errorFunc(responseJson);
-					if ( ! errorObj.title) errorObj.title = `Error in response HTTP query to: <a target="_blank" href="${url}">${url}</a>`;
-					if ( ! errorObj.message) errorObj.message = responseJson.error ? responseJson.error : responseJson.message;
-					const swalParams = {
-						showCloseButton: true,
-						icon: 'error',
-						title: errorObj.title,
-						html: errorObj.message,
-						customClass: {
-							cancelButton: 'btn btn-danger btn-lg',
-						},
-						showConfirmButton: false,
-						showCancelButton: true,
-						cancelButtonText: 'Ok',
-					};
-					Swal.fire(swalParams);
-				}
-			})
-			.catch((error) => {
-				if (error == 'TypeError: Failed to fetch') error += '<br><br>Maybe it is CORS! Check please <a class="btn btn-sm btn-info" target="_blank" href="https://github.com/epexa/bitgesell-wallet-js-dist/blob/master/CORS.md#cors">manual here.</a>';
-				Swal.fire({
-					showCloseButton: true,
-					icon: 'error',
-					title: `Error on HTTP query to: <a target="_blank" href="${url}">${url}</a>`,
-					html: `<p class="text-danger">${error}</p>`,
-					customClass: {
-						cancelButton: 'btn btn-danger btn-lg',
-					},
-					showConfirmButton: false,
-					showCancelButton: true,
-					cancelButtonText: 'Ok',
-				});
-			});
-};
-
-const getAddressInfo = (address, callback) => {
-	const url = `https://api.bitaps.com/bgl/v1/blockchain/address/transactions/${address}`;
-	fetchQuery(url, (responseJson) => {
-		callback(responseJson.data);
-	}, null, () => {
-		return {
-			title: `Error in get address info query: <a target="_blank" href="${url}">${url}</a>`,
-		};
-	});
-};
-
-const getAddressBalance = (address, callback) => {
-	const url = `https://api.bitaps.com/bgl/v1/blockchain/address/state/${address}`;
-	fetchQuery(url, (responseJson) => {
-		callback(responseJson.data);
-	}, null, () => {
-		return {
-			title: `Error in get address balance query: <a target="_blank" href="${url}">${url}</a>`,
-		};
-	});
-};
-
-const getAddressUtxo = (address, callback) => {
-	const url = `https://api.bitaps.com/bgl/v1/blockchain/address/utxo/${address}`;
-	fetchQuery(url, (responseJson) => {
-		callback(responseJson.data);
-	}, null, () => {
-		return {
-			title: `Error in get address UTXO query: <a target="_blank" href="${url}">${url}</a>`,
-		};
-	});
-};
-
-const getCoinInfo = (callback) => {
-	const url = 'https://api.coingecko.com/api/v3/coins/bitgesell';
-	fetchQuery(url, (responseJson) => {
-		callback(responseJson);
-	}, null, () => {
-		return {
-			title: `Error in get coin info: <a target="_blank" href="${url}">${url}</a>`,
-		};
+const generateQRCode = (text, size) => {
+	return new QRCode(text, {
+		width: size,
+		height: size,
+		colorDark: '#000000',
+		colorLight: '#ffffff',
+		correctLevel: QRCode.CorrectLevel.H,
 	});
 };
 

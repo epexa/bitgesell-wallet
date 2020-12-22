@@ -9,13 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#add-new-address-btn',
 	);
 
-	newAddressQRcode = new QRCode($newAddressQrcode, {
-		width: 192,
-		height: 192,
-		colorDark: '#000000',
-		colorLight: '#ffffff',
-		correctLevel: QRCode.CorrectLevel.H,
-	});
+	newAddressQRcode = generateQRCode($newAddressQrcode, 192);
 
 	$addNewAddressBtn.addEventListener('click', () => {
 		newAddressGenerate();

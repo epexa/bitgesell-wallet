@@ -14,13 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	new BSN.Modal($qrCodeModal);
 	new BSN.Modal($importAddressModal);
 
-	const addressQRcode = new QRCode($addressQrcode, {
-		width: 256,
-		height: 256,
-		colorDark: '#000000',
-		colorLight: '#ffffff',
-		correctLevel: QRCode.CorrectLevel.H,
-	});
+	const addressQRcode = generateQRCode($addressQrcode, 256);
 
 	window.addEventButtons = () => {
 		$myAddressesTable.querySelectorAll('.qr-code-btn').forEach(($btn) => {
@@ -47,12 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
 				{ data: 'address', render: (data) => { return `<input type="text" class="form-control-plaintext form-control-sm offset-lg-3 col-lg-6 font-weight-bold address" value="${data}" readonly="">`; }, width: '42%', class: 'text-center desktop' },
 				{ data: 'balance', render: (data) => { return humanAmountFormat(data); }, class: 'text-center' },
 				{ data: 'input_count', class: 'text-center desktop' },
-				{ data: 'address', render: (row, display, column) => {
+				{ data: 'address', render: (data) => {
 					let btns = '';
-					btns += `<a class="btn btn-danger btn-sm mr-1" href="#send/${column.address}"><i class="icon icon-compass visible-sr"></i><span class="hidden-sr">Send</span></a>`;
-					btns += `<button class="btn btn-info btn-sm mr-1 qr-code-btn" data-address="${column.address}"><i class="icon icon-download visible-sr"></i><span class="hidden-sr">Receive</span></button>`;
-					btns += `<a class="btn btn-warning btn-sm mr-1" target="_blank" href="https://bgl.bitaps.com/${column.address}"><i class="icon icon-svg visible-sr"></i><span class="hidden-sr">Explorer</span></a>`;
-					btns += `<a class="btn btn-success btn-sm mr-1" href="#transactions/${column.address}"><i class="icon icon-insert-template visible-sr"></i><span class="hidden-sr">Transactions</span></a>`;
+					btns += `<a class="btn btn-danger btn-sm mr-1" href="#send/${data}"><i class="icon icon-compass visible-sr"></i><span class="hidden-sr">Send</span></a>`;
+					btns += `<button class="btn btn-info btn-sm mr-1 qr-code-btn" data-address="${data}"><i class="icon icon-download visible-sr"></i><span class="hidden-sr">Receive</span></button>`;
+					btns += `<a class="btn btn-warning btn-sm mr-1" target="_blank" href="https://bgl.bitaps.com/${data}"><i class="icon icon-svg visible-sr"></i><span class="hidden-sr">Explorer</span></a>`;
+					btns += `<a class="btn btn-success btn-sm mr-1" href="#transactions/${data}"><i class="icon icon-insert-template visible-sr"></i><span class="hidden-sr">Transactions</span></a>`;
 					return btns;
 				}, class: 'text-right' },
 			],
