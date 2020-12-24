@@ -37,6 +37,7 @@ lib/sweetalert2.min.js \
 lib/qrcode.js \
 lib/satoshi-bitcoin.js \
 lib/aes4js.min.js \
+lib/dayjs.min.js \
 $DIST_FOLDER/app.js \
 -c drop_console=true,toplevel=true -m toplevel=true -o $DIST_FOLDER/app.min.js &&
 

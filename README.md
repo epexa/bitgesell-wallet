@@ -90,6 +90,7 @@ It also has a desktop version (desktop-app) for Linux, macOS, Windows and a mobi
 | Bootswatch | [GitHub](https://github.com/thomaspark/bootswatch) | [jsDelivr](https://www.jsdelivr.com/package/npm/bootswatch?path=dist%2Fflatly) | 4.5.3 |
 | Native JavaScript for Bootstrap | [GitHub](https://github.com/thednp/bootstrap.native) | [jsDelivr](https://www.jsdelivr.com/package/npm/bootstrap.native?path=dist) | 3.0.14
 | SweetAlert2 | [GitHub](https://github.com/sweetalert2/sweetalert2) | [jsDelivr](https://www.jsdelivr.com/package/npm/sweetalert2?path=dist) | 10.10.1
+| Day.js | [GitHub](https://github.com/iamkun/dayjs) | [jsDelivr](https://www.jsdelivr.com/package/npm/dayjs) | 1.8.11
 | DataTables | [GitHub](https://github.com/DataTables/DataTablesSrc) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net?path=js) | 1.10.22
 | DataTables Bootstrap 4 | [GitHub](https://github.com/DataTables/Dist-DataTables-Bootstrap4) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net-bs4) | 1.10.22
 | DataTables Responsive Bootstrap 4 | [GitHub](https://github.com/DataTables/Responsive) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net-responsive?path=js) | 2.2.6
