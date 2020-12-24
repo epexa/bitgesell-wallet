@@ -53,10 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
 			fnDrawCallback: addEventButtons,
 		})
 	)
-			.on('responsive-display', function(e, datatable, row, showHide) {
+			.on('responsive-display', (e, datatable, row, showHide) => {
 				if (showHide) {
-					const $subRow = row.selector.rows[0].nextElementSibling;
-					$subRow.querySelector('.address').addEventListener('click', (e) => copyToBuffer(e.target));
+					const $row = row.selector.rows[0];
+					if ($row) {
+						const $subRow = $row.nextElementSibling;
+						$subRow.querySelector('.address').addEventListener('click', (e) => copyToBuffer(e.target));
+					}
 				}
 			});
 
