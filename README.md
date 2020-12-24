@@ -1,7 +1,7 @@
 # Bitgesell Wallet
 
 ## About
-[Bitgesell](https://bitgesell.ca) Wallet - сross-platform wallet for BGL cryptocurrency!
+[Bitgesell](https://bitgesell.ca) Wallet - сross-platform wallet for BGL cryptocurrency.
 
 This is a modern serverless wallet.
 All work between the app and the blockchain (Node) conducts directly!
@@ -21,11 +21,19 @@ It also has a desktop version (desktop-app) for Linux, macOS, Windows and a mobi
 - ### Web: https://app.bglwallet.io (domain is linked to GitHub Pages, we do not use our server to delivery frontend). Alternative: https://raw.githack.com/epexa/bitgesell-wallet-dist/master/
 - ### WebExtensions (Chrome Extension): https://chrome.google.com/webstore/detail/bitgesell-wallet/pncbphpmaelhiladbdaapmpcchknnpdb
 - ### Linux (Snap): https://snapcraft.io/bitgesell-wallet
-- ### Linux (AppImage): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.1/Bitgesell-Wallet-0.9.1.AppImage
-- ### Linux (deb): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.1/bitgesell-wallet_0.9.1_amd64.deb
-- ### Windows: https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.1/Bitgesell-Wallet-Setup-0.9.1.exe
-- ### Windows (portable): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.1/Bitgesell-Wallet-portable.exe
+- ### Linux (AppImage): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.2/Bitgesell-Wallet-0.9.2.AppImage
+- ### Linux (deb): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.2/bitgesell-wallet_0.9.2_amd64.deb
+- ### Windows: https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.2/Bitgesell-Wallet-Setup-0.9.2.exe
+- ### Windows (portable): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.2/Bitgesell-Wallet-portable.exe
 - ### Android: https://play.google.com/store/apps/details?id=io.bglwallet
+- ### Android (APK): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.2/Bitgesell-Wallet-0.9.2.apk
+
+------------
+
+## Additional repo
+- Dist repo for run wallet from browser https://github.com/epexa/bitgesell-wallet-dist
+- Electron repo for OS desktop wallet builds https://github.com/epexa/bitgesell-wallet-desktop-app
+- Pre-landing repo for beautiful all links https://github.com/epexa/bglwallet.io
 
 ------------
 
