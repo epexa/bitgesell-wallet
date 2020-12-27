@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	window.myAddressesTableDraw = () => {
 		const myAddressesData = [];
+		const addresses = [];
 		let countAddresses = 0;
 		for (const [ key, value ] of Object.entries(storage.addresses)) {
 			countAddresses++;
@@ -74,17 +75,18 @@ document.addEventListener('DOMContentLoaded', () => {
 				input_count: value.input_count,
 				balance: value.balance,
 			});
+			addresses.push(key);
 		}
 		myAddressesTable.clear();
 		myAddressesTable.rows.add(myAddressesData);
 		myAddressesTable.draw(false);
 
-		myAddressesTable.rows().every((index) => {
-			const row = myAddressesTable.row(index);
-			const data = row.data();
-			getAddressBalance(data.address, (apiAddressBalance) => {
-				data.balance = apiAddressBalance.balance;
-				data.input_count = apiAddressBalance.sentTxCount;
+		getAddressesBalance(addresses, (apiAddressesBalance) => {
+			myAddressesTable.rows().every((index) => {
+				const row = myAddressesTable.row(index);
+				const data = row.data();
+				data.balance = apiAddressesBalance[data.address].confirmed;
+				data.input_count = apiAddressesBalance[data.address].sentTxCount;
 				row.data(data);
 				addEventButtons();
 				storage.addresses[data.address].balance = data.balance;

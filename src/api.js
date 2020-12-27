@@ -1,3 +1,5 @@
+const explorerApi = 'https://api.bitaps.com/bgl/v1/blockchain';
+
 const fetchQuery = (url, callback, fetchParams = null, errorFunc = null) => {
 	fetch(url, fetchParams)
 			.then((response) => { return response.json(); })
@@ -42,7 +44,7 @@ const fetchQuery = (url, callback, fetchParams = null, errorFunc = null) => {
 };
 
 const getAddressInfo = (address, callback) => {
-	const url = `https://api.bitaps.com/bgl/v1/blockchain/address/transactions/${address}`;
+	const url = `${explorerApi}/address/transactions/${address}`;
 	fetchQuery(url, (responseJson) => {
 		callback(responseJson.data);
 	}, null, () => {
@@ -52,8 +54,8 @@ const getAddressInfo = (address, callback) => {
 	});
 };
 
-const getAddressBalance = (address, callback) => {
-	const url = `https://api.bitaps.com/bgl/v1/blockchain/address/state/${address}`;
+/* const getAddressBalance = (address, callback) => {
+	const url = `${explorerApi}/address/state/${address}`;
 	fetchQuery(url, (responseJson) => {
 		callback(responseJson.data);
 	}, null, () => {
@@ -61,10 +63,21 @@ const getAddressBalance = (address, callback) => {
 			title: `Error in get address balance query: <a target="_blank" href="${url}">${url}</a>`,
 		};
 	});
+}; */
+
+const getAddressesBalance = (addresses, callback) => {
+	const url = `${explorerApi}/addresses/state/by/address?list=${addresses.join(',')}`;
+	fetchQuery(url, (responseJson) => {
+		callback(responseJson.data);
+	}, null, () => {
+		return {
+			title: `Error in get addresses balance query: <a target="_blank" href="${url}">${url}</a>`,
+		};
+	});
 };
 
 const getAddressUtxo = (address, callback) => {
-	const url = `https://api.bitaps.com/bgl/v1/blockchain/address/utxo/${address}`;
+	const url = `${explorerApi}/address/utxo/${address}`;
 	fetchQuery(url, (responseJson) => {
 		callback(responseJson.data);
 	}, null, () => {
