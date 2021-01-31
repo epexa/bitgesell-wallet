@@ -54,6 +54,17 @@ const getAddressInfo = (address, callback) => {
 	});
 };
 
+const getAddressUnconfirmedInfo = (address, callback) => {
+	const url = `${explorerApi}/address/unconfirmed/transactions/${address}`;
+	fetchQuery(url, (responseJson) => {
+		callback(responseJson.data);
+	}, null, () => {
+		return {
+			title: `Error in get address unconfirmed info query: <a target="_blank" href="${url}">${url}</a>`,
+		};
+	});
+};
+
 /* const getAddressBalance = (address, callback) => {
 	const url = `${explorerApi}/address/state/${address}`;
 	fetchQuery(url, (responseJson) => {

@@ -7,13 +7,25 @@ document.addEventListener('DOMContentLoaded', () => {
 	const transactionsTable = $('#transactions-table').DataTable(
 		$.extend({}, dataTableParams, {
 			columns: [
-				{ data: 'id', className: 'dtr-control' },
+				{ data: 'id', className: 'dtr-control', render: (row, display, column) => {
+					let $html = '<div class="d-flex align-items-baseline">';
+					$html += `<div class="flex-fill">${column.id}</div>`;
+					if (column.confirmations === '-') $html += `
+						<div class="flex-fill">
+							<div class="spinner-border spinner-border-sm" role="status">
+								<span class="sr-only">Loading...</span>
+							</div>
+						</div>
+					`;
+					$html += `</div>`;
+					return $html;
+				} },
 				{ data: 'timestamp', render: dateTimeFormat },
 				{ data: 'tx_id', render: (data) => { return `<input type="text" class="form-control-plaintext form-control-sm" value="${data}" readonly="">`; }, width: '30%', class: 'text-center desktop' },
-				{ data: 'type', render: (data) => {
+				{ data: 'amount', render: (data) => {
 					let className = 'danger';
 					let text = 'Sended';
-					if (data === 0) {
+					if (data > 0) {
 						className = 'success';
 						text = 'Received';
 					}
@@ -52,42 +64,54 @@ document.addEventListener('DOMContentLoaded', () => {
 	window.transactionsTableDraw = () => {
 		transactionsTable.clear();
 		transactionsTable.draw(false);
-		const address = window.location.hash.substring(14);
-		getAddressInfo(address, (apiAddressInfo) => {
-			const transactionsData = [];
+		const address = window.location.hash.substr(14, 43);
+		if (address) {
 			let countAddresses = 0;
-			apiAddressInfo.list = apiAddressInfo.list;
-			for (const key in apiAddressInfo.list) {
-				countAddresses++;
-				const value = apiAddressInfo.list[key];
-				transactionsData.push({
-					id: countAddresses,
-					type: value.addressInputs,
-					tx_id: value.txId,
-					timestamp: value.timestamp,
-					amount: value.amount,
-					confirmations: value.confirmations,
-					block_height: value.blockHeight,
-					rbf: value.rbf,
-					coinbase: value.coinbase,
-					fee: value.fee,
-				});
-			}
-			transactionsTable.rows.add(transactionsData);
-			transactionsTable.draw(false);
-		});
-	};
+			const transactionsData = [];
+			const addToTransactionData = (apiAddressInfo) => {
+				for (const key in apiAddressInfo.list) {
+					countAddresses++;
+					const value = apiAddressInfo.list[key];
+					transactionsData.push({
+						DT_RowClass: ! value.confirmations ? 'table-warning' : null,
+						id: countAddresses,
+						tx_id: value.txId,
+						timestamp: value.timestamp,
+						amount: value.amount,
+						confirmations: value.confirmations ? value.confirmations : '-',
+						block_height: value.blockHeight ? value.blockHeight : '-',
+						rbf: value.rbf,
+						coinbase: value.coinbase,
+						fee: value.fee,
+					});
+				}
+			};
+			getAddressUnconfirmedInfo(address, (apiAddressUnconfirmedInfo) => {
+				addToTransactionData(apiAddressUnconfirmedInfo);
+				getAddressInfo(address, (apiAddressInfo) => {
+					addToTransactionData(apiAddressInfo);
+					transactionsTable.rows.add(transactionsData);
+					transactionsTable.draw(false);
 
-	const hash = window.location.hash.substring(1, 13);
-	if (hash === 'transactions') {
-		window.scrollTo({ top: 0, behavior: 'smooth' });
-		transactionsTableDraw();
-	}
+					const isReload = window.location.hash.substr(-6) === 'reload' ? true : false;
+					if (apiAddressUnconfirmedInfo.list.length > 0) {
+						setTimeout(() => {
+							if ( ! isReload) transactionsTableDraw();
+							else window.location.hash = `transactions/${address}`;
+						}, 60000);
+					}
+					else if (isReload) setTimeout(() => transactionsTableDraw(), 3000);
+				});
+			});
+		}
+	};
 
 });
 
 window.navigateTransactions = () => {
 	hide($welcome, $dashboard, $newAddress, $send, $myAddresses, $setPassword, $mobileMenu);
 	show($main, $transactions);
-	transactionsTableDraw();
+	const address = window.location.hash.substring(14);
+	if (address) transactionsTableDraw();
+	else window.location.hash = locationDefault;
 };
