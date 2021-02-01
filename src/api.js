@@ -1,10 +1,11 @@
 const explorerApi = 'https://api.bitaps.com/bgl/v1/blockchain';
 
-const fetchQuery = (url, callback, fetchParams = null, errorFunc = null) => {
+const fetchQuery = (url, callback, fetchParams = null, errorFunc = null, callbackAlways = null) => {
 	fetch(url, fetchParams)
 			.then((response) => { return response.json(); })
 			.then((responseJson) => {
 				// console.log(responseJson);
+				if (callbackAlways) callbackAlways();
 				if ( ! responseJson.error && ! responseJson.error_code) callback(responseJson);
 				else {
 					let errorObj = {};
