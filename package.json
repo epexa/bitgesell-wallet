@@ -1,6 +1,6 @@
 {
   "name": "bitgesell-wallet",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "description": "Bitgesell Wallet JS",
   "homepage": "https://app.bglwallet.io",
   "bugs": "https://github.com/epexa/bitgesell-wallet/issues",
@@ -10,7 +10,7 @@
   "repository": "epexa/bitgesell-wallet",
   "config": {
     "IP": "127.0.0.1",
-    "PORT": "80",
+    "PORT": "8080",
     "DIST_FOLDER": "../bitgesell-wallet-dist"
   },
   "scripts": {

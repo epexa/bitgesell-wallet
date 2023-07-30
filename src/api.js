@@ -100,7 +100,7 @@ const getAddressUtxo = (address, callback) => {
 };
 
 const getCoinInfo = (callback) => {
-	const url = 'https://api.coingecko.com/api/v3/simple/price?ids=bitgesell&vs_currencies=usd&include_24hr_change=true';
+	const url = 'https://api.bglwallet.io/price';
 	fetchQuery(url, (responseJson) => {
 		callback(responseJson);
 	}, null, () => {

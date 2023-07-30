@@ -2,7 +2,7 @@
   "metadata": {
     "name": "wallet",
     "lastOpened": 0,
-    "created": 1606890550512
+    "created": 1690134314218
   },
   "iconSets": [
     {
@@ -89,7 +89,7 @@
           "order": 18,
           "prevSize": 32,
           "code": 59660,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "ligatures": "image, picture",
@@ -224,7 +224,7 @@
           "order": 7,
           "prevSize": 32,
           "code": 59682,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "ligatures": "profile, file2",
@@ -461,7 +461,7 @@
           "order": 6,
           "prevSize": 32,
           "code": 59721,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "ligatures": "compass2, direction2",
@@ -602,7 +602,7 @@
           "order": 10,
           "prevSize": 32,
           "code": 59744,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "ligatures": "upload, load",
@@ -1151,7 +1151,7 @@
           "order": 15,
           "prevSize": 32,
           "code": 59835,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "ligatures": "tree, branches",
@@ -1850,7 +1850,10 @@
           "ligatures": "loop2, repeat2",
           "name": "loop2",
           "id": 302,
-          "order": 0
+          "order": 19,
+          "prevSize": 32,
+          "code": 59950,
+          "tempChar": ""
         },
         {
           "ligatures": "infinite",
@@ -2261,7 +2264,7 @@
           "order": 16,
           "prevSize": 32,
           "code": 60018,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "ligatures": "pilcrow, wysiwyg21",
@@ -2984,7 +2987,7 @@
           "order": 11,
           "prevSize": 32,
           "code": 60137,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "ligatures": "IcoMoon, icomoon",
@@ -11473,7 +11476,7 @@
           "name": "db",
           "prevSize": 32,
           "code": 59648,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 1,
@@ -11481,7 +11484,7 @@
           "name": "credit-card",
           "prevSize": 32,
           "code": 59649,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 1,
@@ -11489,7 +11492,7 @@
           "name": "key",
           "prevSize": 32,
           "code": 59650,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 1,
@@ -11497,7 +11500,7 @@
           "name": "signout",
           "prevSize": 32,
           "code": 59651,
-          "tempChar": ""
+          "tempChar": ""
         }
       ],
       "id": 0,
@@ -11602,7 +11605,6 @@
       "colorThemes": []
     }
   ],
-  "uid": -1,
   "preferences": {
     "showGlyphs": true,
     "showCodes": true,
@@ -11636,5 +11638,6 @@
       "bgColor": 16777215
     },
     "historySize": 50
-  }
+  },
+  "uid": -1
 }

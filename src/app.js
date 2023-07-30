@@ -1,5 +1,6 @@
 jsbtc.asyncInit(window);
 
+const version = '0.9.6';
 const locationDefault = 'dashboard';
 
 let storage = { // eslint-disable-line prefer-const
@@ -132,8 +133,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	};
 
 	getCoinInfo((coinInfo) => {
-		coinPrice.price = coinInfo.bitgesell.usd;
-		coinPrice.change = coinInfo.bitgesell.usd_24h_change.toFixed(1);
+		coinPrice.price = coinInfo.data.price;
+		coinPrice.change = coinInfo.data.percentChange24h;
 		if (needConvertPrice()) convertPrice();
 	});
 
@@ -178,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		else $prevTheme.setAttribute('disabled', '');
 		if ($themeVal.selectedIndex < $themeVal.length - 1) $nextTheme.removeAttribute('disabled');
 		else $nextTheme.setAttribute('disabled', '');
-		geckoCome(true);
 	});
 
 	$prevTheme.addEventListener('click', () => {
@@ -199,6 +199,16 @@ document.addEventListener('DOMContentLoaded', () => {
 		trigger($themeVal, 'change');
 	}
 	else $themeVal.value = 'flatly';
+
+	const currentYear = new Date().getFullYear();
+
+	document.querySelectorAll('.current-year').forEach(($currentYear) => {
+		$currentYear.innerText = currentYear;
+	});
+
+	document.querySelectorAll('.version').forEach(($version) => {
+		$version.innerText = version;
+	});
 
 });
 

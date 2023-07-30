@@ -21,12 +21,12 @@ It also has a desktop version (desktop-app) for Linux, macOS, Windows and a mobi
 - ### Web: https://app.bglwallet.io (domain is linked to GitHub Pages, we do not use our server to delivery frontend). Alternative: https://raw.githack.com/epexa/bitgesell-wallet-dist/master/
 - ### WebExtensions (Chrome Extension): https://chrome.google.com/webstore/detail/bitgesell-wallet/pncbphpmaelhiladbdaapmpcchknnpdb
 - ### Linux (Snap): https://snapcraft.io/bitgesell-wallet
-- ### Linux (AppImage): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.5/Bitgesell-Wallet-0.9.5.AppImage
-- ### Linux (deb): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.5/bitgesell-wallet_0.9.5_amd64.deb
-- ### Windows: https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.5/Bitgesell-Wallet-Setup-0.9.5.exe
-- ### Windows (portable): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.5/Bitgesell-Wallet-portable.exe
+- ### Linux (AppImage): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.6/Bitgesell-Wallet-0.9.6.AppImage
+- ### Linux (deb): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.6/bitgesell-wallet_0.9.6_amd64.deb
+- ### Windows: https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.6/Bitgesell-Wallet-Setup-0.9.6.exe
+- ### Windows (portable): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.6/Bitgesell-Wallet-portable.exe
 - ### Android: https://play.google.com/store/apps/details?id=io.bglwallet
-- ### Android (APK): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.5/Bitgesell-Wallet-0.9.5.apk
+- ### Android (APK): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.6/Bitgesell-Wallet-0.9.6.apk
 
 ------------
 
