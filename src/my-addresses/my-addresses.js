@@ -6,13 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#save-qr-address',
 		'#bitgesell-address',
 		'#add-new-address-btn',
-		'#qr-code-modal',
 		'#import-address-btn',
 		'#import-address-modal',
 	);
 
-	new BSN.Modal($qrCodeModal);
-	new BSN.Modal($importAddressModal);
+	const importAddressModal = new bootstrap.Modal($importAddressModal);
 
 	const addressQRcode = generateQRCode($addressQrcode, 256);
 
@@ -23,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				addressQRcode.makeCode(`bgl:${$btn.dataset.address}`);
 				$saveQrAddress.href = $addressQrcode.querySelector('canvas').toDataURL('image/png').replace(/^data:image\/[^;]/, 'data:application/octet-stream');
 				$bitgesellAddress.value = $btn.dataset.address;
-				$qrCodeModal.Modal.show();
+				qrCodeModal.show();
 			});
 		});
 		$myAddressesTable.querySelectorAll('.address').forEach(($input) => {
@@ -35,20 +33,36 @@ document.addEventListener('DOMContentLoaded', () => {
 	};
 
 	window.myAddressesTable = $('#my-addresses-table').DataTable(
-		$.extend({}, dataTableParams, {
+		$.extend(dataTableParams, {
+			columnDefs: [
+				{
+					className: 'dtr-control',
+					orderable: false,
+					target: 0,
+				}
+			],
+			order: [ 1, 'asc' ],
+			responsive: {
+				details: {
+					type: 'column',
+					target: 'tr'
+				},
+			},
+		}, {
 			columns: [
+				{ render: () => { return null } },
 				{ data: 'id' },
-				{ data: 'address', render: (data) => { return `<input type="text" class="form-control-plaintext form-control-sm offset-lg-3 col-lg-6 font-weight-bold address" value="${data}" readonly="">`; }, width: '42%', class: 'text-center desktop' },
+				{ data: 'address', render: (data) => { return `<input type="text" class="form-control-plaintext form-control-sm offset-lg-3 col-lg-6 fw-bold address" value="${data}" readonly="">`; }, width: '42%', class: 'text-center desktop' },
 				{ data: 'balance', render: (data) => { return humanAmountFormat(data); }, class: 'text-center' },
 				{ data: 'input_count', class: 'text-center desktop' },
 				{ data: 'address', render: (data) => {
 					let btns = '';
-					btns += `<a class="btn btn-danger btn-sm mr-1" href="#send/${data}"><i class="icon icon-compass visible-sr"></i><span class="hidden-sr">Send</span></a>`;
-					btns += `<button class="btn btn-info btn-sm mr-1 qr-code-btn" data-address="${data}"><i class="icon icon-download visible-sr"></i><span class="hidden-sr">Receive</span></button>`;
-					btns += `<a class="btn btn-warning btn-sm mr-1" target="_blank" href="https://bgl.bitaps.com/${data}"><i class="icon icon-svg visible-sr"></i><span class="hidden-sr">Explorer</span></a>`;
-					btns += `<a class="btn btn-success btn-sm mr-1" href="#transactions/${data}"><i class="icon icon-insert-template visible-sr"></i><span class="hidden-sr">Transactions</span></a>`;
+					btns += `<a class="btn btn-danger btn-sm" href="#send/${data}"><i class="icon icon-compass visible-sr"></i><span class="hidden-sr">Send</span></a>`;
+					btns += `<button class="btn btn-info btn-sm qr-code-btn" data-address="${data}"><i class="icon icon-download visible-sr"></i><span class="hidden-sr">Receive</span></button>`;
+					btns += `<a class="btn btn-warning btn-sm" target="_blank" href="https://bgl.bitaps.com/${data}"><i class="icon icon-svg visible-sr"></i><span class="hidden-sr">Explorer</span></a>`;
+					btns += `<a class="btn btn-success btn-sm" href="#transactions/${data}"><i class="icon icon-insert-template visible-sr"></i><span class="hidden-sr">Transactions</span></a>`;
 					return btns;
-				}, class: 'text-right' },
+				}, class: 'd-flex justify-content-end grid gap-1' },
 			],
 			fnDrawCallback: addEventButtons,
 		})
@@ -104,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	$importAddressBtn.addEventListener('click', () => {
-		$importAddressModal.Modal.show();
+		importAddressModal.show();
 	});
 
 	formHandler($importAddressModal.querySelector('form'), (data) => {
@@ -117,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					input_count: 0,
 				};
 				saveToCryptoStorage();
-				$importAddressModal.Modal.hide();
+				importAddressModal.hide();
 				myAddressesTableDraw();
 				Swal.fire({
 					showCloseButton: true,

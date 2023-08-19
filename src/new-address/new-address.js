@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const newAddressGenerate = () => {
-	$qrCodeModal.Modal.hide();
+	qrCodeModal.hide();
 	window.scrollTo({ top: 0, behavior: 'smooth' });
 	const $form = $newAddress.querySelector('form');
 	$form.reset();

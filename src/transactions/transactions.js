@@ -5,9 +5,25 @@ document.addEventListener('DOMContentLoaded', () => {
 	);
 
 	const transactionsTable = $('#transactions-table').DataTable(
-		$.extend({}, dataTableParams, {
+		$.extend(dataTableParams, {
+			columnDefs: [
+				{
+					className: 'dtr-control',
+					orderable: false,
+					target: 0,
+				}
+			],
+			order: [ 1, 'asc' ],
+			responsive: {
+				details: {
+					type: 'column',
+					target: 'tr'
+				},
+			},
+		}, {
 			columns: [
-				{ data: 'id', className: 'dtr-control', render: (row, display, column) => {
+				{ render: () => { return null } },
+				{ data: 'id', render: (row, display, column) => {
 					let $html = '<div class="d-flex align-items-baseline">';
 					$html += `<div class="flex-fill">${column.id}</div>`;
 					if (column.confirmations === '-') $html += `
@@ -20,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					$html += `</div>`;
 					return $html;
 				} },
-				{ data: 'timestamp', render: dateTimeFormat },
+				{ data: 'timestamp', render: dateTimeFormat, className: 'desktop' },
 				{ data: 'tx_id', render: (data) => { return `<input type="text" class="form-control-plaintext form-control-sm" value="${data}" readonly="">`; }, width: '30%', class: 'text-center desktop' },
 				{ data: 'amount', render: (data) => {
 					let className = 'danger';
@@ -29,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 						className = 'success';
 						text = 'Received';
 					}
-					return `<span class="badge badge-${className}">${text}</span>`;
+					return `<span class="badge bg-${className}">${text}</span>`;
 				}, class: 'text-center' },
 				{ data: 'amount', render: humanAmountFormat },
 				{ data: 'confirmations', className: 'none' },
@@ -39,9 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
 				{ data: 'coinbase', className: 'none', render: (data) => { return data ? 'Yes' : 'No'; } },
 				{ data: 'tx_id', render: (data) => {
 					let btns = '';
-					btns += `<a class="btn btn-warning btn-sm mr-1" target="_blank" href="https://bgl.bitaps.com/${data}"><i class="icon icon-svg mr-1"></i>Explorer</a>`;
+					btns += `<a class="btn btn-warning btn-sm d-inline-flex" target="_blank" href="https://bgl.bitaps.com/${data}"><i class="icon icon-svg mt-1"></i><span class="hidden-sr ms-1">Explorer</span></a>`;
 					return btns;
-				}, class: 'text-right desktop' },
+				}, class: 'd-flex justify-content-end' },
 			],
 			fnDrawCallback: () => {
 				$transactionsTable.querySelectorAll('input').forEach(($input) => {

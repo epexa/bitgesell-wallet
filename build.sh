@@ -29,10 +29,10 @@ src/send/send.js \
 uglifyjs \
 lib/1-jquery.slim.min.js \
 lib/2-jquery.dataTables.min.js \
-lib/3-dataTables.bootstrap4.min.js \
+lib/3-dataTables.bootstrap5.min.js \
 lib/4-dataTables.responsive.min.js \
-lib/5-responsive.bootstrap.min.js \
-lib/bootstrap-native.min.js \
+lib/5-responsive.bootstrap5.min.js \
+lib/bootstrap.bundle.min.js \
 lib/sweetalert2.min.js \
 lib/qrcode.js \
 lib/satoshi-bitcoin.js \
@@ -61,8 +61,8 @@ src/login/login.html \
 
 cleancss \
 lib/sweetalert2.min.css \
-lib/dataTables.bootstrap4.min.css \
-lib/responsive.bootstrap4.min.css \
+lib/dataTables.bootstrap5.min.css \
+lib/responsive.bootstrap5.min.css \
 lib/icomoon.css \
 src/custom.css \
 -o $DIST_FOLDER/custom.min.css --skip-rebase

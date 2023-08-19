@@ -47,6 +47,8 @@ if (localStorage.cryptoStorage) {
 }
 else window.location.hash = 'welcome';
 
+let qrCodeModal;
+
 document.addEventListener('DOMContentLoaded', () => {
 
 	initHtmlElements(
@@ -76,16 +78,18 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.onselectstart = new Function('return false;');
 	// document.oncontextmenu = new Function('return false;');
 
+	qrCodeModal = new bootstrap.Modal('#qr-code-modal');
+
 	const $nodeAddressInput = $nodeAddress.querySelector('.form-control[name="node-address"]');
 
 	if (localStorage.nodeAddress) $nodeAddressInput.value = localStorage.nodeAddress;
 	else localStorage.nodeAddress = $nodeAddressInput.value;
 
-	new BSN.Modal($nodeAddressModal);
+	const nodeAddressModal = new bootstrap.Modal($nodeAddressModal);
 
 	document.querySelectorAll('.node-address-btn').forEach(($btn) => {
 		$btn.addEventListener('click', () => {
-			$nodeAddressModal.Modal.show();
+			nodeAddressModal.show();
 		});
 	});
 
@@ -147,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 
-	new BSN.Modal($themeModal);
+	const themeModal = new bootstrap.Modal($themeModal);
 
 	$themeModal.addEventListener('shown.bs.modal', () => {
 		$themeModal.querySelector('.form-control').focus();
@@ -155,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	document.querySelectorAll('.theme-btn').forEach(($btn) => {
 		$btn.addEventListener('click', () => {
-			$themeModal.Modal.show();
+			themeModal.show();
 			if (window.location.hash.substring(1) === 'mobile-menu') window.location.hash = 'my-addresses';
 		});
 	});
@@ -242,7 +246,7 @@ const humanAmountFormat = (amount) => {
 	let humanAmount = sb.toBitcoin(amount);
 	const needConvertPriceVal = needConvertPrice();
 	if (needConvertPriceVal) humanAmount = (humanAmount * coinPrice.price).toFixed(2);
-	return `<span class="font-weight-bold ${needConvertPriceVal ? `text-${coinPrice.change > 0 ? 'success' : 'danger'}" title="24 Hour Change: ${coinPrice.change}%` : ''}">${humanAmount}</span> ${needConvertPriceVal ? 'USD' : 'BGL'}`;
+	return `<span class="fw-bold ${needConvertPriceVal ? `text-${coinPrice.change > 0 ? 'success' : 'danger'}" title="24 Hour Change: ${coinPrice.change}%` : ''}">${humanAmount}</span> ${needConvertPriceVal ? 'USD' : 'BGL'}`;
 };
 
 const copyToBuffer = ($select) => {

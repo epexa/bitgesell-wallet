@@ -102,7 +102,7 @@ const calcAmountSpent = () => {
 		delete sendParams.newFromAmount;
 		hide($sendAmountPrice);
 	}
-	$sendFormBtn.innerHTML = `Send <span class="badge badge-info">${amountSpent > 0 ? sb.toBitcoin(amountSpent) : ''}</span> BGL`;
+	$sendFormBtn.innerHTML = `Send <span class="badge bg-info">${amountSpent > 0 ? sb.toBitcoin(amountSpent) : ''}</span> BGL`;
 
 	$sendAmountVal.classList.remove('is-invalid');
 	if (sendParams.fromAmount >= 0 && sendParams.toAmount >= 0) {
@@ -204,7 +204,7 @@ const send = () => {
 			showCloseButton: true,
 			icon: 'success',
 			title: 'Your transaction has been created!',
-			html: `<b class="text-danger">Transaction ID:</b><input type="text" class="form-control-plaintext form-control-sm font-weight-bold" value="${responseJson.result}" readonly="">It can take about an hour to process the transaction.`,
+			html: `<b class="text-danger">Transaction ID:</b><input type="text" class="form-control-plaintext form-control-sm fw-bold" value="${responseJson.result}" readonly="">It can take about an hour to process the transaction.`,
 			customClass: {
 				actions: 'btn-group',
 				confirmButton: 'btn btn-success btn-lg',
