@@ -1,6 +1,6 @@
 jsbtc.asyncInit(window);
 
-const version = '0.9.6';
+const version = '0.9.7';
 const locationDefault = 'dashboard';
 
 let storage = { // eslint-disable-line prefer-const
@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#welcome',
 		'#restore',
 		'#create-wallet',
+		'#export-wallet',
 		'#set-password',
 		'#login',
 		'#dashboard',
@@ -293,13 +294,16 @@ const themes = {
 		'lux',
 		'materia',
 		'minty',
+		'morph',
 		'pulse',
+		'quartz',
 		'sandstone',
 		'simplex',
 		'sketchy',
 		'spacelab',
 		'united',
 		'yeti',
+		'zephyr',
 	],
 	dark: [
 		'cyborg',
@@ -307,10 +311,11 @@ const themes = {
 		'slate',
 		'solar',
 		'superhero',
+		'vapor',
 	],
 };
 
 window.navigateMobileMenu = () => {
-	hide($dashboard, $myAddresses, $send, $setPassword, $welcome, $newAddress, $transactions, $createWallet);
+	hide($dashboard, $myAddresses, $send, $setPassword, $welcome, $newAddress, $transactions, $createWallet, $exportWallet);
 	show($main, $mobileMenu);
 };

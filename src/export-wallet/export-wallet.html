@@ -1,0 +1,20 @@
+<div class="d-none" id="export-wallet">
+	<div class="container col-md-4">
+		<div class="text-center my-4">
+			<h1 class="h3 mb-3 font-weight-normal">Export Wallet</h1>
+		</div>
+		<div class="my-4">
+			<h2 class="h4 mb-3 font-weight-normal">Backup Your Wallet</h2>
+			<h2 class="h5 mb-3 font-weight-normal">Your backup phrase will allow you to recover your crypto if you lose access to your wallet.</h2>
+		</div>
+		<form class="d-grid gap-3">
+			<div class="form-group">
+				<label for="export-phrase">Please write down these 24 words in order and keep them somwhere safe:</label>
+				<textarea class="form-control form-control-lg copy-val" id="export-phrase" name="export-phrase" rows="5" readonly="" required=""></textarea>
+			</div>
+			<h2 class="h5 mb-3 font-weight-normal text-danger">Never share it with anyone!</h2>
+			<a class="btn btn-info btn-lg" id="save-export-phrase" download="Bitgesell-backup-phrase.txt" href="#">Save seed words as file</a>
+			<button type="button" class="btn btn-danger btn-lg mt-5" id="export-wallet-btn">I've copied it somewhere safe</button>
+		</form>
+	</div>
+</div>

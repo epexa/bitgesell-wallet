@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				{ data: 'coinbase', className: 'none', render: (data) => { return data ? 'Yes' : 'No'; } },
 				{ data: 'tx_id', render: (data) => {
 					let btns = '';
-					btns += `<a class="btn btn-warning btn-sm d-inline-flex" target="_blank" href="https://bgl.bitaps.com/${data}"><i class="icon icon-svg mt-1"></i><span class="hidden-sr ms-1">Explorer</span></a>`;
+					btns += `<a class="btn btn-warning btn-sm d-inline-flex" target="_blank" href="https://bgl.bitaps.com/${data}"><i class="fa-solid fa-binoculars mt-1"></i><span class="hidden-sr ms-1">Explorer</span></a>`;
 					return btns;
 				}, class: 'd-flex justify-content-end' },
 			],

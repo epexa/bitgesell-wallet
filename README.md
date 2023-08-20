@@ -21,12 +21,12 @@ It also has a desktop version (desktop-app) for Linux, macOS, Windows and a mobi
 - ### Web: https://app.bglwallet.io (domain is linked to GitHub Pages, we do not use our server to delivery frontend). Alternative: https://raw.githack.com/epexa/bitgesell-wallet-dist/master/
 - ### WebExtensions (Chrome Extension): https://chrome.google.com/webstore/detail/bitgesell-wallet/pncbphpmaelhiladbdaapmpcchknnpdb
 - ### Linux (Snap): https://snapcraft.io/bitgesell-wallet
-- ### Linux (AppImage): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.6/Bitgesell-Wallet-0.9.6.AppImage
-- ### Linux (deb): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.6/bitgesell-wallet_0.9.6_amd64.deb
-- ### Windows: https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.6/Bitgesell-Wallet-Setup-0.9.6.exe
-- ### Windows (portable): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.6/Bitgesell-Wallet-portable.exe
+- ### Linux (AppImage): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.7/Bitgesell-Wallet-0.9.7.AppImage
+- ### Linux (deb): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.7/bitgesell-wallet_0.9.7_amd64.deb
+- ### Windows: https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.7/Bitgesell-Wallet-Setup-0.9.7.exe
+- ### Windows (portable): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.7/Bitgesell-Wallet-portable.exe
 - ### Android: https://play.google.com/store/apps/details?id=io.bglwallet
-- ### Android (APK): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.6/Bitgesell-Wallet-0.9.6.apk
+- ### Android (APK): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.7/Bitgesell-Wallet-0.9.7.apk
 
 ------------
 
@@ -49,7 +49,7 @@ It also has a desktop version (desktop-app) for Linux, macOS, Windows and a mobi
 - [x] responsive layout (mobile support)
 - [x] new wallet creation with mnemonic seed (24 words)
 - [x] restore wallet from mnemonic seed
-- [x] import address from WIF
+- [x] import address from WIF (private key)
 - [x] private keys are stored on user-side only
 - [x] storage encrypted with AES-GCM 256-bit
 - [x] generate receiving address
@@ -57,7 +57,7 @@ It also has a desktop version (desktop-app) for Linux, macOS, Windows and a mobi
 - [x] transactions list (with unconfirmed tx)
 - [x] show balances in USD
 - [x] specify Node RPC
-- [x] good UX & UI with 22 themes (17 light and 5 dark)
+- [x] good UX & UI with 26 themes (20 light and 6 dark)
 
 ------------
 
@@ -102,6 +102,7 @@ It also has a desktop version (desktop-app) for Linux, macOS, Windows and a mobi
 | DataTables Responsive | [GitHub](https://github.com/DataTables/Responsive) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net-responsive?path=js&tab=files) | 2.5.0
 | DataTables Responsive Bootstrap 5 | [GitHub](https://github.com/DataTables/Dist-DataTables-Responsive-Bootstrap4) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net-responsive-bs5?tab=files) | 2.5.0
 | jQuery slim (only for DataTables) | [GitHub](https://github.com/jquery/jquery) | [jsDelivr](https://www.jsdelivr.com/package/npm/jquery?path=dist&tab=files) | 3.7.0
+| Font Awesome | [GitHub](https://github.com/FortAwesome/Font-Awesome) | [jsDelivr](https://www.jsdelivr.com/package/npm/@fortawesome/fontawesome-free?tab=files&path=css) | 6.4.2
 
 ------------
 

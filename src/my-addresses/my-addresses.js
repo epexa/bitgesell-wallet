@@ -57,10 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
 				{ data: 'input_count', class: 'text-center desktop' },
 				{ data: 'address', render: (data) => {
 					let btns = '';
-					btns += `<a class="btn btn-danger btn-sm" href="#send/${data}"><i class="icon icon-compass visible-sr"></i><span class="hidden-sr">Send</span></a>`;
-					btns += `<button class="btn btn-info btn-sm qr-code-btn" data-address="${data}"><i class="icon icon-download visible-sr"></i><span class="hidden-sr">Receive</span></button>`;
-					btns += `<a class="btn btn-warning btn-sm" target="_blank" href="https://bgl.bitaps.com/${data}"><i class="icon icon-svg visible-sr"></i><span class="hidden-sr">Explorer</span></a>`;
-					btns += `<a class="btn btn-success btn-sm" href="#transactions/${data}"><i class="icon icon-insert-template visible-sr"></i><span class="hidden-sr">Transactions</span></a>`;
+					btns += `<a class="btn btn-danger btn-sm" href="#send/${data}"><i class="fa-solid fa-paper-plane visible-sr"></i><span class="hidden-sr">Send</span></a>`;
+					btns += `<button class="btn btn-info btn-sm qr-code-btn" data-address="${data}"><i class="fa-solid fa-download visible-sr"></i><span class="hidden-sr">Receive</span></button>`;
+					btns += `<a class="btn btn-warning btn-sm" target="_blank" href="https://bgl.bitaps.com/${data}"><i class="fa-solid fa-binoculars visible-sr"></i><span class="hidden-sr">Explorer</span></a>`;
+					btns += `<a class="btn btn-success btn-sm" href="#transactions/${data}"><i class="fa-solid fa-circle-nodes visible-sr"></i><span class="hidden-sr">Transactions</span></a>`;
 					return btns;
 				}, class: 'd-flex justify-content-end grid gap-1' },
 			],

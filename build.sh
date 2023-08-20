@@ -17,6 +17,7 @@ src/app.js \
 src/login/login.js \
 src/welcome/welcome.js \
 src/create-wallet/create-wallet.js \
+src/export-wallet/export-wallet.js \
 src/set-password/set-password.js \
 src/restore/restore.js \
 src/my-addresses/my-addresses.js \
@@ -54,6 +55,7 @@ src/send/send.html \
 src/footer.html \
 src/welcome/welcome.html \
 src/create-wallet/create-wallet.html \
+src/export-wallet/export-wallet.html \
 src/restore/restore.html \
 src/set-password/set-password.html \
 src/login/login.html \
@@ -63,6 +65,7 @@ cleancss \
 lib/sweetalert2.min.css \
 lib/dataTables.bootstrap5.min.css \
 lib/responsive.bootstrap5.min.css \
-lib/icomoon.css \
+lib/fontawesome.min.css \
+lib/fontawesome.solid.min.css \
 src/custom.css \
 -o $DIST_FOLDER/custom.min.css --skip-rebase

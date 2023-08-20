@@ -10,6 +10,7 @@ const htmlFiles = [
 	'welcome/welcome',
 	'restore/restore',
 	'create-wallet/create-wallet',
+	'export-wallet/export-wallet',
 	'set-password/set-password',
 	'login/login',
 ];

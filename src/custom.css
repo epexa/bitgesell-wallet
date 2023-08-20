@@ -28,6 +28,9 @@ footer {
   width: 100%;
 }
 
+table.dataTable.collapsed>tbody>tr {
+  cursor: pointer;
+}
 table.dataTable>tbody>tr.child ul.dtr-details {
   display: block;
 }
@@ -75,3 +78,23 @@ table.dataTable>tbody>tr.child ul.dtr-details>li {
 #mobile-menu .list-group  {
   width: 100%;
 }
+
+/*:root {
+  --clr-main: #6c757d;
+  --clr-hover: #0d6efd;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  color: var(--clr-hover) !important;
+}
+
+.nav-link {
+  color: var(--clr-main) !important;
+  padding-top: 12px !important;
+  padding-bottom: 0 !important;
+  width: 80px;
+}
+
+.nav-link i {
+  transform: scale(1.6);
+} */
