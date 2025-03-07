@@ -10,6 +10,7 @@ const fetchQuery = (url, callback, fetchParams = null, errorFunc = null, callbac
 				else {
 					let errorObj = {};
 					if (errorFunc) errorObj = errorFunc(responseJson);
+					if (errorObj === false) return;
 					if ( ! errorObj.title) errorObj.title = `Error in response HTTP query to: <a target="_blank" href="${url}">${url}</a>`;
 					if ( ! errorObj.message) errorObj.message = responseJson.error ? responseJson.error : responseJson.message;
 					const swalParams = {
@@ -28,7 +29,8 @@ const fetchQuery = (url, callback, fetchParams = null, errorFunc = null, callbac
 				}
 			})
 			.catch((error) => {
-				if (error == 'TypeError: Failed to fetch') error += '<br><br>Maybe it is CORS! Check please <a class="btn btn-sm btn-info" target="_blank" href="https://github.com/epexa/bitgesell-wallet-dist/blob/master/CORS.md#cors">manual here.</a>';
+				if (callbackAlways) callbackAlways();
+				if (error.message === 'Failed to fetch') error += '<br><br>Maybe it is CORS! Check please <a class="btn btn-sm btn-info" target="_blank" href="https://github.com/epexa/bitgesell-wallet-dist/blob/master/CORS.md#cors">manual here.</a>';
 				Swal.fire({
 					showCloseButton: true,
 					icon: 'error',
@@ -99,11 +101,19 @@ const getAddressUtxo = (address, callback) => {
 	});
 };
 
+const coinInfoFetchParams = {};
+
+if (isTwa) {
+	const normalize = (str) => btoa(unescape(encodeURIComponent(str))).split('').reverse().join('');
+	coinInfoFetchParams.headers = {};
+	coinInfoFetchParams.headers['X-Telegram-Bot-Api-Secret-Token'] = normalize(getTelegramData());
+}
+
 const getCoinInfo = (callback) => {
 	const url = 'https://api.bglwallet.io/price';
 	fetchQuery(url, (responseJson) => {
 		callback(responseJson);
-	}, null, () => {
+	}, coinInfoFetchParams, () => {
 		return {
 			title: `Error in get coin info: <a target="_blank" href="${url}">${url}</a>`,
 		};

@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			$btn.addEventListener('click', () => {
 				addressQRcode.clear();
 				addressQRcode.makeCode(`bgl:${$btn.dataset.address}`);
-				$saveQrAddress.href = $addressQrcode.querySelector('canvas').toDataURL('image/png').replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+				$saveQrAddress.href = $addressQrcode.querySelector('canvas').toDataURL('image/png').replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
 				$bitgesellAddress.value = $btn.dataset.address;
 				qrCodeModal.show();
 			});
@@ -32,49 +32,47 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	};
 
+	const optionsButtonHtml = (address) => (
+		`<a class="btn btn-danger btn-sm" href="#send/${address}"><i class="fa-solid fa-paper-plane visible-sr"></i><span class="hidden-sr">Send</span></a>` +
+		`<button class="btn btn-info btn-sm qr-code-btn" data-address="${address}"><i class="fa-solid fa-download visible-sr"></i><span class="hidden-sr">Receive</span></button>` +
+		`<a class="btn btn-warning btn-sm" target="_blank" href="https://bgl.bitaps.com/${address}"><i class="fa-solid fa-binoculars visible-sr"></i><span class="hidden-sr">Explorer</span></a>` +
+		`<a class="btn btn-success btn-sm" href="#transactions/${address}"><i class="fa-solid fa-circle-nodes visible-sr"></i><span class="hidden-sr">Transactions</span></a>`
+	);
+
 	window.myAddressesTable = $('#my-addresses-table').DataTable(
 		$.extend(dataTableParams, {
 			columnDefs: [
 				{
 					className: 'dtr-control',
 					orderable: false,
-					target: 0,
-				}
+					targets: 0,
+				},
 			],
 			order: [ 1, 'asc' ],
 			responsive: {
 				details: {
 					type: 'column',
-					target: 'tr'
+					target: 'tr',
 				},
 			},
 		}, {
 			columns: [
-				{ render: () => { return null } },
+				{ render: () => { return null; } },
 				{ data: 'id' },
-				{ data: 'address', render: (data) => { return `<input type="text" class="form-control-plaintext form-control-sm offset-lg-3 col-lg-6 fw-bold address" value="${data}" readonly="">`; }, width: '42%', class: 'text-center desktop' },
-				{ data: 'balance', render: (data) => { return humanAmountFormat(data); }, class: 'text-center' },
-				{ data: 'input_count', class: 'text-center desktop' },
-				{ data: 'address', render: (data) => {
-					let btns = '';
-					btns += `<a class="btn btn-danger btn-sm" href="#send/${data}"><i class="fa-solid fa-paper-plane visible-sr"></i><span class="hidden-sr">Send</span></a>`;
-					btns += `<button class="btn btn-info btn-sm qr-code-btn" data-address="${data}"><i class="fa-solid fa-download visible-sr"></i><span class="hidden-sr">Receive</span></button>`;
-					btns += `<a class="btn btn-warning btn-sm" target="_blank" href="https://bgl.bitaps.com/${data}"><i class="fa-solid fa-binoculars visible-sr"></i><span class="hidden-sr">Explorer</span></a>`;
-					btns += `<a class="btn btn-success btn-sm" href="#transactions/${data}"><i class="fa-solid fa-circle-nodes visible-sr"></i><span class="hidden-sr">Transactions</span></a>`;
-					return btns;
-				}, class: 'd-flex justify-content-end grid gap-1' },
+				{ data: 'address', render: (data) => (`<input type="text" class="form-control-plaintext form-control-sm offset-lg-3 col-lg-6 fw-bold address" value="${data}" readonly="">`), width: '42%', className: 'text-center desktop' },
+				{ data: 'balance', render: humanAmountFormat, className: 'text-center' },
+				{ data: 'input_count', className: 'text-center desktop' },
+				{ data: 'address', render: optionsButtonHtml, className: 'd-flex justify-content-end grid gap-1' },
 			],
-			fnDrawCallback: addEventButtons,
-		})
+			drawCallback: addEventButtons,
+		}),
 	)
 			.on('responsive-display', (e, datatable, row, showHide) => {
-				if (showHide) {
-					const $row = row.selector.rows[0];
-					if ($row) {
-						const $subRow = $row.nextElementSibling;
-						$subRow.querySelector('.address').addEventListener('click', (e) => copyToBuffer(e.target));
-					}
-				}
+				if ( ! showHide) return;
+				const $row = row.selector.rows[0];
+				if ( ! $row) return;
+				const $subRow = $row.nextElementSibling;
+				$subRow.querySelector('.address').addEventListener('click', (e) => copyToBuffer(e.target));
 			});
 
 	window.myAddressesTableDraw = () => {
@@ -122,42 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	formHandler($importAddressModal.querySelector('form'), (data) => {
-		if (isWifValid(data.wif)) {
-			const address = new Address(data.wif);
-			if ( ! storage.addresses[address.address]) {
-				storage.addresses[address.address] = {
-					private: data.wif,
-					balance: 0,
-					input_count: 0,
-				};
-				saveToCryptoStorage();
-				importAddressModal.hide();
-				myAddressesTableDraw();
-				Swal.fire({
-					showCloseButton: true,
-					icon: 'success',
-					title: 'Your address is imported!',
-					customClass: {
-						confirmButton: 'btn btn-success btn-lg',
-					},
-					confirmButtonText: 'Nice!',
-				});
-			}
-			else {
-				Swal.fire({
-					showCloseButton: true,
-					icon: 'error',
-					title: 'This address has already been imported!',
-					customClass: {
-						cancelButton: 'btn btn-danger btn-lg',
-					},
-					showConfirmButton: false,
-					showCancelButton: true,
-					cancelButtonText: 'Ok',
-				});
-			}
-		}
-		else {
+		if ( ! jsbgl.isWifValid(data.wif)) {
 			Swal.fire({
 				showCloseButton: true,
 				icon: 'error',
@@ -170,7 +133,43 @@ document.addEventListener('DOMContentLoaded', () => {
 				showCancelButton: true,
 				cancelButtonText: 'Ok',
 			});
+			return;
 		}
+
+		const address = new jsbgl.Address(data.wif);
+
+		if (storage.addresses[address.address]) {
+			Swal.fire({
+				showCloseButton: true,
+				icon: 'error',
+				title: 'This address has already been imported!',
+				customClass: {
+					cancelButton: 'btn btn-danger btn-lg',
+				},
+				showConfirmButton: false,
+				showCancelButton: true,
+				cancelButtonText: 'Ok',
+			});
+			return;
+		}
+
+		storage.addresses[address.address] = {
+			private: data.wif,
+			balance: 0,
+			input_count: 0,
+		};
+		saveToCryptoStorage();
+		importAddressModal.hide();
+		myAddressesTableDraw();
+		Swal.fire({
+			showCloseButton: true,
+			icon: 'success',
+			title: 'Your address is imported!',
+			customClass: {
+				confirmButton: 'btn btn-success btn-lg',
+			},
+			confirmButtonText: 'Nice!',
+		});
 	});
 
 });

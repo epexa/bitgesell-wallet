@@ -10,19 +10,19 @@ document.addEventListener('DOMContentLoaded', () => {
 				{
 					className: 'dtr-control',
 					orderable: false,
-					target: 0,
-				}
+					targets: 0,
+				},
 			],
 			order: [ 1, 'asc' ],
 			responsive: {
 				details: {
 					type: 'column',
-					target: 'tr'
+					target: 'tr',
 				},
 			},
 		}, {
 			columns: [
-				{ render: () => { return null } },
+				{ render: () => { return null; } },
 				{ data: 'id', render: (row, display, column) => {
 					let $html = '<div class="d-flex align-items-baseline">';
 					$html += `<div class="flex-fill">${column.id}</div>`;
@@ -36,8 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
 					$html += `</div>`;
 					return $html;
 				} },
-				{ data: 'timestamp', render: dateTimeFormat, className: 'desktop' },
-				{ data: 'tx_id', render: (data) => { return `<input type="text" class="form-control-plaintext form-control-sm" value="${data}" readonly="">`; }, width: '30%', class: 'text-center desktop' },
+				{ data: 'timestamp', render: dateTimeFormat, className: 'text-center desktop' },
+				{ data: 'tx_id', render: (data) => (`<input type="text" class="form-control-plaintext form-control-sm" value="${data}" readonly="">`), width: '30%', className: 'text-center desktop' },
 				{ data: 'amount', render: (data) => {
 					let className = 'danger';
 					let text = 'Sended';
@@ -46,80 +46,76 @@ document.addEventListener('DOMContentLoaded', () => {
 						text = 'Received';
 					}
 					return `<span class="badge bg-${className}">${text}</span>`;
-				}, class: 'text-center' },
+				}, className: 'text-center' },
 				{ data: 'amount', render: humanAmountFormat },
 				{ data: 'confirmations', className: 'none' },
 				{ data: 'block_height', className: 'none' },
 				{ data: 'fee', className: 'none', render: humanAmountFormat },
-				{ data: 'rbf', className: 'none', render: (data) => { return data ? 'Yes' : 'No'; } },
-				{ data: 'coinbase', className: 'none', render: (data) => { return data ? 'Yes' : 'No'; } },
-				{ data: 'tx_id', render: (data) => {
-					let btns = '';
-					btns += `<a class="btn btn-warning btn-sm d-inline-flex" target="_blank" href="https://bgl.bitaps.com/${data}"><i class="fa-solid fa-binoculars mt-1"></i><span class="hidden-sr ms-1">Explorer</span></a>`;
-					return btns;
-				}, class: 'd-flex justify-content-end' },
+				{ data: 'rbf', className: 'none', render: (data) => (data ? 'Yes' : 'No') },
+				{ data: 'coinbase', className: 'none', render: (data) => (data ? 'Yes' : 'No') },
+				{ data: 'tx_id', render: (data) => (
+					`<a class="btn btn-warning btn-sm d-inline-flex" target="_blank" href="https://bgl.bitaps.com/${data}"><i class="fa-solid fa-binoculars mt-1"></i><span class="hidden-sr ms-1">Explorer</span></a>`
+				), className: 'd-flex justify-content-end' },
 			],
-			fnDrawCallback: () => {
+			drawCallback: () => {
 				$transactionsTable.querySelectorAll('input').forEach(($input) => {
 					$input.addEventListener('click', () => copyToBuffer($input));
 				});
 			},
-		})
+		}),
 	)
 			.on('responsive-display', (e, datatable, row, showHide) => {
-				if (showHide) {
-					const $row = row.selector.rows[0];
-					if ($row) {
-						const $subRow = $row.nextElementSibling;
-						const $input = $subRow.querySelector('input');
-						if ($input) $input.addEventListener('click', (e) => copyToBuffer(e.target));
-					}
-				}
+				if ( ! showHide) return;
+				const $row = row.selector.rows[0];
+				if ( ! $row) return;
+				const $subRow = $row.nextElementSibling;
+				const $input = $subRow.querySelector('input');
+				if ($input) $input.addEventListener('click', (e) => copyToBuffer(e.target));
 			});
 
 	window.transactionsTableDraw = () => {
 		transactionsTable.clear();
 		transactionsTable.draw(false);
 		const address = window.location.hash.substr(14, 43);
-		if (address) {
-			let countAddresses = 0;
-			const transactionsData = [];
-			const addToTransactionData = (apiAddressInfo) => {
-				for (const key in apiAddressInfo.list) {
-					countAddresses++;
-					const value = apiAddressInfo.list[key];
-					transactionsData.push({
-						DT_RowClass: ! value.confirmations ? 'table-warning' : null,
-						id: countAddresses,
-						tx_id: value.txId,
-						timestamp: value.timestamp,
-						amount: value.amount,
-						confirmations: value.confirmations ? value.confirmations : '-',
-						block_height: value.blockHeight ? value.blockHeight : '-',
-						rbf: value.rbf,
-						coinbase: value.coinbase,
-						fee: value.fee,
-					});
-				}
-			};
-			getAddressUnconfirmedInfo(address, (apiAddressUnconfirmedInfo) => {
-				addToTransactionData(apiAddressUnconfirmedInfo);
-				getAddressInfo(address, (apiAddressInfo) => {
-					addToTransactionData(apiAddressInfo);
-					transactionsTable.rows.add(transactionsData);
-					transactionsTable.draw(false);
+		if ( ! address) return;
 
-					const isReload = window.location.hash.substr(-6) === 'reload' ? true : false;
-					if (apiAddressUnconfirmedInfo.list.length > 0) {
-						setTimeout(() => {
-							if ( ! isReload) transactionsTableDraw();
-							else window.location.hash = `transactions/${address}`;
-						}, 60000);
-					}
-					else if (isReload) setTimeout(() => transactionsTableDraw(), 3000);
+		let countAddresses = 0;
+		const transactionsData = [];
+		const addToTransactionData = (apiAddressInfo) => {
+			for (const key in apiAddressInfo.list) {
+				countAddresses++;
+				const value = apiAddressInfo.list[key];
+				transactionsData.push({
+					DT_RowClass: ! value.confirmations ? 'table-warning' : null,
+					id: countAddresses,
+					tx_id: value.txId,
+					timestamp: value.timestamp,
+					amount: value.amount,
+					confirmations: value.confirmations ? value.confirmations : '-',
+					block_height: value.blockHeight ? value.blockHeight : '-',
+					rbf: value.rbf,
+					coinbase: value.coinbase,
+					fee: value.fee,
 				});
+			}
+		};
+		getAddressUnconfirmedInfo(address, (apiAddressUnconfirmedInfo) => {
+			addToTransactionData(apiAddressUnconfirmedInfo);
+			getAddressInfo(address, (apiAddressInfo) => {
+				addToTransactionData(apiAddressInfo);
+				transactionsTable.rows.add(transactionsData);
+				transactionsTable.draw(false);
+
+				const isReload = window.location.hash.substr(-6) === 'reload' ? true : false;
+				if (apiAddressUnconfirmedInfo.list.length > 0) {
+					setTimeout(() => {
+						if ( ! isReload) transactionsTableDraw();
+						else window.location.hash = `transactions/${address}`;
+					}, 60000);
+				}
+				else if (isReload) setTimeout(() => transactionsTableDraw(), 3000);
 			});
-		}
+		});
 	};
 
 });

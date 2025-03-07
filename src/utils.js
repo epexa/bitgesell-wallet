@@ -48,7 +48,6 @@ const formHandler = ($formName, callback) => {
 
 const dataTableParams = {
 	processing: true,
-	renderer: 'bootstrap',
 	pagingType: 'simple_numbers',
 	stateDuration: -1,
 	lengthChange: false,

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-npm test &&
+npm run eslint &&
 
 # DIST_FOLDER=$(node --eval="process.stdout.write(require('./package.json').config.DIST_FOLDER)")
 # DIST_FOLDER=$npm_package_config_DIST_FOLDER
@@ -13,6 +13,8 @@ cp -r public/* $DIST_FOLDER/ &&
 babel \
 src/utils.js \
 src/api.js \
+lib/telegram-web-app.js \
+src/1-twa.js \
 src/app.js \
 src/login/login.js \
 src/welcome/welcome.js \
@@ -29,7 +31,7 @@ src/send/send.js \
 
 uglifyjs \
 lib/1-jquery.slim.min.js \
-lib/2-jquery.dataTables.min.js \
+lib/2-dataTables.min.js \
 lib/3-dataTables.bootstrap5.min.js \
 lib/4-dataTables.responsive.min.js \
 lib/5-responsive.bootstrap5.min.js \
@@ -68,4 +70,4 @@ lib/responsive.bootstrap5.min.css \
 lib/fontawesome.min.css \
 lib/fontawesome.solid.min.css \
 src/custom.css \
--o $DIST_FOLDER/custom.min.css --skip-rebase
+-o $DIST_FOLDER/custom.min.css

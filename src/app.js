@@ -1,12 +1,15 @@
-jsbtc.asyncInit(window);
+const jsbgl = {};
+jsbtc.asyncInit(jsbgl);
 
-const version = '0.9.7';
+const version = '0.9.8';
 const locationDefault = 'dashboard';
 
 let storage = { // eslint-disable-line prefer-const
 	balance: 0,
 	addresses: {},
 };
+
+const tempStorage = {};
 
 const coinPrice = {
 	price: 0,
@@ -31,21 +34,10 @@ let localPassword;
 const saveToCryptoStorage = () => {
 	aes4js.encrypt(localPassword, JSON.stringify(storage))
 			.then((encrypted) => {
-				localStorage.iv = JSON.stringify(encrypted.iv);
-				localStorage.cryptoStorage = encrypted.encrypted.replace(encryptedMimeType, '');
+				setItem('iv', JSON.stringify(encrypted.iv));
+				setItem('cryptoStorage', encrypted.encrypted.replace(encryptedMimeType, ''));
 			});
 };
-
-if (localStorage.cryptoStorage) {
-	// start temp crutch for those who have used the wallet before
-	if ( ! localStorage.iv) {
-		storage = JSON.parse(localStorage.cryptoStorage);
-		window.location.hash = 'set-password';
-	}
-	// end temp crutch for those who have used the wallet before
-	else window.location.hash = 'login';
-}
-else window.location.hash = 'welcome';
 
 let qrCodeModal;
 
@@ -200,6 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	if (localStorage.theme) {
+		if ([ 'lux', 'quartz', 'morph', 'slate' ].indexOf(localStorage.theme) !== -1) localStorage.theme = 'flatly';
 		$themeVal.value = localStorage.theme;
 		trigger($themeVal, 'change');
 	}
@@ -220,26 +213,24 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
 	window.addEventListener('hashchange', () => {
 		const hash = window.location.hash.substring(1);
-		if (hash) {
-			const params = hash.split('/');
-			if (params[0]) {
-				const screenName = camelCase(`navigate-${params[0]}`); // navigateDashboard();
-				if (window[screenName]) window[screenName]();
-				else window.location.hash = locationDefault;
-				/* start highlight active link in apple mobile menu */
-				$appleMobileMenu.querySelectorAll('a').forEach(($li) => {
-					if (params[0] === $li.getAttribute('href').substring(1)) $li.classList.add('active');
-					else $li.classList.remove('active');
-				});
-				/* end highlight active link in apple mobile menu */
-			}
-		}
+		if ( ! hash) return;
+		const params = hash.split('/');
+		if ( ! params[0]) return;
+		const screenName = camelCase(`navigate-${params[0]}`); // navigateDashboard();
+		if (window[screenName]) window[screenName]();
+		else window.location.hash = locationDefault;
+		/* start highlight active link in apple mobile menu */
+		$appleMobileMenu.querySelectorAll('a').forEach(($li) => {
+			if (params[0] === $li.getAttribute('href').substring(1)) $li.classList.add('selected');
+			else $li.classList.remove('selected');
+		});
+		/* end highlight active link in apple mobile menu */
 	});
 	window.dispatchEvent(new CustomEvent('hashchange'));
 });
 
 const needConvertPrice = () => {
-	if (parseInt(localStorage.convertPrice) === 1) return true;
+	if (parseInt(localStorage.convertPrice, 10) === 1) return true;
 	else return false;
 };
 
@@ -291,12 +282,9 @@ const themes = {
 		'journal',
 		'litera',
 		'lumen',
-		'lux',
 		'materia',
 		'minty',
-		'morph',
 		'pulse',
-		'quartz',
 		'sandstone',
 		'simplex',
 		'sketchy',
@@ -308,14 +296,48 @@ const themes = {
 	dark: [
 		'cyborg',
 		'darkly',
-		'slate',
 		'solar',
 		'superhero',
 		'vapor',
 	],
 };
 
+const replacesInnerText = (...agrs) => {
+	agrs.slice(1).forEach(($elem) => $elem.innerText = $elem.innerText.replace(agrs[0], ''));
+};
+
+const downloadHrefValue = (value) => `data:text/plain;charset=utf-8,${encodeURIComponent(value)}`;
+
 window.navigateMobileMenu = () => {
 	hide($dashboard, $myAddresses, $send, $setPassword, $welcome, $newAddress, $transactions, $createWallet, $exportWallet);
 	show($main, $mobileMenu);
 };
+
+(async () => {
+	const cryptoStorage = await getItem('cryptoStorage');
+
+	if ( ! cryptoStorage) {
+		window.location.hash = 'welcome';
+		return;
+	}
+
+	tempStorage.cryptoStorage = cryptoStorage;
+
+	const iv = await getItem('iv');
+
+	/* start temp crutch for those who have used the wallet before */
+	if ( ! iv) {
+		tempStorage = JSON.parse(tempStorage.cryptoStorage);
+
+		if ( ! tempStorage.iv) {
+			window.location.hash = 'set-password';
+			return;
+		}
+	}
+	/* end temp crutch for those who have used the wallet before */
+
+	tempStorage.iv = JSON.parse(iv);
+
+	window.location.hash = 'login';
+
+})();

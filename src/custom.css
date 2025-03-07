@@ -1,31 +1,10 @@
-html {
-  position: relative;
-  min-height: 100%;
-}
-
 body {
-  margin-bottom: 80px !important;
-}
-
-header {
-  padding-bottom: 90px;
-}
-
-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+  margin-top: 30px !important;
+  margin-bottom: 90px !important;
 }
 
 .navbar-brand img {
   height: 28px;
-}
-
-.card {
-  width: max-content;
-}
-.card-full {
-  width: 100%;
 }
 
 table.dataTable.collapsed>tbody>tr {
@@ -36,6 +15,10 @@ table.dataTable>tbody>tr.child ul.dtr-details {
 }
 table.dataTable>tbody>tr.child ul.dtr-details>li {
   text-align: left !important;
+}
+table.dataTable.collapsed>tbody>tr>td.dtr-control,
+table.dataTable.collapsed>tbody>tr>th.dtr-control {
+  padding-top: .75rem !important;
 }
 
 #my-addresses-table input:focus {
@@ -75,26 +58,12 @@ table.dataTable>tbody>tr.child ul.dtr-details>li {
   }
 }
 
-#mobile-menu .list-group  {
-  width: 100%;
+.nav-pills .nav-link {
+  filter: saturate(0);
 }
-
-/*:root {
-  --clr-main: #6c757d;
-  --clr-hover: #0d6efd;
+.nav-pills .nav-link.selected {
+  filter: saturate(1);
 }
-
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-  color: var(--clr-hover) !important;
+.nav-pills .nav-link i {
+  transform: scale(1.5);
 }
-
-.nav-link {
-  color: var(--clr-main) !important;
-  padding-top: 12px !important;
-  padding-bottom: 0 !important;
-  width: 80px;
-}
-
-.nav-link i {
-  transform: scale(1.6);
-} */

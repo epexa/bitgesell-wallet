@@ -78,6 +78,8 @@ if (workDir === '/src/') {
 	app.use(express.static(`${__dirname}/public/`));
 	app.use(express.static(`${__dirname}/lib/`));
 
+	// pathJsFiles += templateJs('https://livejs.com/live.js');
+
 	app.get('/', (req, res) => {
 		let outputStr = '';
 		outputStr += pathCssFiles;
@@ -88,4 +90,6 @@ if (workDir === '/src/') {
 		res.setHeader('Content-Type', 'text/html');
 		res.send(outputStr);
 	});
+
+	app.get('/custom.min.css|app.min.js', (req, res) => res.send());
 }

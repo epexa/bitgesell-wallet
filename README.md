@@ -21,12 +21,13 @@ It also has a desktop version (desktop-app) for Linux, macOS, Windows and a mobi
 - ### Web: https://app.bglwallet.io (domain is linked to GitHub Pages, we do not use our server to delivery frontend). Alternative: https://raw.githack.com/epexa/bitgesell-wallet-dist/master/
 - ### WebExtensions (Chrome Extension): https://chrome.google.com/webstore/detail/bitgesell-wallet/pncbphpmaelhiladbdaapmpcchknnpdb
 - ### Linux (Snap): https://snapcraft.io/bitgesell-wallet
-- ### Linux (AppImage): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.7/Bitgesell-Wallet-0.9.7.AppImage
-- ### Linux (deb): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.7/bitgesell-wallet_0.9.7_amd64.deb
-- ### Windows: https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.7/Bitgesell-Wallet-Setup-0.9.7.exe
-- ### Windows (portable): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.7/Bitgesell-Wallet-portable.exe
+- ### Linux (AppImage): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.8/Bitgesell-Wallet-0.9.8.AppImage
+- ### Linux (deb): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.8/bitgesell-wallet_0.9.8_amd64.deb
+- ### Linux (pacman): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.8/bitgesell-wallet-0.9.8.pacman
+- ### Windows: https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.8/Bitgesell-Wallet-Setup-0.9.8.exe
+- ### Windows (portable): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.8/Bitgesell-Wallet-portable.exe
 - ### Android: https://play.google.com/store/apps/details?id=io.bglwallet
-- ### Android (APK): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.7/Bitgesell-Wallet-0.9.7.apk
+- ### Android (APK): https://github.com/epexa/bitgesell-wallet-desktop-app/releases/download/v0.9.8/Bitgesell-Wallet-0.9.8.apk
 
 ------------
 
@@ -64,7 +65,7 @@ It also has a desktop version (desktop-app) for Linux, macOS, Windows and a mobi
 ## Help environment
 
 - ### 1) PRE
-`npm install`
+`npm ci`
 
 - ### 2) DEVELOP
 1. `npm start`
@@ -90,19 +91,19 @@ It also has a desktop version (desktop-app) for Linux, macOS, Windows and a mobi
 ## This project uses JavaScript libraries
 | Name | GitHub | jsDelivr | Version |
 |------|--------|----------|---------|
-| jsbgl | [GitHub](https://github.com/bitaps-com/jsbgl) | [jsDelivr](https://www.jsdelivr.com/package/npm/jsbgl?path=dist) | 1.0.17
+| jsbgl | [GitHub](https://github.com/bitaps-com/jsbgl) | [jsDelivr](https://www.jsdelivr.com/package/npm/jsbgl?tab=files&path=dist) | 1.0.17
 | aes4js | [GitHub](https://github.com/rndme/aes4js) | [jsDelivr](https://www.jsdelivr.com/package/npm/aes4js?tab=files) | 1.0.0
 | satoshi-bitcoin | [GitHub](https://github.com/dawsbot/satoshi-bitcoin) | [jsDelivr](https://www.jsdelivr.com/package/npm/satoshi-bitcoin?tab=files) | 1.0.5
-| Bootstrap | [GitHub](https://github.com/twbs/bootstrap) | [jsDelivr](https://www.jsdelivr.com/package/npm/bootstrap?tab=files&path=dist) | 5.3.1
-| Bootswatch | [GitHub](https://github.com/thomaspark/bootswatch) | [jsDelivr](https://www.jsdelivr.com/package/npm/bootswatch?path=dist%2Fflatly) | 5.3.1 |
-| SweetAlert2 | [GitHub](https://github.com/sweetalert2/sweetalert2) | [jsDelivr](https://www.jsdelivr.com/package/npm/sweetalert2?path=dist) | 11.7.22
-| Day.js | [GitHub](https://github.com/iamkun/dayjs) | [jsDelivr](https://www.jsdelivr.com/package/npm/dayjs?tab=files) | 1.11.9
-| DataTables | [GitHub](https://github.com/DataTables/DataTablesSrc) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net?path=js&tab=files) | 1.13.6
-| DataTables Bootstrap 5 | [GitHub](https://github.com/DataTables/Dist-DataTables-Bootstrap5) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net-bs5?tab=files) | 1.13.6
-| DataTables Responsive | [GitHub](https://github.com/DataTables/Responsive) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net-responsive?path=js&tab=files) | 2.5.0
-| DataTables Responsive Bootstrap 5 | [GitHub](https://github.com/DataTables/Dist-DataTables-Responsive-Bootstrap4) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net-responsive-bs5?tab=files) | 2.5.0
-| jQuery slim (only for DataTables) | [GitHub](https://github.com/jquery/jquery) | [jsDelivr](https://www.jsdelivr.com/package/npm/jquery?path=dist&tab=files) | 3.7.0
-| Font Awesome | [GitHub](https://github.com/FortAwesome/Font-Awesome) | [jsDelivr](https://www.jsdelivr.com/package/npm/@fortawesome/fontawesome-free?tab=files&path=css) | 6.4.2
+| Bootstrap | [GitHub](https://github.com/twbs/bootstrap) | [jsDelivr](https://www.jsdelivr.com/package/npm/bootstrap?tab=files&path=dist) | 5.3.3
+| Bootswatch | [GitHub](https://github.com/thomaspark/bootswatch) | [jsDelivr](https://www.jsdelivr.com/package/npm/bootswatch?tab=files&path=dist%2Fflatly) | 5.3.3 |
+| SweetAlert2 | [GitHub](https://github.com/sweetalert2/sweetalert2) | [jsDelivr](https://www.jsdelivr.com/package/npm/sweetalert2?tab=files&path=dist) | 11.17.2
+| Day.js | [GitHub](https://github.com/iamkun/dayjs) | [jsDelivr](https://www.jsdelivr.com/package/npm/dayjs?tab=files) | 1.11.13
+| DataTables | [GitHub](https://github.com/DataTables/DataTablesSrc) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net?path=js&tab=files) | 2.2.2
+| DataTables Bootstrap 5 | [GitHub](https://github.com/DataTables/Dist-DataTables-Bootstrap5) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net-bs5?tab=files) | 2.2.2
+| DataTables Responsive | [GitHub](https://github.com/DataTables/Responsive) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net-responsive?path=js&tab=files) | 3.0.4
+| DataTables Responsive Bootstrap 5 | [GitHub](https://github.com/DataTables/Dist-DataTables-Responsive-Bootstrap4) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net-responsive-bs5?tab=files) | 3.0.4
+| jQuery slim (only for DataTables) | [GitHub](https://github.com/jquery/jquery) | [jsDelivr](https://www.jsdelivr.com/package/npm/jquery?path=dist&tab=files) | 3.7.1
+| Font Awesome | [GitHub](https://github.com/FortAwesome/Font-Awesome) | [jsDelivr](https://www.jsdelivr.com/package/npm/@fortawesome/fontawesome-free?tab=files&path=css) | 6.7.2
 
 ------------
 
@@ -121,13 +122,10 @@ Patches are welcome! If you would like to contribute, but don't know what to wor
 ## Donations
 
 If you'd like to buy me a beer, I won't complain. I will thank you! =)
-- BGL: [bgl1qlmzckh904vze03n0lwzptt5dkmvf2vj3ev4qm9](bgl:bgl1qlmzckh904vze03n0lwzptt5dkmvf2vj3ev4qm9)
-- BTC: [3HAx7GndxNCeri72xPbuaAyAJT8w2v5XGt](btc:3HAx7GndxNCeri72xPbuaAyAJT8w2v5XGt)
-- ETH: [0xa88DcEB0139A56f5b054d22212C0445aD984f685](ethereum:0xa88DcEB0139A56f5b054d22212C0445aD984f685)
-- [Other cryptocurrencies (395+ coins)...](https://coinswitch.co/?ref=LLBEOO8IZD)
+BGL: [bgl1qlmzckh904vze03n0lwzptt5dkmvf2vj3ev4qm9](bgl:bgl1qlmzckh904vze03n0lwzptt5dkmvf2vj3ev4qm9)
 
 ------------
 
 ## Contacts
 
-Telegram: [@epexa](https://t.me/epexa)
+Telegram: [@BGLWallet](https://t.me/BGLWallet)

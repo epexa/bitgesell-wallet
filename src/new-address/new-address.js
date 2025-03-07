@@ -35,7 +35,7 @@ const newAddressGenerate = () => {
 	$newAddressVal.value = generateAddress(storage.entropy, Object.keys(storage.addresses).length).address;
 	newAddressQRcode.clear();
 	newAddressQRcode.makeCode(`bgl:${$newAddressVal.value}`);
-	$saveQrNewAddress.href = $newAddressQrcode.querySelector('canvas').toDataURL('image/png').replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+	$saveQrNewAddress.href = $newAddressQrcode.querySelector('canvas').toDataURL('image/png').replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
 };
 
 window.navigateNewAddress = () => {

@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	formHandler($form, (data) => {
 		aes4js.decrypt(data.password, {
-			encrypted: encryptedMimeType + localStorage.cryptoStorage,
-			iv: JSON.parse(localStorage.iv),
+			encrypted: encryptedMimeType + tempStorage.cryptoStorage,
+			iv: tempStorage.iv,
 			bin: false,
 		})
 				.then((decrypted) => {
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					Swal.fire({
 						showCloseButton: true,
 						icon: 'error',
-						title: e,
+						title: 'Incorrect password!',
 						showConfirmButton: false,
 						cancelButtonText: 'Ok',
 						toast: true,
@@ -41,6 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
 					$login.querySelector('input').focus();
 				});
 	});
+
+	if (isTwa) replacesInnerText(/local /ig, $login.querySelector('p'), $login.querySelector('label'));
 
 });
 

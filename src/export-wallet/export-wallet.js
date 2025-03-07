@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	);
 
 	$saveExportPhrase.addEventListener('click', () => {
-		$saveExportPhrase.href = `data:text/plain;charset=utf-8,${encodeURIComponent($exportPhrase.value)}`;
+		$saveExportPhrase.href = downloadHrefValue($exportPhrase.value);
 	});
 
 	$exportWalletBtn.addEventListener('click', () => {
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const exportWallet = () => {
-	$exportPhrase.value = entropyToMnemonic(storage.entropy);
+	$exportPhrase.value = jsbgl.entropyToMnemonic(storage.entropy);
 };
 
 const goExportWalletScreen = () => {
@@ -27,22 +27,28 @@ const goExportWalletScreen = () => {
 };
 
 window.navigateExportWallet = () => {
-	if (storage.entropy) {
-		Swal.fire({
-			title: 'Are you sure you want to show phrases?',
-			html: 'These phrases will restore full access to your wallet!<br><b class="text-danger">Never share it with anyone!</b>',
-			icon: 'question',
-			showCancelButton: true,
-			customClass: {
-				actions: 'btn-group',
-				confirmButton: 'btn btn-success btn-lg',
-				cancelButton: 'btn btn-outline-danger btn-lg',
-			},
-			showCloseButton: true,
-		}).then((result) => {
-			if (result.value) goExportWalletScreen();
-			else window.location.hash = locationDefault;
-		});
+	if ( ! storage.entropy) {
+		window.location.hash = 'login';
+		return;
 	}
-	else window.location.hash = 'login';
+
+	Swal.fire({
+		title: 'Are you sure you want to show phrases?',
+		html: 'These phrases will restore full access to your wallet!<br><b class="text-danger">Never share it with anyone!</b>',
+		icon: 'question',
+		showCancelButton: true,
+		customClass: {
+			actions: 'btn-group',
+			confirmButton: 'btn btn-success btn-lg',
+			cancelButton: 'btn btn-outline-danger btn-lg',
+		},
+		showCloseButton: true,
+	}).then((result) => {
+		if ( ! result.value) {
+			window.location.hash = locationDefault;
+			return;
+		}
+
+		goExportWalletScreen();
+	});
 };
