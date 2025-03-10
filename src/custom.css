@@ -65,5 +65,5 @@ table.dataTable.collapsed>tbody>tr>th.dtr-control {
   filter: saturate(1);
 }
 .nav-pills .nav-link i {
-  transform: scale(1.5);
+  transform: scale(1.25);
 }

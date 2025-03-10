@@ -7,7 +7,7 @@
 				<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
 					<div class="container-fluid">
 						<a class="navbar-brand" href="#dashboard"><img class="d-inline-block align-top" src="logo-square.png?2" alt=""> Bitgesell Wallet</a>
-						<ul class="navbar-nav gap-5" id="menu-items">
+						<ul class="navbar-nav text-uppercase gap-5" id="menu-items">
 							<li class="nav-item mx-sm-0 mx-xl-2 mx-xxl-5"><a class="nav-link fs-5 fw-bold" href="#my-addresses">My addresses</a></li>
 							<li class="nav-item mx-sm-0 mx-xl-2 mx-xxl-5"><a class="nav-link fs-5 fw-bold" href="#send">Send</a></li>
 							<!-- <li class="nav-item mx-sm-0 mx-xl-2 mx-xxl-5"><a class="nav-link fs-5 fw-bold" href="https://bglswap.com" target="_blank">Swap</a></li> -->
@@ -38,7 +38,7 @@
 			</header>
 
 			<div class="modal" id="node-address-modal" tabindex="-1" role="dialog">
-				<div class="modal-dialog" role="document">
+				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title">Node RPC API address</h5>
@@ -58,7 +58,7 @@
 			</div>
 
 			<div class="modal" id="theme-modal" tabindex="-1" role="dialog" data-bs-backdrop="false">
-				<div class="modal-dialog" role="document">
+				<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title">Theme</h5>
@@ -67,12 +67,12 @@
 						<div class="modal-body">
 							<form id="theme-form">
 								<div class="input-group">
-									<button class="btn btn-outline-primary" type="button" id="prev-theme">Previous</button>
+									<button class="btn btn-outline-primary" type="button" id="prev-theme">⬅</button>
 									<select class="form-control" id="theme-val" name="theme" placeholder="Select theme" required="">
 										<optgroup label="Light"></optgroup>
 										<optgroup label="Dark"></optgroup>
 									</select>
-									<button class="btn btn-outline-primary" type="button" id="next-theme">Next</button>
+									<button class="btn btn-outline-primary" type="button" id="next-theme">➡</button>
 								</div>
 							</form>
 						</div>

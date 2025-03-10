@@ -57,10 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
 					`<a class="btn btn-warning btn-sm d-inline-flex" target="_blank" href="https://bgl.bitaps.com/${data}"><i class="fa-solid fa-binoculars mt-1"></i><span class="hidden-sr ms-1">Explorer</span></a>`
 				), className: 'd-flex justify-content-end' },
 			],
-			drawCallback: () => {
+			drawCallback: (oSettings) => {
 				$transactionsTable.querySelectorAll('input').forEach(($input) => {
 					$input.addEventListener('click', () => copyToBuffer($input));
 				});
+
+				hideDataTablePagingIfOnlyOnePage(oSettings);
 			},
 		}),
 	)

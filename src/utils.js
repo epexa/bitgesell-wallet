@@ -58,7 +58,7 @@ const dataTableParams = {
 	searching: false,
 	serverSide: false,
 	ajax: '',
-	stateSave: true,
+	stateSave: false,
 };
 
 const dateTimeFormat = (timestamp) => {

@@ -58,7 +58,7 @@ It also has a desktop version (desktop-app) for Linux, macOS, Windows and a mobi
 - [x] transactions list (with unconfirmed tx)
 - [x] show balances in USD
 - [x] specify Node RPC
-- [x] good UX & UI with 26 themes (20 light and 6 dark)
+- [x] good UX & UI with 10 themes (7 light and 3 dark)
 
 ------------
 
@@ -122,6 +122,7 @@ Patches are welcome! If you would like to contribute, but don't know what to wor
 ## Donations
 
 If you'd like to buy me a beer, I won't complain. I will thank you! =)
+
 BGL: [bgl1qlmzckh904vze03n0lwzptt5dkmvf2vj3ev4qm9](bgl:bgl1qlmzckh904vze03n0lwzptt5dkmvf2vj3ev4qm9)
 
 ------------

@@ -18,7 +18,8 @@
     "local-server": "IP=$npm_package_config_IP PORT=$npm_package_config_PORT node local-server.js",
     "start": "npm run eslint && npm run local-server",
     "build": "./build.sh $npm_package_config_DIST_FOLDER",
-    "dist-start": "npm run build && DIST_FOLDER=$npm_package_config_DIST_FOLDER npm run local-server"
+    "dist-start": "npm run build && DIST_FOLDER=$npm_package_config_DIST_FOLDER npm run local-server",
+    "ngrok": "ngrok http $npm_package_config_PORT"
   },
   "husky": {
     "hooks": {

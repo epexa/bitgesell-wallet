@@ -192,11 +192,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	if (localStorage.theme) {
-		if ([ 'lux', 'quartz', 'morph', 'slate' ].indexOf(localStorage.theme) !== -1) localStorage.theme = 'flatly';
+		if ([ 'cerulean', 'default', 'journal', 'lux', 'quartz', 'materia', 'minty', 'morph', 'pulse', 'sandstone', 'slate', 'simplex', 'spacelab', 'solar', 'superhero', 'united' ].indexOf(localStorage.theme) !== -1) localStorage.theme = 'lumen';
 		$themeVal.value = localStorage.theme;
 		trigger($themeVal, 'change');
 	}
-	else $themeVal.value = 'flatly';
+	else $themeVal.value = 'lumen';
 
 	const currentYear = new Date().getFullYear();
 
@@ -275,29 +275,17 @@ const trigger = (element, event) => {
 
 const themes = {
 	light: [
-		'cerulean',
 		'cosmo',
-		'default',
 		'flatly',
-		'journal',
 		'litera',
 		'lumen',
-		'materia',
-		'minty',
-		'pulse',
-		'sandstone',
-		'simplex',
 		'sketchy',
-		'spacelab',
-		'united',
 		'yeti',
 		'zephyr',
 	],
 	dark: [
 		'cyborg',
 		'darkly',
-		'solar',
-		'superhero',
 		'vapor',
 	],
 };
@@ -307,6 +295,15 @@ const replacesInnerText = (...agrs) => {
 };
 
 const downloadHrefValue = (value) => `data:text/plain;charset=utf-8,${encodeURIComponent(value)}`;
+
+const hideDataTablePagingIfOnlyOnePage = (oSettings) => {
+	if ( ! oSettings) return;
+
+	const $paging = oSettings.nTableWrapper.querySelector('.dt-paging').closest('.row');
+
+	if (oSettings._iDisplayLength >= oSettings.fnRecordsDisplay()) hide($paging);
+	else show($paging);
+};
 
 window.navigateMobileMenu = () => {
 	hide($dashboard, $myAddresses, $send, $setPassword, $welcome, $newAddress, $transactions, $createWallet, $exportWallet);
@@ -323,16 +320,20 @@ window.navigateMobileMenu = () => {
 
 	tempStorage.cryptoStorage = cryptoStorage;
 
-	const iv = await getItem('iv');
+	let iv = await getItem('iv');
 
 	/* start temp crutch for those who have used the wallet before */
 	if ( ! iv) {
-		tempStorage = JSON.parse(tempStorage.cryptoStorage);
+		const oldSchema = JSON.parse(tempStorage.cryptoStorage);
+		tempStorage.iv = oldSchema.iv;
+		tempStorage.cryptoStorage = oldSchema.encrypted;
 
 		if ( ! tempStorage.iv) {
 			window.location.hash = 'set-password';
 			return;
 		}
+
+		iv = JSON.stringify(tempStorage.iv);
 	}
 	/* end temp crutch for those who have used the wallet before */
 

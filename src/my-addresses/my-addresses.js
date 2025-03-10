@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const addressQRcode = generateQRCode($addressQrcode, 256);
 
-	window.addEventButtons = () => {
+	window.addEventButtons = (oSettings) => {
 		$myAddressesTable.querySelectorAll('.qr-code-btn').forEach(($btn) => {
 			$btn.addEventListener('click', () => {
 				addressQRcode.clear();
@@ -30,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				copyToBuffer($input);
 			});
 		});
+
+		hideDataTablePagingIfOnlyOnePage(oSettings);
 	};
 
 	const optionsButtonHtml = (address) => (
