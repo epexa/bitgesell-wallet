@@ -4,12 +4,11 @@ jsbtc.asyncInit(jsbgl);
 const version = '0.9.8';
 const locationDefault = 'dashboard';
 
-let storage = { // eslint-disable-line prefer-const
+let storage = {
 	balance: 0,
 	addresses: {},
 };
-
-const tempStorage = {};
+let tempStorage = {};
 
 const coinPrice = {
 	price: 0,
@@ -34,8 +33,11 @@ let localPassword;
 const saveToCryptoStorage = () => {
 	aes4js.encrypt(localPassword, JSON.stringify(storage))
 			.then((encrypted) => {
-				setItem('iv', JSON.stringify(encrypted.iv));
-				setItem('cryptoStorage', encrypted.encrypted.replace(encryptedMimeType, ''));
+				// need to save together in one item, otherwise there are problems with cloud storage due to desynchronization
+				setItem('cryptoStorage', JSON.stringify({
+					cryptoStorage: encrypted.encrypted.replace(encryptedMimeType, ''),
+					iv: encrypted.iv,
+				}));
 			});
 };
 
@@ -318,26 +320,27 @@ window.navigateMobileMenu = () => {
 		return;
 	}
 
-	tempStorage.cryptoStorage = cryptoStorage;
+	try {
+		tempStorage = JSON.parse(cryptoStorage);
 
-	let iv = await getItem('iv');
-
-	/* start temp crutch for those who have used the wallet before */
-	if ( ! iv) {
-		const oldSchema = JSON.parse(tempStorage.cryptoStorage);
-		tempStorage.iv = oldSchema.iv;
-		tempStorage.cryptoStorage = oldSchema.encrypted;
-
+		/* start temp crutch for those who have used the wallet before encrypted data */
 		if ( ! tempStorage.iv) {
+			storage = tempStorage;
+
 			window.location.hash = 'set-password';
 			return;
 		}
-
-		iv = JSON.stringify(tempStorage.iv);
+		/* end temp crutch for those who have used the wallet before encrypted data */
 	}
-	/* end temp crutch for those who have used the wallet before */
+	catch (e) {
+		/* start temp crutch for those who have used the wallet before 0.9.8 */
+		tempStorage = { cryptoStorage };
 
-	tempStorage.iv = JSON.parse(iv);
+		const iv = await getItem('iv');
+
+		tempStorage.iv = JSON.parse(iv);
+		/* end temp crutch for those who have used the wallet before 0.9.8 */
+	}
 
 	window.location.hash = 'login';
 
