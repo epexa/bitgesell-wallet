@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	formHandler($form, (data) => {
 		aes4js.decrypt(data.password, {
-			encrypted: encryptedMimeType + tempStorage.cryptoStorage,
+			encrypted: encryptedMimeType + tempStorage.encrypted,
 			iv: tempStorage.iv,
 			bin: false,
 		})

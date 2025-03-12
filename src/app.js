@@ -35,7 +35,7 @@ const saveToCryptoStorage = () => {
 			.then((encrypted) => {
 				// need to save together in one item, otherwise there are problems with cloud storage due to desynchronization
 				setItem('cryptoStorage', JSON.stringify({
-					cryptoStorage: encrypted.encrypted.replace(encryptedMimeType, ''),
+					encrypted: encrypted.encrypted.replace(encryptedMimeType, ''),
 					iv: encrypted.iv,
 				}));
 			});
@@ -95,6 +95,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	document.querySelectorAll('.logout').forEach(($btn) => {
+		if (isTwa) {
+			if ($btn.closest('li')) $btn = $btn.closest('li');
+			if ($btn.previousElementSibling) $btn.previousElementSibling.remove();
+			$btn.remove();
+			return;
+		}
+
 		$btn.addEventListener('click', () => { // (csrf protect)
 			/* Swal.fire({
 				showCloseButton: true,
@@ -323,23 +330,27 @@ window.navigateMobileMenu = () => {
 	try {
 		tempStorage = JSON.parse(cryptoStorage);
 
-		/* start temp crutch for those who have used the wallet before encrypted data */
+		/* start encrypt data who use unencrypted */
 		if ( ! tempStorage.iv) {
 			storage = tempStorage;
 
 			window.location.hash = 'set-password';
 			return;
 		}
-		/* end temp crutch for those who have used the wallet before encrypted data */
+		/* end encrypt data who use unencrypted */
+
+		/* start fix testers bug restructure data */
+		if ( ! tempStorage.encrypted) tempStorage.encrypted = tempStorage.cryptoStorage;
+		/* end fix testers bug restructure data */
 	}
 	catch (e) {
-		/* start temp crutch for those who have used the wallet before 0.9.8 */
-		tempStorage = { cryptoStorage };
+		/* start restructure data who use 0.9.7 */
+		tempStorage = { encrypted: cryptoStorage };
 
 		const iv = await getItem('iv');
 
 		tempStorage.iv = JSON.parse(iv);
-		/* end temp crutch for those who have used the wallet before 0.9.8 */
+		/* end restructure data who use 0.9.7 */
 	}
 
 	window.location.hash = 'login';

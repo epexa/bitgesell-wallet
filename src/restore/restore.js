@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.navigateRestore = () => {
 	if ( ! localPassword) {
-		window.location.hash = 'login';
+		window.location.hash = 'set-password';
 		return;
 	}
 
