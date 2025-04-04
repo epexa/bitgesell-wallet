@@ -34,6 +34,7 @@ It also has a desktop version (desktop-app) for Linux, macOS, Windows and a mobi
 ## Additional repo
 - Dist repo for run wallet from browser https://github.com/epexa/bitgesell-wallet-dist
 - Electron repo for OS desktop wallet builds https://github.com/epexa/bitgesell-wallet-desktop-app
+- Cordova repo for mobile wallet builds https://github.com/epexa/bitgesell-wallet-mobile-app
 - Pre-landing repo for beautiful all links https://github.com/epexa/bglwallet.io
 
 ------------
@@ -41,7 +42,7 @@ It also has a desktop version (desktop-app) for Linux, macOS, Windows and a mobi
 ## Technical advantages
 - Use Bitgesell JavaScript library [“jsbgl”](https://github.com/bitaps-com/jsbgl).
 - It is written without using JS frontend frameworks (React, Vue.JS, etc.), which is why it has a very simple and clear codebase and code architecture.
-- Not used by third-party API. Used only [Node RPC](https://rpc.bglwallet.io) and [Explorer API](https://bgl.bitaps.com).
+- Not used by third-party API. Used only [RPC node](https://rpc.bglwallet.io) and [Explorer API](https://bgl.bitaps.com).
 
 ------------
 
@@ -56,8 +57,10 @@ It also has a desktop version (desktop-app) for Linux, macOS, Windows and a mobi
 - [x] generate receiving address
 - [x] sent transaction (with specify fee)
 - [x] transactions list (with unconfirmed tx)
+- [x] show transaction status and confirmations
 - [x] show balances in USD
-- [x] specify Node RPC
+- [x] specify RPC node
+- [x] support backup in plain format
 - [x] good UX & UI with 10 themes (7 light and 3 dark)
 
 ------------

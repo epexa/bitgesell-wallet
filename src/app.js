@@ -350,9 +350,9 @@ window.navigateMobileMenu = () => {
 		}
 		/* end encrypt data who use unencrypted */
 
-		/* start fix testers bug restructure data */
-		/* end fix testers bug restructure data */
+		/* start restructure data who use telegram 0.9.7 */
 		if ( ! window.tempStorage.encrypted) window.tempStorage.encrypted = window.tempStorage.cryptoStorage;
+		/* end restructure data who use telegram 0.9.7 */
 	}
 	catch {
 		/* start restructure data who use 0.9.7 */

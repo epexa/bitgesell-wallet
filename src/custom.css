@@ -11,14 +11,14 @@ table.dataTable.collapsed>tbody>tr {
   cursor: pointer;
 }
 table.dataTable>tbody>tr.child ul.dtr-details {
-  display: block;
+  display: block !important;
 }
 table.dataTable>tbody>tr.child ul.dtr-details>li {
   text-align: left !important;
 }
 table.dataTable.collapsed>tbody>tr>td.dtr-control,
 table.dataTable.collapsed>tbody>tr>th.dtr-control {
-  padding-top: .75rem !important;
+  padding-top: .5rem !important;
 }
 
 #my-addresses-table input:focus {
