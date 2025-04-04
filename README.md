@@ -88,25 +88,6 @@ It also has a desktop version (desktop-app) for Linux, macOS, Windows and a mobi
 
 ------------
 
-## This project uses JavaScript libraries
-| Name | GitHub | jsDelivr | Version |
-|------|--------|----------|---------|
-| jsbgl | [GitHub](https://github.com/bitaps-com/jsbgl) | [jsDelivr](https://www.jsdelivr.com/package/npm/jsbgl?tab=files&path=dist) | 1.0.17
-| aes4js | [GitHub](https://github.com/rndme/aes4js) | [jsDelivr](https://www.jsdelivr.com/package/npm/aes4js?tab=files) | 1.0.0
-| satoshi-bitcoin | [GitHub](https://github.com/dawsbot/satoshi-bitcoin) | [jsDelivr](https://www.jsdelivr.com/package/npm/satoshi-bitcoin?tab=files) | 1.0.5
-| Bootstrap | [GitHub](https://github.com/twbs/bootstrap) | [jsDelivr](https://www.jsdelivr.com/package/npm/bootstrap?tab=files&path=dist) | 5.3.3
-| Bootswatch | [GitHub](https://github.com/thomaspark/bootswatch) | [jsDelivr](https://www.jsdelivr.com/package/npm/bootswatch?tab=files&path=dist%2Fflatly) | 5.3.3 |
-| SweetAlert2 | [GitHub](https://github.com/sweetalert2/sweetalert2) | [jsDelivr](https://www.jsdelivr.com/package/npm/sweetalert2?tab=files&path=dist) | 11.17.2
-| Day.js | [GitHub](https://github.com/iamkun/dayjs) | [jsDelivr](https://www.jsdelivr.com/package/npm/dayjs?tab=files) | 1.11.13
-| DataTables | [GitHub](https://github.com/DataTables/DataTablesSrc) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net?path=js&tab=files) | 2.2.2
-| DataTables Bootstrap 5 | [GitHub](https://github.com/DataTables/Dist-DataTables-Bootstrap5) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net-bs5?tab=files) | 2.2.2
-| DataTables Responsive | [GitHub](https://github.com/DataTables/Responsive) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net-responsive?path=js&tab=files) | 3.0.4
-| DataTables Responsive Bootstrap 5 | [GitHub](https://github.com/DataTables/Dist-DataTables-Responsive-Bootstrap4) | [jsDelivr](https://www.jsdelivr.com/package/npm/datatables.net-responsive-bs5?tab=files) | 3.0.4
-| jQuery slim (only for DataTables) | [GitHub](https://github.com/jquery/jquery) | [jsDelivr](https://www.jsdelivr.com/package/npm/jquery?path=dist&tab=files) | 3.7.1
-| Font Awesome | [GitHub](https://github.com/FortAwesome/Font-Awesome) | [jsDelivr](https://www.jsdelivr.com/package/npm/@fortawesome/fontawesome-free?tab=files&path=css) | 6.7.2
-
-------------
-
 ## Issues
 
 When you find issues, please report them!

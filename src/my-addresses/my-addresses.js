@@ -1,3 +1,14 @@
+import * as bootstrap from 'bootstrap';
+import $ from 'jquery';
+import 'datatables.net-bs5';
+import 'datatables.net-responsive-bs5';
+import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css';
+import 'datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css';
+
+import { initHtmlElements, hide, show, dataTableParams, formHandler, Swal } from '../utils';
+import { generateQRCode, humanAmountFormat, hideDataTablePagingIfOnlyOnePage, copyToBuffer, getBalanceSum, saveToCryptoStorage, jsbgl } from '../app';
+import { getAddressesBalance } from '../api';
+
 document.addEventListener('DOMContentLoaded', () => {
 
 	initHtmlElements(

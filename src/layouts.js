@@ -1,0 +1,16 @@
+export default [
+	'header',
+	'main',
+	'dashboard',
+	'my-addresses',
+	'new-address',
+	'send',
+	'transactions',
+	'footer',
+	'welcome',
+	'create-wallet',
+	'restore',
+	'set-password',
+	'export-wallet',
+	'login',
+];

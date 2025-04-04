@@ -1,12 +1,21 @@
-const google = require('eslint-config-google');
+import google from 'eslint-config-google';
 
 if (google.rules['valid-jsdoc']) {
 	delete google.rules['valid-jsdoc'];
 	delete google.rules['require-jsdoc'];
 }
 
-module.exports = [
+export default [
 	google,
+	{
+		files: [ '*.js' ],
+		languageOptions: {
+			globals: {
+				console: 'readonly',
+				process: 'readonly',
+			},
+		},
+	},
 	{
 		languageOptions: {
 			parserOptions: {

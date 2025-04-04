@@ -1,3 +1,7 @@
+import { hide, show, formHandler, Swal } from '../utils';
+import { locationDefault, jsbgl } from '../app';
+import { generateAddress } from '../create-wallet/create-wallet';
+
 document.addEventListener('DOMContentLoaded', () => {
 
 	const $form = $dom.restore.querySelector('form');

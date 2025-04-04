@@ -1,3 +1,9 @@
+import aes4js from 'aes4js';
+
+import { hide, show, formHandler, Swal } from '../utils';
+import { locationDefault, encryptedMimeType, replacesInnerText } from '../app';
+import { isTwa } from '../twa';
+
 document.addEventListener('DOMContentLoaded', () => {
 
 	const $form = $dom.login.querySelector('form');

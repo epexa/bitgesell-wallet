@@ -1,3 +1,6 @@
+import { initHtmlElements, hide, show, Swal } from '../utils';
+import { locationDefault, downloadHrefValue, jsbgl } from '../app';
+
 document.addEventListener('DOMContentLoaded', () => {
 
 	initHtmlElements(

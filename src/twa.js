@@ -91,3 +91,11 @@ if (isTwa && Telegram.WebApp.enableClosingConfirmation) {
 if (isTwa && Telegram.WebApp.disableVerticalSwipes) {
 	Telegram.WebApp.disableVerticalSwipes();
 }
+
+export {
+	getTelegramData,
+	isTwa,
+	showAlert,
+	setItem,
+	getItem,
+};

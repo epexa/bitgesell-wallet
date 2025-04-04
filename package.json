@@ -6,7 +6,7 @@
   "bugs": "https://github.com/epexa/bitgesell-wallet/issues",
   "license": "Proprietary",
   "author": "epexa",
-  "main": "local-server.js",
+  "type": "module",
   "repository": "epexa/bitgesell-wallet",
   "config": {
     "IP": "127.0.0.1",
@@ -14,12 +14,17 @@
     "DIST_FOLDER": "../bitgesell-wallet-dist"
   },
   "scripts": {
-    "eslint": "eslint 'src/**/*.js'",
-    "local-server": "IP=$npm_package_config_IP PORT=$npm_package_config_PORT node local-server.js",
-    "start": "npm run eslint && npm run local-server",
-    "build": "./build.sh $npm_package_config_DIST_FOLDER",
-    "dist-start": "npm run build && DIST_FOLDER=$npm_package_config_DIST_FOLDER npm run local-server",
+    "eslint": "eslint 'src/**/*.js' --ignore-pattern 'src/assets/**'",
+    "start": "npm run eslint && IP=$npm_package_config_IP PORT=$npm_package_config_PORT node dev",
+    "build": "npm run eslint && node build $npm_package_config_DIST_FOLDER",
+    "dist-start": "serve $npm_package_config_DIST_FOLDER -l tcp://$npm_package_config_IP:$npm_package_config_PORT",
     "ngrok": "ngrok http $npm_package_config_PORT"
+  },
+  "targets": {
+    "default": {}
+  },
+  "alias": {
+    "dayjs": "dayjs/esm/index.js"
   },
   "husky": {
     "hooks": {
@@ -27,15 +32,23 @@
     }
   },
   "devDependencies": {
-    "@babel/cli": "^7.26.4",
-    "@babel/core": "^7.26.9",
-    "@babel/preset-env": "^7.26.9",
-    "clean-css-cli": "^5.6.3",
+    "chokidar": "^4.0.3",
     "eslint": "^9.21.0",
     "eslint-config-google": "^0.14.0",
-    "express": "^4.21.2",
-    "html-minifier": "^4.0.0",
     "husky": "^9.1.7",
-    "uglify-js": "^3.17.4"
+    "parcel": "^2.14.1",
+    "serve": "^14.2.4"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "aes4js": "^1.0.0",
+    "bootstrap": "^5.3.3",
+    "datatables.net-bs5": "^2.2.2",
+    "datatables.net-responsive-bs5": "^3.0.4",
+    "dayjs": "^1.11.13",
+    "jquery": "^3.7.1",
+    "jsbgl": "^1.0.17",
+    "satoshi-bitcoin": "^1.0.5",
+    "sweetalert2": "^11.17.2"
   }
 }

@@ -1,3 +1,7 @@
+import { initHtmlElements, hide, show, Swal } from '../utils';
+import { generateQRCode } from '../app';
+import { generateAddress } from '../create-wallet/create-wallet';
+
 let newAddressQRcode;
 
 document.addEventListener('DOMContentLoaded', () => {

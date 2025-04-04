@@ -1,0 +1,6 @@
+{
+  "extends": "@parcel/config-default",
+  "transformers": {
+    "*.min.js": ["@parcel/transformer-raw"]
+  }
+}

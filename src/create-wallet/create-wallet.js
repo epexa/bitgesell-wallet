@@ -1,3 +1,6 @@
+import { initHtmlElements, hide, show, Swal } from '../utils';
+import { locationDefault, getBalanceSum, saveToCryptoStorage, downloadHrefValue, jsbgl } from '../app';
+
 document.addEventListener('DOMContentLoaded', () => {
 
 	initHtmlElements(
@@ -98,4 +101,8 @@ window.navigateCreateWallet = () => {
 		});
 		goCreateWalletScreen();
 	});
+};
+
+export {
+	generateAddress,
 };

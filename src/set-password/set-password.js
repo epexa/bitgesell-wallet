@@ -1,3 +1,7 @@
+import { hide, show, formHandler, Swal } from '../utils';
+import { saveToCryptoStorage, replacesInnerText } from '../app';
+import { isTwa } from '../twa';
+
 document.addEventListener('DOMContentLoaded', () => {
 
 	const $form = $dom.setPassword.querySelector('form');

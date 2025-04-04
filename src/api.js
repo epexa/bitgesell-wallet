@@ -1,3 +1,6 @@
+import { isTwa, getTelegramData } from './twa';
+import { Swal } from './utils';
+
 const explorerApi = 'https://api.bitaps.com/bgl/v1/blockchain';
 
 const fetchQuery = (url, callback, fetchParams = null, errorFunc = null, callbackAlways = null) => {
@@ -118,4 +121,13 @@ const getCoinInfo = (callback) => {
 			title: `Error in get coin info: <a target="_blank" href="${url}">${url}</a>`,
 		};
 	});
+};
+
+export {
+	fetchQuery,
+	getAddressInfo,
+	getAddressUnconfirmedInfo,
+	getAddressesBalance,
+	getAddressUtxo,
+	getCoinInfo,
 };
