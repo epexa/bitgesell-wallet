@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-	const $form = $login.querySelector('form');
+	const $form = $dom.login.querySelector('form');
 
 	formHandler($form, (data) => {
 		aes4js.decrypt(data.password, {
@@ -38,18 +38,18 @@ document.addEventListener('DOMContentLoaded', () => {
 						timer: 2000,
 						timerProgressBar: true,
 					});
-					$login.querySelector('input').focus();
+					$dom.login.querySelector('input').focus();
 				});
 	});
 
-	if (isTwa) replacesInnerText(/local /ig, $login.querySelector('p'), $login.querySelector('label'));
+	if (isTwa) replacesInnerText(/local /ig, $dom.login.querySelector('p'), $dom.login.querySelector('label'));
 
 });
 
 window.navigateLogin = () => {
-	hide($main, $setPassword);
-	show($login);
 	setTimeout(() => {
-		$login.querySelector('input').focus();
+	hide($dom.main, $dom.setPassword);
+	show($dom.login);
+		$dom.login.querySelector('input').focus();
 	}, 100);
 };

@@ -1,5 +1,5 @@
 window.navigateDashboard = () => {
-	hide($welcome, $createWallet, $exportWallet, $myAddresses, $newAddress, $send, $transactions, $restore, $login, $setPassword, $mobileMenu);
-	show($main, $dashboard);
+	hide($dom.welcome, $dom.createWallet, $dom.exportWallet, $dom.myAddresses, $dom.newAddress, $dom.send, $dom.transactions, $dom.restore, $dom.login, $dom.setPassword, $dom.mobileMenu);
+	show($dom.main, $dom.dashboard);
 	getBalanceSum();
 };

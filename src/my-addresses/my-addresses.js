@@ -10,21 +10,21 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#import-address-modal',
 	);
 
-	const importAddressModal = new bootstrap.Modal($importAddressModal);
+	const importAddressModal = new bootstrap.Modal($dom.importAddressModal);
 
-	const addressQRcode = generateQRCode($addressQrcode, 256);
+	const addressQRcode = generateQRCode($dom.addressQrcode, 256);
 
 	window.addEventButtons = (oSettings) => {
-		$myAddressesTable.querySelectorAll('.qr-code-btn').forEach(($btn) => {
+		$dom.myAddressesTable.querySelectorAll('.qr-code-btn').forEach(($btn) => {
 			$btn.addEventListener('click', () => {
 				addressQRcode.clear();
 				addressQRcode.makeCode(`bgl:${$btn.dataset.address}`);
-				$saveQrAddress.href = $addressQrcode.querySelector('canvas').toDataURL('image/png').replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
-				$bitgesellAddress.value = $btn.dataset.address;
 				qrCodeModal.show();
+				$dom.saveQrAddress.href = $dom.addressQrcode.querySelector('canvas').toDataURL('image/png').replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
+				$dom.bitgesellAddress.value = $btn.dataset.address;
 			});
 		});
-		$myAddressesTable.querySelectorAll('.address').forEach(($input) => {
+		$dom.myAddressesTable.querySelectorAll('.address').forEach(($input) => {
 			$input.addEventListener('click', () => {
 				$input.select();
 				copyToBuffer($input);
@@ -117,11 +117,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		myAddressesTableDraw();
 	}
 
-	$importAddressBtn.addEventListener('click', () => {
+	$dom.importAddressBtn.addEventListener('click', () => {
 		importAddressModal.show();
 	});
 
-	formHandler($importAddressModal.querySelector('form'), (data) => {
+	formHandler($dom.importAddressModal.querySelector('form'), (data) => {
 		if ( ! jsbgl.isWifValid(data.wif)) {
 			Swal.fire({
 				showCloseButton: true,
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.navigateMyAddresses = () => {
-	hide($welcome, $dashboard, $newAddress, $send, $transactions, $setPassword, $mobileMenu);
-	show($main, $myAddresses);
 	myAddressesTableDraw();
+	hide($dom.welcome, $dom.dashboard, $dom.newAddress, $dom.send, $dom.transactions, $dom.setPassword, $dom.mobileMenu);
+	show($dom.main, $dom.myAddresses);
 };

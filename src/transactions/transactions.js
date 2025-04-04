@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				), className: 'd-flex justify-content-end' },
 			],
 			drawCallback: (oSettings) => {
-				$transactionsTable.querySelectorAll('input').forEach(($input) => {
+				$dom.transactionsTable.querySelectorAll('input').forEach(($input) => {
 					$input.addEventListener('click', () => copyToBuffer($input));
 				});
 
@@ -123,8 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.navigateTransactions = () => {
-	hide($welcome, $dashboard, $newAddress, $send, $myAddresses, $setPassword, $mobileMenu);
-	show($main, $transactions);
+	hide($dom.welcome, $dom.dashboard, $dom.newAddress, $dom.send, $dom.myAddresses, $dom.setPassword, $dom.mobileMenu);
+	show($dom.main, $dom.transactions);
 	const address = window.location.hash.substring(14);
 	if (address) transactionsTableDraw();
 	else window.location.hash = locationDefault;

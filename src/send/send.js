@@ -16,44 +16,44 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#send-new-balance',
 	);
 
-	$sendFromVal.addEventListener('change', addressBalance);
+	$dom.sendFromVal.addEventListener('change', addressBalance);
 
-	$sendToVal.addEventListener('change', () => {
-		const isValid = jsbgl.isAddressValid($sendToVal.value);
+	$dom.sendToVal.addEventListener('change', () => {
+		const isValid = jsbgl.isAddressValid($dom.sendToVal.value);
 		if (isValid) {
-			$sendToVal.classList.remove('is-invalid');
-			$sendToVal.classList.add('is-valid');
+			$dom.sendToVal.classList.remove('is-invalid');
+			$dom.sendToVal.classList.add('is-valid');
 			calcAmountSpent();
 		}
 		else {
-			$sendToVal.classList.remove('is-valid');
-			$sendToVal.classList.add('is-invalid');
+			$dom.sendToVal.classList.remove('is-valid');
+			$dom.sendToVal.classList.add('is-invalid');
 		}
 	});
 
-	$sendAmountVal.addEventListener('input', () => {
+	$dom.sendAmountVal.addEventListener('input', () => {
 		calcAmountSpent();
 	});
-	$sendFeeVal.addEventListener('input', calcAmountSpent);
+	$dom.sendFeeVal.addEventListener('input', calcAmountSpent);
 
-	formHandler($send.querySelector('form'), () => {
+	formHandler($dom.send.querySelector('form'), () => {
 		send();
 	});
 
-	$sendAmountMax.addEventListener('click', () => {
+	$dom.sendAmountMax.addEventListener('click', () => {
 		if ( ! sendParams.fromAmount) return;
 
-		if ( ! sendParams.feeAmount) sendParams.feeAmount = sb.toSatoshi($sendFeeVal.value);
-		$sendAmountVal.value = sb.toBitcoin(sendParams.fromAmount - sendParams.feeAmount);
+		if ( ! sendParams.feeAmount) sendParams.feeAmount = sb.toSatoshi($dom.sendFeeVal.value);
+		$dom.sendAmountVal.value = sb.toBitcoin(sendParams.fromAmount - sendParams.feeAmount);
 		calcAmountSpent();
 	});
 
 });
 
 const generateTransaction = () => {
-	const fromPublicAddress = $sendFromVal.value;
-	const toPublicAddress = $sendToVal.value;
 	const privateKey = storage.addresses[fromPublicAddress].private;
+	const fromPublicAddress = $dom.sendFromVal.value;
+	const toPublicAddress = $dom.sendToVal.value;
 	// console.log('send tx', privateKey, fromPublicAddress, toPublicAddress, sendParams.fromAmount, sendParams.toAmount, sendParams.feeAmount, sendParams.newFromAmount);
 	const tx = new jsbgl.Transaction();
 
@@ -91,33 +91,33 @@ const generateTransaction = () => {
 
 const calcAmountSpent = () => {
 	let amountSpent;
-	if ($sendAmountVal.value) {
-		sendParams.toAmount = sb.toSatoshi($sendAmountVal.value);
-		$sendAmountPrice.querySelector('span').innerText = ($sendAmountVal.value * coinPrice.price).toFixed(2);
-		show($sendAmountPrice);
-		sendParams.feeAmount = sb.toSatoshi($sendFeeVal.value);
+	if ($dom.sendAmountVal.value) {
+		sendParams.toAmount = sb.toSatoshi($dom.sendAmountVal.value);
+		$dom.sendAmountPrice.querySelector('span').innerText = ($dom.sendAmountVal.value * coinPrice.price).toFixed(2);
+		show($dom.sendAmountPrice);
+		sendParams.feeAmount = sb.toSatoshi($dom.sendFeeVal.value);
 		amountSpent = sendParams.toAmount + sendParams.feeAmount;
 	}
 	else {
 		delete sendParams.toAmount;
 		delete sendParams.newFromAmount;
-		hide($sendAmountPrice);
+		hide($dom.sendAmountPrice);
 	}
-	$sendFormBtn.innerHTML = `Send <span class="badge bg-info">${amountSpent > 0 ? sb.toBitcoin(amountSpent) : ''}</span> BGL`;
+	$dom.sendFormBtn.innerHTML = `Send <span class="badge bg-info">${amountSpent > 0 ? sb.toBitcoin(amountSpent) : ''}</span> BGL`;
 
-	$sendAmountVal.classList.remove('is-invalid');
+	$dom.sendAmountVal.classList.remove('is-invalid');
 
 	if (sendParams.fromAmount < 0 || sendParams.toAmount === undefined || sendParams.toAmount < 0) {
-		hide($sendNewBalance);
+		hide($dom.sendNewBalance);
 		return;
 	}
 
 	sendParams.newFromAmount = sendParams.fromAmount - sendParams.toAmount - sendParams.feeAmount;
-	$sendNewBalance.querySelector('span').innerText = sb.toBitcoin(sendParams.newFromAmount);
-	show($sendNewBalance);
+	$dom.sendNewBalance.querySelector('span').innerText = sb.toBitcoin(sendParams.newFromAmount);
+	show($dom.sendNewBalance);
 
 	if (sendParams.newFromAmount < 0) {
-		$sendAmountVal.classList.add('is-invalid');
+		$dom.sendAmountVal.classList.add('is-invalid');
 		return;
 	}
 
@@ -125,7 +125,7 @@ const calcAmountSpent = () => {
 };
 
 const checkAdressUxto = () => {
-	getAddressUtxo($sendFromVal.value, (result) => {
+	getAddressUtxo($dom.sendFromVal.value, (result) => {
 		if ( ! result.length) {
 			Swal.fire({
 				showCloseButton: true,
@@ -143,7 +143,7 @@ const checkAdressUxto = () => {
 			}).then((result) => {
 				if ( ! result.value) return;
 
-				window.location.hash = `transactions/${$sendFromVal.value}#reload`;
+				window.location.hash = `transactions/${$dom.sendFromVal.value}#reload`;
 			});
 			return;
 		}
@@ -155,23 +155,23 @@ const checkAdressUxto = () => {
 
 const addressBalance = () => {
 	apiAddressUtxo = null;
-	$sendFromVal.classList.remove('is-invalid');
-	hide($sendBalance, $sendNewBalance);
+	$dom.sendFromVal.classList.remove('is-invalid');
+	hide($dom.sendBalance, $dom.sendNewBalance);
 
-	if ( ! $sendFromVal.value) {
+	if ( ! $dom.sendFromVal.value) {
 		delete sendParams.fromAmount;
 		calcAmountSpent();
 		return;
 	}
 
-	sendParams.fromAmount = storage.addresses[$sendFromVal.value].balance;
+	sendParams.fromAmount = storage.addresses[$dom.sendFromVal.value].balance;
 	const humanAmount = sb.toBitcoin(sendParams.fromAmount);
-	$sendBalance.querySelector('span').innerText = humanAmount;
-	$sendBalance.querySelector('span:nth-child(2)').innerText = (humanAmount * coinPrice.price).toFixed(2);
-	show($sendBalance);
+	$dom.sendBalance.querySelector('span').innerText = humanAmount;
+	$dom.sendBalance.querySelector('span:nth-child(2)').innerText = (humanAmount * coinPrice.price).toFixed(2);
+	show($dom.sendBalance);
 
 	if (sendParams.fromAmount <= 0) {
-		$sendFromVal.classList.add('is-invalid');
+		$dom.sendFromVal.classList.add('is-invalid');
 		return;
 	}
 
@@ -182,26 +182,26 @@ const addressBalance = () => {
 
 const sendFormInit = () => {
 	window.scrollTo({ top: 0, behavior: 'smooth' });
-	const $form = $send.querySelector('form');
+	const $form = $dom.send.querySelector('form');
 	$form.reset();
 	sendParams = {};
 	newTx = null;
-	while ($sendFromVal.length > 1) {
-		$sendFromVal.remove(1);
+	while ($dom.sendFromVal.length > 1) {
+		$dom.sendFromVal.remove(1);
 	}
 	for (const [ key ] of Object.entries(storage.addresses)) {
-		$sendFromVal.add(new Option(key, key));
+		$dom.sendFromVal.add(new Option(key, key));
 	}
 	const selectedAddress = window.location.hash.substring(6);
-	$sendFromVal.value = selectedAddress;
+	$dom.sendFromVal.value = selectedAddress;
 	addressBalance();
-	$sendToVal.classList.remove('is-valid', 'is-invalid');
+	$dom.sendToVal.classList.remove('is-valid', 'is-invalid');
 };
 
 const send = () => {
-	if ($send.querySelector('.is-invalid')) return;
+	if ($dom.send.querySelector('.is-invalid')) return;
 
-	$send.querySelector('fieldset').setAttribute('disabled', '');
+	$dom.send.querySelector('fieldset').setAttribute('disabled', '');
 	const url = new URL(localStorage.nodeAddress);
 	const fetchParams = {
 		method: 'POST',
@@ -214,9 +214,9 @@ const send = () => {
 	if (url.username && url.password) fetchParams.headers['Authorization'] = `Basic ${btoa(`${url.username}:${url.password}`)}`;
 	fetchQuery(url.origin, (responseJson) => {
 		// console.log('new txId', responseJson.result);
-		const fromPublicAddress = $sendFromVal.value;
 		storage.addresses[fromPublicAddress].balance = sendParams.newFromAmount;
 		storage.addresses[fromPublicAddress].input_count++;
+		const fromPublicAddress = $dom.sendFromVal.value;
 		getBalanceSum();
 		saveToCryptoStorage();
 		Swal.fire({
@@ -248,12 +248,12 @@ const send = () => {
 			message: `<p class="text-danger">${responseJson.error.message}</p>Change the parameters and try again!`,
 		};
 	}, () => {
-		$send.querySelector('fieldset').removeAttribute('disabled');
+		$dom.send.querySelector('fieldset').removeAttribute('disabled');
 	});
 };
 
 window.navigateSend = () => {
-	hide($welcome, $dashboard, $myAddresses, $newAddress, $transactions, $setPassword, $mobileMenu);
-	show($main, $send);
+	hide($dom.welcome, $dom.dashboard, $dom.myAddresses, $dom.newAddress, $dom.transactions, $dom.setPassword, $dom.mobileMenu);
+	show($dom.main, $dom.send);
 	sendFormInit();
 };

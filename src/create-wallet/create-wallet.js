@@ -6,11 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#create-wallet-btn',
 	);
 
-	$saveBackupPhrase.addEventListener('click', () => {
-		$saveBackupPhrase.href = downloadHrefValue($backupPhrase.value);
+	$dom.saveBackupPhrase.addEventListener('click', () => {
+		$dom.saveBackupPhrase.href = downloadHrefValue($dom.backupPhrase.value);
 	});
 
-	$createWalletBtn.addEventListener('click', () => {
+	$dom.createWalletBtn.addEventListener('click', () => {
 		Swal.fire({
 			title: 'Are you sure you saved the phrase?',
 			html: 'They are not saved anywhere, so you can\'t get them anywhere else!',
@@ -50,12 +50,12 @@ const createWallet = () => {
 	storage.entropy = entropy;
 	storage.addresses = {};
 	const newAddress = generateAddress(entropy, 0);
-	$backupPhrase.value = newAddress.mnemonic;
+	$dom.backupPhrase.value = newAddress.mnemonic;
 };
 
 const goCreateWalletScreen = () => {
-	hide($main, $welcome, $setPassword);
-	show($createWallet);
+	hide($dom.main, $dom.welcome, $dom.setPassword);
+	show($dom.createWallet);
 	createWallet();
 };
 

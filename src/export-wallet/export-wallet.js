@@ -6,23 +6,23 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#export-wallet-btn',
 	);
 
-	$saveExportPhrase.addEventListener('click', () => {
-		$saveExportPhrase.href = downloadHrefValue($exportPhrase.value);
+	$dom.saveExportPhrase.addEventListener('click', () => {
+		$dom.saveExportPhrase.href = downloadHrefValue($dom.exportPhrase.value);
 	});
 
-	$exportWalletBtn.addEventListener('click', () => {
+	$dom.exportWalletBtn.addEventListener('click', () => {
 		window.location.hash = locationDefault;
 	});
 
 });
 
 const exportWallet = () => {
-	$exportPhrase.value = jsbgl.entropyToMnemonic(storage.entropy);
+	$dom.exportPhrase.value = jsbgl.entropyToMnemonic(window.storage.entropy);
 };
 
 const goExportWalletScreen = () => {
-	hide($main);
-	show($exportWallet);
+	hide($dom.main);
+	show($dom.exportWallet);
 	exportWallet();
 };
 

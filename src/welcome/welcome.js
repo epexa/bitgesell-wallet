@@ -3,6 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.navigateWelcome = () => {
-	hide($main, $restore, $login, $createWallet);
-	show($welcome);
+	hide($dom.main, $dom.restore, $dom.login, $dom.createWallet);
+	show($dom.welcome);
 };

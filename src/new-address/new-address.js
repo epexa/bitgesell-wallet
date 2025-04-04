@@ -9,9 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#add-new-address-btn',
 	);
 
-	newAddressQRcode = generateQRCode($newAddressQrcode, 192);
+	newAddressQRcode = generateQRCode($dom.newAddressQrcode, 192);
 
-	$addNewAddressBtn.addEventListener('click', () => {
+	$dom.addNewAddressBtn.addEventListener('click', () => {
 		newAddressGenerate();
 		Swal.fire({
 			showCloseButton: true,
@@ -30,16 +30,16 @@ document.addEventListener('DOMContentLoaded', () => {
 const newAddressGenerate = () => {
 	qrCodeModal.hide();
 	window.scrollTo({ top: 0, behavior: 'smooth' });
-	const $form = $newAddress.querySelector('form');
+	const $form = $dom.newAddress.querySelector('form');
 	$form.reset();
-	$newAddressVal.value = generateAddress(storage.entropy, Object.keys(storage.addresses).length).address;
+	$dom.newAddressVal.value = generateAddress(storage.entropy, Object.keys(storage.addresses).length).address;
 	newAddressQRcode.clear();
-	newAddressQRcode.makeCode(`bgl:${$newAddressVal.value}`);
-	$saveQrNewAddress.href = $newAddressQrcode.querySelector('canvas').toDataURL('image/png').replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
+	newAddressQRcode.makeCode(`bgl:${$dom.newAddressVal.value}`);
+	$dom.saveQrNewAddress.href = $dom.newAddressQrcode.querySelector('canvas').toDataURL('image/png').replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
 };
 
 window.navigateNewAddress = () => {
-	hide($welcome, $myAddresses, $send, $transactions, $setPassword, $mobileMenu);
-	show($main, $newAddress);
+	hide($dom.welcome, $dom.myAddresses, $dom.send, $dom.transactions, $dom.setPassword, $dom.mobileMenu);
+	show($dom.main, $dom.newAddress);
 	newAddressGenerate();
 };

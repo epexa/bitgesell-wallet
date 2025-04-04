@@ -75,12 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	qrCodeModal = new bootstrap.Modal('#qr-code-modal');
 
-	const $nodeAddressInput = $nodeAddress.querySelector('.form-control[name="node-address"]');
+	const $nodeAddressInput = $dom.nodeAddress.querySelector('.form-control[name="node-address"]');
 
 	if (localStorage.nodeAddress) $nodeAddressInput.value = localStorage.nodeAddress;
 	else localStorage.nodeAddress = $nodeAddressInput.value;
 
-	const nodeAddressModal = new bootstrap.Modal($nodeAddressModal);
+	const nodeAddressModal = new bootstrap.Modal($dom.nodeAddressModal);
 
 	document.querySelectorAll('.node-address-btn').forEach(($btn) => {
 		$btn.addEventListener('click', () => {
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 
-	$nodeAddress.addEventListener('submit', (e) => {
+	$dom.nodeAddress.addEventListener('submit', (e) => {
 		e.preventDefault();
 		localStorage.nodeAddress = $nodeAddressInput.value;
 		window.location.reload();
@@ -153,10 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 
-	const themeModal = new bootstrap.Modal($themeModal);
+	const themeModal = new bootstrap.Modal($dom.themeModal);
 
-	$themeModal.addEventListener('shown.bs.modal', () => {
-		$themeModal.querySelector('.form-control').focus();
+	$dom.themeModal.addEventListener('shown.bs.modal', () => {
+		$dom.themeModal.querySelector('.form-control').focus();
 	});
 
 	document.querySelectorAll('.theme-btn').forEach(($btn) => {
@@ -174,38 +174,38 @@ document.addEventListener('DOMContentLoaded', () => {
 		$select.appendChild($option);
 	};
 	for (const [ key, value ] of Object.entries(themes.light))
-		addOptionInSelect($themeVal.querySelector('optgroup'), value);
 	for (const [ key, value ] of Object.entries(themes.dark))
-		addOptionInSelect($themeVal.querySelector('optgroup:nth-child(2)'), value);
+		addOptionInSelect($dom.themeVal.querySelector('optgroup'), value);
+		addOptionInSelect($dom.themeVal.querySelector('optgroup:nth-child(2)'), value);
 
-	$themeVal.addEventListener('change', () => {
-		$theme.setAttribute('href', `themes/${$themeVal.value}.min.css`);
-		localStorage.theme = $themeVal.value;
-		if ($themeVal.selectedIndex > 0) $prevTheme.removeAttribute('disabled');
-		else $prevTheme.setAttribute('disabled', '');
-		if ($themeVal.selectedIndex < $themeVal.length - 1) $nextTheme.removeAttribute('disabled');
-		else $nextTheme.setAttribute('disabled', '');
+	$dom.themeVal.addEventListener('change', () => {
+		$dom.theme.setAttribute('href', `/themes/${$dom.themeVal.value}.min.css`);
+		localStorage.theme = $dom.themeVal.value;
+		if ($dom.themeVal.selectedIndex > 0) $dom.prevTheme.removeAttribute('disabled');
+		else $dom.prevTheme.setAttribute('disabled', '');
+		if ($dom.themeVal.selectedIndex < $dom.themeVal.length - 1) $dom.nextTheme.removeAttribute('disabled');
+		else $dom.nextTheme.setAttribute('disabled', '');
 	});
 
-	$prevTheme.addEventListener('click', () => {
-		if ($themeVal.selectedIndex > 0) {
-			$themeVal.selectedIndex--;
-			trigger($themeVal, 'change');
+	$dom.prevTheme.addEventListener('click', () => {
+		if ($dom.themeVal.selectedIndex > 0) {
+			$dom.themeVal.selectedIndex--;
+			trigger($dom.themeVal, 'change');
 		}
 	});
-	$nextTheme.addEventListener('click', () => {
-		if ($themeVal.selectedIndex < $themeVal.length - 1) {
-			$themeVal.selectedIndex++;
-			trigger($themeVal, 'change');
+	$dom.nextTheme.addEventListener('click', () => {
+		if ($dom.themeVal.selectedIndex < $dom.themeVal.length - 1) {
+			$dom.themeVal.selectedIndex++;
+			trigger($dom.themeVal, 'change');
 		}
 	});
 
 	if (localStorage.theme) {
 		if ([ 'cerulean', 'default', 'journal', 'lux', 'quartz', 'materia', 'minty', 'morph', 'pulse', 'sandstone', 'slate', 'simplex', 'spacelab', 'solar', 'superhero', 'united' ].indexOf(localStorage.theme) !== -1) localStorage.theme = 'lumen';
-		$themeVal.value = localStorage.theme;
-		trigger($themeVal, 'change');
+		$dom.themeVal.value = localStorage.theme;
+		trigger($dom.themeVal, 'change');
 	}
-	else $themeVal.value = 'lumen';
+	else $dom.themeVal.value = 'lumen';
 
 	const currentYear = new Date().getFullYear();
 
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (window[screenName]) window[screenName]();
 		else window.location.hash = locationDefault;
 		/* start highlight active link in apple mobile menu */
-		$appleMobileMenu.querySelectorAll('a').forEach(($li) => {
+		$dom.appleMobileMenu.querySelectorAll('a').forEach(($li) => {
 			if (params[0] === $li.getAttribute('href').substring(1)) $li.classList.add('selected');
 			else $li.classList.remove('selected');
 		});
@@ -315,8 +315,8 @@ const hideDataTablePagingIfOnlyOnePage = (oSettings) => {
 };
 
 window.navigateMobileMenu = () => {
-	hide($dashboard, $myAddresses, $send, $setPassword, $welcome, $newAddress, $transactions, $createWallet, $exportWallet);
-	show($main, $mobileMenu);
+	hide($dom.dashboard, $dom.myAddresses, $dom.send, $dom.setPassword, $dom.welcome, $dom.newAddress, $dom.transactions, $dom.createWallet, $dom.exportWallet);
+	show($dom.main, $dom.mobileMenu);
 };
 
 (async () => {

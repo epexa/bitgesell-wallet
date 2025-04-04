@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-	const $form = $restore.querySelector('form');
+	const $form = $dom.restore.querySelector('form');
 
 	formHandler($form, (data) => {
 		if ( ! jsbgl.isMnemonicCheckSumValid(data.phrase)) {
@@ -45,6 +45,6 @@ window.navigateRestore = () => {
 		return;
 	}
 
-	hide($main, $welcome, $setPassword);
-	show($restore);
+	hide($dom.main, $dom.welcome, $dom.setPassword);
+	show($dom.restore);
 };

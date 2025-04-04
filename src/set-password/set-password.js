@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-	const $form = $setPassword.querySelector('form');
+	const $form = $dom.setPassword.querySelector('form');
 
 	formHandler($form, (data) => {
 		if (data.signup_password !== data.retype_signup_password) {
@@ -37,16 +37,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	if (isTwa) {
-		replacesInnerText(/local /ig, $setPassword.querySelector('h1'), $setPassword.querySelector('p'), $setPassword.querySelector('button'));
-		hide($setPassword.querySelector('p.text-warning'));
+		replacesInnerText(/local /ig, $dom.setPassword.querySelector('h1'), $dom.setPassword.querySelector('p'), $dom.setPassword.querySelector('button'));
+		hide($dom.setPassword.querySelector('p.text-warning'));
 	}
 
 });
 
 window.navigateSetPassword = () => {
-	hide($main, $welcome);
-	show($setPassword);
+	hide($dom.main, $dom.welcome);
+	show($dom.setPassword);
 	setTimeout(() => {
-		$setPassword.querySelector('input').focus();
+		$dom.setPassword.querySelector('input').focus();
 	}, 100);
 };
