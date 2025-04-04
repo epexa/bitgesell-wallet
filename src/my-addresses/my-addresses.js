@@ -1,6 +1,5 @@
 import * as bootstrap from 'bootstrap';
-import $ from 'jquery';
-import 'datatables.net-bs5';
+import DataTable from 'datatables.net-bs5';
 import 'datatables.net-responsive-bs5';
 import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css';
 import 'datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css';
@@ -52,8 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		`<a class="btn btn-success btn-sm" href="#transactions/${address}"><i class="fa-solid fa-circle-nodes visible-sr"></i><span class="hidden-sr">Transactions</span></a>`
 	);
 
-	window.myAddressesTable = $('#my-addresses-table').DataTable(
-		$.extend(dataTableParams, {
+	window.myAddressesTable = new DataTable($dom.myAddressesTable,
+		Object.assign({}, dataTableParams, {
 			columnDefs: [
 				{
 					className: 'dtr-control',

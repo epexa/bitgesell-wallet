@@ -1,5 +1,4 @@
-import $ from 'jquery';
-import 'datatables.net-bs5';
+import DataTable from 'datatables.net-bs5';
 import 'datatables.net-responsive-bs5';
 import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css';
 import 'datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css';
@@ -14,8 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		'#transactions-table',
 	);
 
-	const transactionsTable = $('#transactions-table').DataTable(
-		$.extend(dataTableParams, {
+	const transactionsTable = new DataTable($dom.transactionsTable,
+		Object.assign({}, dataTableParams, {
 			columnDefs: [
 				{
 					className: 'dtr-control',
