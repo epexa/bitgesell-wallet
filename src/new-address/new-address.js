@@ -28,11 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const newAddressGenerate = () => {
-	qrCodeModal.hide();
+	window.qrCodeModal.hide();
 	window.scrollTo({ top: 0, behavior: 'smooth' });
 	const $form = $dom.newAddress.querySelector('form');
 	$form.reset();
-	$dom.newAddressVal.value = generateAddress(storage.entropy, Object.keys(storage.addresses).length).address;
+	$dom.newAddressVal.value = generateAddress(window.storage.entropy, Object.keys(window.storage.addresses).length).address;
 	newAddressQRcode.clear();
 	newAddressQRcode.makeCode(`bgl:${$dom.newAddressVal.value}`);
 	$dom.saveQrNewAddress.href = $dom.newAddressQrcode.querySelector('canvas').toDataURL('image/png').replace(/^data:image\/[^;]+/, 'data:application/octet-stream');

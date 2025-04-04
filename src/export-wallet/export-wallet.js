@@ -27,7 +27,7 @@ const goExportWalletScreen = () => {
 };
 
 window.navigateExportWallet = () => {
-	if ( ! storage.entropy) {
+	if ( ! window.storage.entropy) {
 		window.location.hash = 'login';
 		return;
 	}

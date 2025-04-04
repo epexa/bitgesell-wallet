@@ -1,14 +1,14 @@
 const jsbgl = {};
-jsbtc.asyncInit(jsbgl);
+window.jsbtc.asyncInit(jsbgl);
 
 const version = '0.9.8';
 const locationDefault = 'dashboard';
 
-let storage = {
+window.storage = {
 	balance: 0,
 	addresses: {},
 };
-let tempStorage = {};
+window.tempStorage = {};
 
 const coinPrice = {
 	price: 0,
@@ -17,21 +17,21 @@ const coinPrice = {
 
 const getBalanceSum = () => {
 	let balanceSum = 0;
-	for (const [ key, value ] of Object.entries(storage.addresses)) {
+	for (const [ , value ] of Object.entries(window.storage.addresses)) {
 		balanceSum += value.balance;
 	}
-	storage.balance = balanceSum;
+	window.storage.balance = balanceSum;
 	document.querySelectorAll('.amount-sum').forEach(($btn) => {
-		$btn.innerHTML = humanAmountFormat(storage.balance);
+		$btn.innerHTML = humanAmountFormat(window.storage.balance);
 	});
 };
 
 const encryptedMimeType = 'data:application/octet-stream;base64,';
 
-let localPassword;
+window.localPassword = null;
 
 const saveToCryptoStorage = () => {
-	aes4js.encrypt(localPassword, JSON.stringify(storage))
+	aes4js.encrypt(window.localPassword, JSON.stringify(window.storage))
 			.then((encrypted) => {
 				// need to save together in one item, otherwise there are problems with cloud storage due to desynchronization
 				setItem('cryptoStorage', JSON.stringify({
@@ -41,7 +41,7 @@ const saveToCryptoStorage = () => {
 			});
 };
 
-let qrCodeModal;
+window.qrCodeModal = null;
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -73,12 +73,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.onselectstart = new Function('return false;');
 	// document.oncontextmenu = new Function('return false;');
 
-	qrCodeModal = new bootstrap.Modal('#qr-code-modal');
+	window.qrCodeModal = new bootstrap.Modal('#qr-code-modal');
 
 	const $nodeAddressInput = $dom.nodeAddress.querySelector('.form-control[name="node-address"]');
 
-	if (localStorage.nodeAddress) $nodeAddressInput.value = localStorage.nodeAddress;
-	else localStorage.nodeAddress = $nodeAddressInput.value;
+	if (window.localStorage.nodeAddress) $nodeAddressInput.value = window.localStorage.nodeAddress;
+	else window.localStorage.nodeAddress = $nodeAddressInput.value;
 
 	const nodeAddressModal = new bootstrap.Modal($dom.nodeAddressModal);
 
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	$dom.nodeAddress.addEventListener('submit', (e) => {
 		e.preventDefault();
-		localStorage.nodeAddress = $nodeAddressInput.value;
+		window.localStorage.nodeAddress = $nodeAddressInput.value;
 		window.location.reload();
 	});
 
@@ -125,16 +125,16 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 
-	if ( ! localStorage.convertPrice) localStorage.convertPrice = 0;
+	if ( ! window.localStorage.convertPrice) window.localStorage.convertPrice = 0;
 
 	const convertPrice = () => {
 		document.querySelectorAll('.amount-sum').forEach(($btn) => {
-			$btn.innerHTML = humanAmountFormat(storage.balance);
+			$btn.innerHTML = humanAmountFormat(window.storage.balance);
 		});
-		myAddressesTable.rows().every((index) => {
-			const row = myAddressesTable.row(index);
+		window.myAddressesTable.rows().every((index) => {
+			const row = window.myAddressesTable.row(index);
 			row.data(row.data());
-			addEventButtons();
+			window.addEventButtons();
 		});
 	};
 
@@ -147,8 +147,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.querySelectorAll('.amount-sum').forEach(($btn) => {
 		$btn.addEventListener('click', (e) => {
 			e.preventDefault();
-			if (needConvertPrice()) localStorage.convertPrice = 0;
-			else localStorage.convertPrice = 1;
+			if (needConvertPrice()) window.localStorage.convertPrice = 0;
+			else window.localStorage.convertPrice = 1;
 			convertPrice();
 		});
 	});
@@ -173,14 +173,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		$option.text = value[0].toUpperCase() + value.slice(1);
 		$select.appendChild($option);
 	};
-	for (const [ key, value ] of Object.entries(themes.light))
-	for (const [ key, value ] of Object.entries(themes.dark))
+	for (const [ , value ] of Object.entries(themes.light))
 		addOptionInSelect($dom.themeVal.querySelector('optgroup'), value);
+	for (const [ , value ] of Object.entries(themes.dark))
 		addOptionInSelect($dom.themeVal.querySelector('optgroup:nth-child(2)'), value);
 
 	$dom.themeVal.addEventListener('change', () => {
 		$dom.theme.setAttribute('href', `/themes/${$dom.themeVal.value}.min.css`);
-		localStorage.theme = $dom.themeVal.value;
+		window.localStorage.theme = $dom.themeVal.value;
 		if ($dom.themeVal.selectedIndex > 0) $dom.prevTheme.removeAttribute('disabled');
 		else $dom.prevTheme.setAttribute('disabled', '');
 		if ($dom.themeVal.selectedIndex < $dom.themeVal.length - 1) $dom.nextTheme.removeAttribute('disabled');
@@ -200,9 +200,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 
-	if (localStorage.theme) {
-		if ([ 'cerulean', 'default', 'journal', 'lux', 'quartz', 'materia', 'minty', 'morph', 'pulse', 'sandstone', 'slate', 'simplex', 'spacelab', 'solar', 'superhero', 'united' ].indexOf(localStorage.theme) !== -1) localStorage.theme = 'lumen';
-		$dom.themeVal.value = localStorage.theme;
+	if (window.localStorage.theme) {
+		if ([ 'cerulean', 'default', 'journal', 'lux', 'quartz', 'materia', 'minty', 'morph', 'pulse', 'sandstone', 'slate', 'simplex', 'spacelab', 'solar', 'superhero', 'united' ].indexOf(window.localStorage.theme) !== -1) window.localStorage.theme = 'lumen';
+		$dom.themeVal.value = window.localStorage.theme;
 		trigger($dom.themeVal, 'change');
 	}
 	else $dom.themeVal.value = 'lumen';
@@ -235,11 +235,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 		/* end highlight active link in apple mobile menu */
 	});
-	window.dispatchEvent(new CustomEvent('hashchange'));
+	window.dispatchEvent(new window.CustomEvent('hashchange'));
 });
 
 const needConvertPrice = () => {
-	if (parseInt(localStorage.convertPrice, 10) === 1) return true;
+	if (parseInt(window.localStorage.convertPrice, 10) === 1) return true;
 	else return false;
 };
 
@@ -267,12 +267,12 @@ const copyToBuffer = ($select) => {
 };
 
 const generateQRCode = (text, size) => {
-	return new QRCode(text, {
+	return new window.QRCode(text, {
 		width: size,
 		height: size,
 		colorDark: '#000000',
 		colorLight: '#ffffff',
-		correctLevel: QRCode.CorrectLevel.H,
+		correctLevel: window.QRCode.CorrectLevel.H,
 	});
 };
 
@@ -328,11 +328,11 @@ window.navigateMobileMenu = () => {
 	}
 
 	try {
-		tempStorage = JSON.parse(cryptoStorage);
+		window.tempStorage = JSON.parse(cryptoStorage);
 
 		/* start encrypt data who use unencrypted */
-		if ( ! tempStorage.iv) {
-			storage = tempStorage;
+		if ( ! window.tempStorage.iv) {
+			window.storage = window.tempStorage;
 
 			window.location.hash = 'set-password';
 			return;
@@ -340,16 +340,16 @@ window.navigateMobileMenu = () => {
 		/* end encrypt data who use unencrypted */
 
 		/* start fix testers bug restructure data */
-		if ( ! tempStorage.encrypted) tempStorage.encrypted = tempStorage.cryptoStorage;
 		/* end fix testers bug restructure data */
+		if ( ! window.tempStorage.encrypted) window.tempStorage.encrypted = window.tempStorage.cryptoStorage;
 	}
-	catch (e) {
+	catch {
 		/* start restructure data who use 0.9.7 */
-		tempStorage = { encrypted: cryptoStorage };
+		window.tempStorage = { encrypted: cryptoStorage };
 
 		const iv = await getItem('iv');
 
-		tempStorage.iv = JSON.parse(iv);
+		window.tempStorage.iv = JSON.parse(iv);
 		/* end restructure data who use 0.9.7 */
 	}
 

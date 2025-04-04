@@ -1,3 +1,5 @@
+/* global Telegram */
+
 const getTelegramData = () => {
 	if (Telegram.WebApp.initData) return Telegram.WebApp.initData;
 	else return '';
@@ -14,18 +16,18 @@ const hapticFeedback = (field, type = null) => {
 const impactOccurredHeavy = () => hapticFeedback('impactOccurred', 'heavy');
 
 const showAlert = (message, callback = null) => {
-	if ( ! isTwa) return alert(message);
+	if ( ! isTwa) return window.alert(message);
 
 	try {
 		Telegram.WebApp.showAlert(message, callback);
 	}
-	catch (e) {
-		alert(message);
+	catch {
+		window.alert(message);
 	}
 };
 
 const setItem = async (key, value) => {
-	if ( ! isTwa) return localStorage.setItem(key, value);
+	if ( ! isTwa) return window.localStorage.setItem(key, value);
 
 	try {
 		const result = await new Promise((resolve, reject) => {
@@ -42,13 +44,13 @@ const setItem = async (key, value) => {
 		return result;
 	}
 	catch (e) {
-		if (e.message === 'WebAppMethodUnsupported') return localStorage.setItem(key, value);
+		if (e.message === 'WebAppMethodUnsupported') return window.localStorage.setItem(key, value);
 		else showAlert(`error saving to telegram cloud: ${e}`);
 	}
 };
 
 const getItem = async (key) => {
-	if ( ! isTwa) return localStorage.getItem(key);
+	if ( ! isTwa) return window.localStorage.getItem(key);
 
 	try {
 		const result = await new Promise((resolve, reject) => {
@@ -65,7 +67,7 @@ const getItem = async (key) => {
 		return result;
 	}
 	catch (e) {
-		if (e.message === 'WebAppMethodUnsupported') return localStorage.getItem(key);
+		if (e.message === 'WebAppMethodUnsupported') return window.localStorage.getItem(key);
 		else showAlert(`error getting to telegram cloud: ${e}`);
 	}
 };

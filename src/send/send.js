@@ -51,9 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const generateTransaction = () => {
-	const privateKey = storage.addresses[fromPublicAddress].private;
 	const fromPublicAddress = $dom.sendFromVal.value;
 	const toPublicAddress = $dom.sendToVal.value;
+	const privateKey = window.storage.addresses[fromPublicAddress].private;
 	// console.log('send tx', privateKey, fromPublicAddress, toPublicAddress, sendParams.fromAmount, sendParams.toAmount, sendParams.feeAmount, sendParams.newFromAmount);
 	const tx = new jsbgl.Transaction();
 
@@ -164,7 +164,7 @@ const addressBalance = () => {
 		return;
 	}
 
-	sendParams.fromAmount = storage.addresses[$dom.sendFromVal.value].balance;
+	sendParams.fromAmount = window.storage.addresses[$dom.sendFromVal.value].balance;
 	const humanAmount = sb.toBitcoin(sendParams.fromAmount);
 	$dom.sendBalance.querySelector('span').innerText = humanAmount;
 	$dom.sendBalance.querySelector('span:nth-child(2)').innerText = (humanAmount * coinPrice.price).toFixed(2);
@@ -189,8 +189,8 @@ const sendFormInit = () => {
 	while ($dom.sendFromVal.length > 1) {
 		$dom.sendFromVal.remove(1);
 	}
-	for (const [ key ] of Object.entries(storage.addresses)) {
-		$dom.sendFromVal.add(new Option(key, key));
+	for (const [ key ] of Object.entries(window.storage.addresses)) {
+		$dom.sendFromVal.add(new window.Option(key, key));
 	}
 	const selectedAddress = window.location.hash.substring(6);
 	$dom.sendFromVal.value = selectedAddress;
@@ -202,7 +202,7 @@ const send = () => {
 	if ($dom.send.querySelector('.is-invalid')) return;
 
 	$dom.send.querySelector('fieldset').setAttribute('disabled', '');
-	const url = new URL(localStorage.nodeAddress);
+	const url = new window.URL(window.localStorage.nodeAddress);
 	const fetchParams = {
 		method: 'POST',
 		// mode: 'no-cors',
@@ -211,12 +211,12 @@ const send = () => {
 		},
 		body: `{"jsonrpc":"1.0","id":"curltext","method":"sendrawtransaction","params":["${newTx}"]}`,
 	};
-	if (url.username && url.password) fetchParams.headers['Authorization'] = `Basic ${btoa(`${url.username}:${url.password}`)}`;
+	if (url.username && url.password) fetchParams.headers['Authorization'] = `Basic ${window.btoa(`${url.username}:${url.password}`)}`;
 	fetchQuery(url.origin, (responseJson) => {
 		// console.log('new txId', responseJson.result);
-		storage.addresses[fromPublicAddress].balance = sendParams.newFromAmount;
-		storage.addresses[fromPublicAddress].input_count++;
 		const fromPublicAddress = $dom.sendFromVal.value;
+		window.storage.addresses[fromPublicAddress].balance = sendParams.newFromAmount;
+		window.storage.addresses[fromPublicAddress].input_count++;
 		getBalanceSum();
 		saveToCryptoStorage();
 		Swal.fire({

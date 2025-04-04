@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			return;
 		}
 
-		localPassword = data.signup_password;
+		window.localPassword = data.signup_password;
 		saveToCryptoStorage();
 		if (window.history.length > 1) window.history.go(-1);
 		else window.location.hash = 'login';
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 window.navigateSetPassword = () => {
 	hide($dom.main, $dom.welcome);
 	show($dom.setPassword);
-	setTimeout(() => {
+	window.setTimeout(() => {
 		$dom.setPassword.querySelector('input').focus();
 	}, 100);
 };

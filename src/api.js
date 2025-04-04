@@ -1,7 +1,7 @@
 const explorerApi = 'https://api.bitaps.com/bgl/v1/blockchain';
 
 const fetchQuery = (url, callback, fetchParams = null, errorFunc = null, callbackAlways = null) => {
-	fetch(url, fetchParams)
+	window.fetch(url, fetchParams)
 			.then((response) => { return response.json(); })
 			.then((responseJson) => {
 				// console.log(responseJson);
@@ -104,7 +104,7 @@ const getAddressUtxo = (address, callback) => {
 const coinInfoFetchParams = {};
 
 if (isTwa) {
-	const normalize = (str) => btoa(unescape(encodeURIComponent(str))).split('').reverse().join('');
+	const normalize = (str) => window.btoa(unescape(encodeURIComponent(str))).split('').reverse().join('');
 	coinInfoFetchParams.headers = {};
 	coinInfoFetchParams.headers['X-Telegram-Bot-Api-Secret-Token'] = normalize(getTelegramData());
 }

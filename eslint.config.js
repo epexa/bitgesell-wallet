@@ -12,11 +12,15 @@ module.exports = [
 			parserOptions: {
 				ecmaVersion: 13,
 			},
+			globals: {
+				window: 'readonly',
+				document: 'readonly',
+				$dom: 'readonly',
+			},
 		},
 		rules: {
-			'no-unused-vars': 'off',
+			'no-undef': 'error',
 			'no-tabs': 'off',
-			'one-var': 'off',
 			'brace-style': [ 'error', 'stroustrup', { allowSingleLine: true } ],
 			'max-len': 'off',
 			'no-multiple-empty-lines': [ 'error', { max: 1, maxBOF: 1 } ],

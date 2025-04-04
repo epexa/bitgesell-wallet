@@ -19,9 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
 			$btn.addEventListener('click', () => {
 				addressQRcode.clear();
 				addressQRcode.makeCode(`bgl:${$btn.dataset.address}`);
-				qrCodeModal.show();
 				$dom.saveQrAddress.href = $dom.addressQrcode.querySelector('canvas').toDataURL('image/png').replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
 				$dom.bitgesellAddress.value = $btn.dataset.address;
+				window.qrCodeModal.show();
 			});
 		});
 		$dom.myAddressesTable.querySelectorAll('.address').forEach(($input) => {
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				{ data: 'input_count', className: 'text-center desktop' },
 				{ data: 'address', render: optionsButtonHtml, className: 'd-flex justify-content-end grid gap-1' },
 			],
-			drawCallback: addEventButtons,
+			drawCallback: window.addEventButtons,
 		}),
 	)
 			.on('responsive-display', (e, datatable, row, showHide) => {
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		const myAddressesData = [];
 		const addresses = [];
 		let countAddresses = 0;
-		for (const [ key, value ] of Object.entries(storage.addresses)) {
+		for (const [ key, value ] of Object.entries(window.storage.addresses)) {
 			countAddresses++;
 			myAddressesData.push({
 				id: countAddresses,
@@ -91,20 +91,20 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 			addresses.push(key);
 		}
-		myAddressesTable.clear();
-		myAddressesTable.rows.add(myAddressesData);
-		myAddressesTable.draw(false);
+		window.myAddressesTable.clear();
+		window.myAddressesTable.rows.add(myAddressesData);
+		window.myAddressesTable.draw(false);
 
 		getAddressesBalance(addresses, (apiAddressesBalance) => {
-			myAddressesTable.rows().every((index) => {
-				const row = myAddressesTable.row(index);
+			window.myAddressesTable.rows().every((index) => {
+				const row = window.myAddressesTable.row(index);
 				const data = row.data();
 				data.balance = apiAddressesBalance[data.address].confirmed;
 				data.input_count = apiAddressesBalance[data.address].sentTxCount;
 				row.data(data);
-				addEventButtons();
-				storage.addresses[data.address].balance = data.balance;
-				storage.addresses[data.address].input_count = data.input_count;
+				window.addEventButtons();
+				window.storage.addresses[data.address].balance = data.balance;
+				window.storage.addresses[data.address].input_count = data.input_count;
 				getBalanceSum();
 				saveToCryptoStorage();
 			});
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const hash = window.location.hash.substring(1);
 	if (hash === 'my-addresses') {
 		window.scrollTo({ top: 0, behavior: 'smooth' });
-		myAddressesTableDraw();
+		window.myAddressesTableDraw();
 	}
 
 	$dom.importAddressBtn.addEventListener('click', () => {
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		const address = new jsbgl.Address(data.wif);
 
-		if (storage.addresses[address.address]) {
+		if (window.storage.addresses[address.address]) {
 			Swal.fire({
 				showCloseButton: true,
 				icon: 'error',
@@ -155,14 +155,14 @@ document.addEventListener('DOMContentLoaded', () => {
 			return;
 		}
 
-		storage.addresses[address.address] = {
+		window.storage.addresses[address.address] = {
 			private: data.wif,
 			balance: 0,
 			input_count: 0,
 		};
 		saveToCryptoStorage();
 		importAddressModal.hide();
-		myAddressesTableDraw();
+		window.myAddressesTableDraw();
 		Swal.fire({
 			showCloseButton: true,
 			icon: 'success',
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.navigateMyAddresses = () => {
-	myAddressesTableDraw();
 	hide($dom.welcome, $dom.dashboard, $dom.newAddress, $dom.send, $dom.transactions, $dom.setPassword, $dom.mobileMenu);
 	show($dom.main, $dom.myAddresses);
+	window.myAddressesTableDraw();
 };

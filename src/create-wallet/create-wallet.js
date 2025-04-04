@@ -35,7 +35,7 @@ const generateAddress = (entropy, indexAddress = 0) => {
 	const mnemonic = jsbgl.entropyToMnemonic(entropy);
 	const wallet = new jsbgl.Wallet({ from: mnemonic });
 	const address = wallet.getAddress(indexAddress);
-	storage.addresses[address.address] = {
+	window.storage.addresses[address.address] = {
 		private: address.privateKey,
 		balance: 0,
 		input_count: 0,
@@ -47,8 +47,8 @@ const generateAddress = (entropy, indexAddress = 0) => {
 
 const createWallet = () => {
 	const entropy = jsbgl.generateEntropy();
-	storage.entropy = entropy;
-	storage.addresses = {};
+	window.storage.entropy = entropy;
+	window.storage.addresses = {};
 	const newAddress = generateAddress(entropy, 0);
 	$dom.backupPhrase.value = newAddress.mnemonic;
 };
@@ -60,11 +60,11 @@ const goCreateWalletScreen = () => {
 };
 
 window.navigateCreateWallet = () => {
-	if ( ! localPassword) {
+	if ( ! window.localPassword) {
 		window.location.hash = 'set-password';
 		return;
 	}
-	if ( ! storage.entropy) {
+	if ( ! window.storage.entropy) {
 		goCreateWalletScreen();
 		return;
 	}

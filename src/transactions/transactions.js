@@ -110,12 +110,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 				const isReload = window.location.hash.substr(-6) === 'reload' ? true : false;
 				if (apiAddressUnconfirmedInfo.list.length > 0) {
-					setTimeout(() => {
-						if ( ! isReload) transactionsTableDraw();
+					window.setTimeout(() => {
+						if ( ! isReload) window.transactionsTableDraw();
 						else window.location.hash = `transactions/${address}`;
 					}, 60000);
 				}
-				else if (isReload) setTimeout(() => transactionsTableDraw(), 3000);
+				else if (isReload) window.setTimeout(() => window.transactionsTableDraw(), 3000);
 			});
 		});
 	};
@@ -126,6 +126,6 @@ window.navigateTransactions = () => {
 	hide($dom.welcome, $dom.dashboard, $dom.newAddress, $dom.send, $dom.myAddresses, $dom.setPassword, $dom.mobileMenu);
 	show($dom.main, $dom.transactions);
 	const address = window.location.hash.substring(14);
-	if (address) transactionsTableDraw();
+	if (address) window.transactionsTableDraw();
 	else window.location.hash = locationDefault;
 };

@@ -20,9 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 
 		const entropy = jsbgl.mnemonicToEntropy(data.phrase);
-		storage.entropy = entropy;
-		storage.addresses = {};
-		const newAddress = generateAddress(entropy, 0);
+		window.storage.entropy = entropy;
+		window.storage.addresses = {};
+		generateAddress(entropy, 0);
 		$form.reset();
 		window.location.hash = locationDefault;
 		Swal.fire({
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.navigateRestore = () => {
-	if ( ! localPassword) {
+	if ( ! window.localPassword) {
 		window.location.hash = 'set-password';
 		return;
 	}

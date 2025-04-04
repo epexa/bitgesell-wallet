@@ -4,14 +4,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	formHandler($form, (data) => {
 		aes4js.decrypt(data.password, {
-			encrypted: encryptedMimeType + tempStorage.encrypted,
-			iv: tempStorage.iv,
+			encrypted: encryptedMimeType + window.tempStorage.encrypted,
+			iv: window.tempStorage.iv,
 			bin: false,
 		})
 				.then((decrypted) => {
-					localPassword = data.password;
-					storage = JSON.parse(decrypted);
-					if (storage.entropy) window.location.hash = locationDefault;
+					window.localPassword = data.password;
+					window.storage = JSON.parse(decrypted);
+					if (window.storage.entropy) window.location.hash = locationDefault;
 					else window.location.hash = 'welcome';
 					$form.reset();
 					Swal.fire({
@@ -47,9 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.navigateLogin = () => {
-	setTimeout(() => {
 	hide($dom.main, $dom.setPassword);
 	show($dom.login);
+	window.setTimeout(() => {
 		$dom.login.querySelector('input').focus();
 	}, 100);
 };
