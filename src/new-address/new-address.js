@@ -1,17 +1,10 @@
-import { initHtmlElements, hide, show, Swal } from '../utils';
+import { hide, show, Swal } from '../utils';
 import { generateQRCode } from '../app';
 import { generateAddress } from '../create-wallet/create-wallet';
 
 let newAddressQRcode;
 
 document.addEventListener('DOMContentLoaded', () => {
-
-	initHtmlElements(
-		'#new-address-qrcode',
-		'#save-qr-new-address',
-		'#new-address-val',
-		'#add-new-address-btn',
-	);
 
 	newAddressQRcode = generateQRCode($dom.newAddressQrcode, 192);
 

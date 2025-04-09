@@ -1,13 +1,7 @@
-import { initHtmlElements, hide, show, Swal } from '../utils';
+import { hide, show, Swal } from '../utils';
 import { locationDefault, downloadHrefValue, jsbgl } from '../app';
 
 document.addEventListener('DOMContentLoaded', () => {
-
-	initHtmlElements(
-		'#export-phrase',
-		'#save-export-phrase',
-		'#export-wallet-btn',
-	);
 
 	$dom.saveExportPhrase.addEventListener('click', () => {
 		$dom.saveExportPhrase.href = downloadHrefValue($dom.exportPhrase.value);

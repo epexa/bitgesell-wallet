@@ -1,6 +1,6 @@
 import sb from 'satoshi-bitcoin';
 
-import { initHtmlElements, hide, show, formHandler, Swal } from '../utils';
+import { hide, show, formHandler, Swal } from '../utils';
 import { getBalanceSum, saveToCryptoStorage, coinPrice, jsbgl } from '../app';
 import { fetchQuery, getAddressUtxo } from '../api';
 
@@ -9,18 +9,6 @@ let apiAddressUtxo;
 let newTx;
 
 document.addEventListener('DOMContentLoaded', () => {
-
-	initHtmlElements(
-		'#send-from-val',
-		'#send-balance',
-		'#send-to-val',
-		'#send-amount-val',
-		'#send-amount-max',
-		'#send-amount-price',
-		'#send-fee-val',
-		'#send-form-btn',
-		'#send-new-balance',
-	);
 
 	$dom.sendFromVal.addEventListener('change', addressBalance);
 

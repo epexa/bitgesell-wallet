@@ -1,13 +1,7 @@
-import { initHtmlElements, hide, show, Swal } from '../utils';
+import { hide, show, Swal } from '../utils';
 import { locationDefault, getBalanceSum, saveToCryptoStorage, downloadHrefValue, jsbgl } from '../app';
 
 document.addEventListener('DOMContentLoaded', () => {
-
-	initHtmlElements(
-		'#backup-phrase',
-		'#save-backup-phrase',
-		'#create-wallet-btn',
-	);
 
 	$dom.saveBackupPhrase.addEventListener('click', () => {
 		$dom.saveBackupPhrase.href = downloadHrefValue($dom.backupPhrase.value);

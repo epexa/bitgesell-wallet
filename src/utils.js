@@ -28,6 +28,15 @@ const initHtmlElements = (...agrs) => {
 	});
 };
 
+const autoInitHtmlElements = () => {
+	const allHtmlElemenetsWithIds = Array.from(document.querySelectorAll('[id]'))
+			.map((element) => `#${element.id}`);
+
+	if ( ! allHtmlElemenetsWithIds.length) return;
+
+	initHtmlElements(...allHtmlElemenetsWithIds);
+};
+
 const hide = (...agrs) => {
 	agrs.forEach((el) => {
 		el.classList.add('d-none');
@@ -73,7 +82,7 @@ const dateTimeFormat = (timestamp) => {
 export {
 	Swal,
 	camelCase,
-	initHtmlElements,
+	autoInitHtmlElements,
 	hide,
 	show,
 	formHandler,

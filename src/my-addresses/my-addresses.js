@@ -4,21 +4,11 @@ import 'datatables.net-responsive-bs5';
 import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css';
 import 'datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css';
 
-import { initHtmlElements, hide, show, dataTableParams, formHandler, Swal } from '../utils';
+import { hide, show, dataTableParams, formHandler, Swal } from '../utils';
 import { generateQRCode, humanAmountFormat, hideDataTablePagingIfOnlyOnePage, copyToBuffer, getBalanceSum, saveToCryptoStorage, jsbgl } from '../app';
 import { getAddressesBalance } from '../api';
 
 document.addEventListener('DOMContentLoaded', () => {
-
-	initHtmlElements(
-		'#my-addresses-table',
-		'#address-qrcode',
-		'#save-qr-address',
-		'#bitgesell-address',
-		'#add-new-address-btn',
-		'#import-address-btn',
-		'#import-address-modal',
-	);
 
 	const importAddressModal = new bootstrap.Modal($dom.importAddressModal);
 

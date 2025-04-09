@@ -6,7 +6,7 @@ import '@fortawesome/fontawesome-free/css/solid.min.css';
 
 import { isTwa, setItem, getItem } from './twa';
 import { getCoinInfo } from './api';
-import { Swal, camelCase, initHtmlElements, hide, show } from './utils';
+import { Swal, camelCase, autoInitHtmlElements, hide, show } from './utils';
 import packageJson from '../package.json';
 import './custom.css';
 
@@ -57,30 +57,7 @@ window.qrCodeModal = null;
 
 document.addEventListener('DOMContentLoaded', () => {
 
-	initHtmlElements(
-		'#main',
-		'#welcome',
-		'#restore',
-		'#create-wallet',
-		'#export-wallet',
-		'#set-password',
-		'#login',
-		'#dashboard',
-		'#my-addresses',
-		'#new-address',
-		'#send',
-		'#transactions',
-		'#node-address-modal',
-		'#node-address',
-		'#export-wallet-btn',
-		'#mobile-menu',
-		'#apple-mobile-menu',
-		'#theme',
-		'#theme-modal',
-		'#theme-val',
-		'#prev-theme',
-		'#next-theme',
-	);
+	autoInitHtmlElements();
 
 	document.onselectstart = new Function('return false;');
 	// document.oncontextmenu = new Function('return false;');
