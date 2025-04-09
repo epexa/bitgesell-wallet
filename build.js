@@ -1,18 +1,20 @@
 import { execSync } from 'child_process';
-import { generateImports, buildLayouts, copyPublicFolder, removeFile } from './utils.js';
+import { generateImports, buildLayouts, copyPublicFolder, removeFileOrDir } from './utils.js';
+
+const DIST_WHITE_LIST = [ '.git', '.github', 'CNAME', 'CORS.md', 'README.md' ];
 
 const main = async () => {
 	const distFolder = process.argv[2] || 'dist';
-	const filePath = 'src/temp_index.html';
+	const filePath = 'src/index.html';
 
-	await copyPublicFolder(distFolder);
+	await copyPublicFolder(distFolder, DIST_WHITE_LIST);
 	await generateImports();
 	buildLayouts(filePath);
 
 	execSync(`npx parcel build ${filePath} --no-source-maps --no-cache --dist-dir ${distFolder}`, { stdio: 'inherit' });
 
-	await removeFile(filePath);
-	await removeFile('src/generated-imports.js');
+	await removeFileOrDir(filePath);
+	await removeFileOrDir('src/generated-imports.js');
 
 	console.log(`\n[Parcel] Build complete. Check folder: ${distFolder}\n`);
 };

@@ -1,12 +1,12 @@
 import { spawn } from 'child_process';
 import chokidar from 'chokidar';
-import { removeFile, copyPublicFolder, generateImports, buildLayouts } from './utils.js';
+import { removeFileOrDir, copyPublicFolder, generateImports, buildLayouts } from './utils.js';
 import LAYOUT_NAMES from './src/layouts.js';
 
 const main = async () => {
 	const filePath = 'src/temp_index.html';
 
-	await removeFile(filePath);
+	await removeFileOrDir(filePath);
 	await copyPublicFolder('dist');
 	await generateImports();
 	buildLayouts(filePath);
@@ -33,8 +33,8 @@ const main = async () => {
 
 	parcel.on('close', async (code) => {
 		console.log(`[dev] Parcel dev server exited with code: ${code}`);
-		await removeFile(filePath);
-		await removeFile('src/generated-imports.js');
+		await removeFileOrDir(filePath);
+		await removeFileOrDir('src/generated-imports.js');
 		watcher.close();
 	});
 };

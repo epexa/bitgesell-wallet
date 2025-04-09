@@ -1,15 +1,16 @@
 import { existsSync, readFileSync, writeFileSync } from 'fs';
-import { rm, cp } from 'fs/promises';
+import { rm, cp, readdir } from 'fs/promises';
 import { join, resolve } from 'path';
 import LAYOUT_NAMES from './src/layouts.js';
 
-const removeFile = async (filePath) => {
+const removeFileOrDir = async (filePath, options = { force: true, recursive: false }) => {
 	try {
-		await rm(filePath, { force: true });
+		await rm(filePath, options);
 		console.log(`[utils] Removed ${filePath}`);
 	}
 	catch (error) {
 		console.error(`[utils] Error removing ${filePath}:`, error);
+		throw error;
 	}
 };
 
@@ -18,7 +19,7 @@ const generateImports = async () => {
 	const outputFile = join(srcDir, 'generated-imports.js');
 	const importStatements = [];
 
-	await removeFile(outputFile);
+	await removeFileOrDir(outputFile);
 
 	LAYOUT_NAMES.forEach((dir) => {
 		const modulePath = join(srcDir, dir, `${dir}.js`);
@@ -33,13 +34,29 @@ const generateImports = async () => {
 	console.log(`[utils] File ${outputFile} successfully generated with the following imports:\n${fileContent}`);
 };
 
-const copyPublicFolder = async (distDirPath = 'dist') => {
+const copyPublicFolder = async (distDirPath = 'dist', allowList = []) => {
 	const publicDir = resolve(process.cwd(), 'public');
 	const distDir = resolve(process.cwd(), distDirPath);
 
+	if ( ! existsSync(publicDir)) return;
+
 	try {
-		await rm(distDir, { recursive: true, force: true });
-		console.log('[utils] Existing dist folder removed');
+		if (existsSync(distDir)) {
+			if ( ! allowList.length) {
+				await removeFileOrDir(distDir, { recursive: true });
+				console.log('[utils] Existing dist folder removed');
+			}
+			else {
+				const existingItems = await readdir(distDir);
+				const itemsToRemove = existingItems.filter((item) => ! allowList.includes(item));
+
+				await Promise.all(
+					itemsToRemove.map((item) => removeFileOrDir(resolve(distDir, item), { recursive: true })),
+				);
+
+				console.log('[utils] Removed non-allowList files from dist directory');
+			}
+		}
 
 		await cp(publicDir, distDir, { recursive: true });
 		console.log('[utils] Public folder copied to dist');
@@ -59,7 +76,7 @@ const buildLayouts = (outputFile = 'temp_index.html') => {
 
 export {
 	generateImports,
-	removeFile,
+	removeFileOrDir,
 	copyPublicFolder,
 	buildLayouts,
 };
