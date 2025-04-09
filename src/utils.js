@@ -1,7 +1,7 @@
-import Swal from 'sweetalert2';
+import BaseSwal from 'sweetalert2';
 import dayjs from 'dayjs';
 
-Swal.mixin({
+const Swal = BaseSwal.mixin({
 	buttonsStyling: false,
 	confirmButtonText: 'I\'m sure!',
 	cancelButtonText: 'Stop, I have to think...',
