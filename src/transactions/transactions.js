@@ -36,7 +36,7 @@ const transactionsTable = new DataTable($dom.transactionsTable,
 						</div>
 					</div>
 				`;
-				$html += `</div>`;
+				$html += '</div>';
 				return $html;
 			} },
 			{ data: 'timestamp', render: dateTimeFormat, className: 'text-center desktop' },

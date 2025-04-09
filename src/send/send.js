@@ -88,8 +88,8 @@ const checkAdressUxto = () => {
 			Swal.fire({
 				showCloseButton: true,
 				icon: 'error',
-				title: `Please wait for confirmation of the previous transaction!`,
-				html: `It may take about 1 hour...`,
+				title: 'Please wait for confirmation of the previous transaction!',
+				html: 'It may take about 1 hour...',
 				customClass: {
 					actions: 'btn-group',
 					confirmButton: 'btn btn-success btn-lg',

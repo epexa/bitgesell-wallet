@@ -125,7 +125,7 @@ formHandler($dom.importAddressModal.querySelector('form'), (data) => {
 			showCloseButton: true,
 			icon: 'error',
 			title: 'WIF is not correct!',
-			html: `Please check your WIF.`,
+			html: 'Please check your WIF.',
 			customClass: {
 				cancelButton: 'btn btn-danger btn-lg',
 			},

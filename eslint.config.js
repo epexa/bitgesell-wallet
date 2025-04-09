@@ -41,6 +41,7 @@ export default [
 			'prefer-template': 'error',
 			'new-cap': 'off',
 			'guard-for-in': 'off',
+			'quotes': [ 'error', 'single', { 'avoidEscape': true, 'allowTemplateLiterals': false } ],
 			'indent': [
 				'error',
 				'tab',
