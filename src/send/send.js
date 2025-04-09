@@ -8,42 +8,6 @@ let sendParams = {};
 let apiAddressUtxo;
 let newTx;
 
-document.addEventListener('DOMContentLoaded', () => {
-
-	$dom.sendFromVal.addEventListener('change', addressBalance);
-
-	$dom.sendToVal.addEventListener('change', () => {
-		const isValid = jsbgl.isAddressValid($dom.sendToVal.value);
-		if (isValid) {
-			$dom.sendToVal.classList.remove('is-invalid');
-			$dom.sendToVal.classList.add('is-valid');
-			calcAmountSpent();
-		}
-		else {
-			$dom.sendToVal.classList.remove('is-valid');
-			$dom.sendToVal.classList.add('is-invalid');
-		}
-	});
-
-	$dom.sendAmountVal.addEventListener('input', () => {
-		calcAmountSpent();
-	});
-	$dom.sendFeeVal.addEventListener('input', calcAmountSpent);
-
-	formHandler($dom.send.querySelector('form'), () => {
-		send();
-	});
-
-	$dom.sendAmountMax.addEventListener('click', () => {
-		if ( ! sendParams.fromAmount) return;
-
-		if ( ! sendParams.feeAmount) sendParams.feeAmount = sb.toSatoshi($dom.sendFeeVal.value);
-		$dom.sendAmountVal.value = sb.toBitcoin(sendParams.fromAmount - sendParams.feeAmount);
-		calcAmountSpent();
-	});
-
-});
-
 const generateTransaction = () => {
 	const fromPublicAddress = $dom.sendFromVal.value;
 	const toPublicAddress = $dom.sendToVal.value;
@@ -245,6 +209,38 @@ const send = () => {
 		$dom.send.querySelector('fieldset').removeAttribute('disabled');
 	});
 };
+
+$dom.sendFromVal.addEventListener('change', addressBalance);
+
+$dom.sendToVal.addEventListener('change', () => {
+	const isValid = jsbgl.isAddressValid($dom.sendToVal.value);
+	if (isValid) {
+		$dom.sendToVal.classList.remove('is-invalid');
+		$dom.sendToVal.classList.add('is-valid');
+		calcAmountSpent();
+	}
+	else {
+		$dom.sendToVal.classList.remove('is-valid');
+		$dom.sendToVal.classList.add('is-invalid');
+	}
+});
+
+$dom.sendAmountVal.addEventListener('input', () => {
+	calcAmountSpent();
+});
+$dom.sendFeeVal.addEventListener('input', calcAmountSpent);
+
+formHandler($dom.send.querySelector('form'), () => {
+	send();
+});
+
+$dom.sendAmountMax.addEventListener('click', () => {
+	if ( ! sendParams.fromAmount) return;
+
+	if ( ! sendParams.feeAmount) sendParams.feeAmount = sb.toSatoshi($dom.sendFeeVal.value);
+	$dom.sendAmountVal.value = sb.toBitcoin(sendParams.fromAmount - sendParams.feeAmount);
+	calcAmountSpent();
+});
 
 window.navigateSend = () => {
 	hide($dom.welcome, $dom.dashboard, $dom.myAddresses, $dom.newAddress, $dom.transactions, $dom.setPassword, $dom.mobileMenu);

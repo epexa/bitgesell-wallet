@@ -1,18 +1,6 @@
 import { hide, show, Swal } from '../utils';
 import { locationDefault, downloadHrefValue, jsbgl } from '../app';
 
-document.addEventListener('DOMContentLoaded', () => {
-
-	$dom.saveExportPhrase.addEventListener('click', () => {
-		$dom.saveExportPhrase.href = downloadHrefValue($dom.exportPhrase.value);
-	});
-
-	$dom.exportWalletBtn.addEventListener('click', () => {
-		window.location.hash = locationDefault;
-	});
-
-});
-
 const exportWallet = () => {
 	$dom.exportPhrase.value = jsbgl.entropyToMnemonic(window.storage.entropy);
 };
@@ -22,6 +10,14 @@ const goExportWalletScreen = () => {
 	show($dom.exportWallet);
 	exportWallet();
 };
+
+$dom.saveExportPhrase.addEventListener('click', () => {
+	$dom.saveExportPhrase.href = downloadHrefValue($dom.exportPhrase.value);
+});
+
+$dom.exportWalletBtn.addEventListener('click', () => {
+	window.location.hash = locationDefault;
+});
 
 window.navigateExportWallet = () => {
 	if ( ! window.storage.entropy) {

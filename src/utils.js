@@ -20,8 +20,6 @@ const camelCase = (str) => {
 window.$dom = {};
 
 const initHtmlElements = (...agrs) => {
-	/* document.addEventListener('DOMContentLoaded', () => {
-	}); */
 	agrs.forEach(($htmlElement) => {
 		const nameConst = camelCase($htmlElement);
 		window.$dom[nameConst] = document.querySelector($htmlElement);

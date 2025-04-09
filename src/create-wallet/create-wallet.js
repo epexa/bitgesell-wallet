@@ -1,33 +1,6 @@
 import { hide, show, Swal } from '../utils';
 import { locationDefault, getBalanceSum, saveToCryptoStorage, downloadHrefValue, jsbgl } from '../app';
 
-document.addEventListener('DOMContentLoaded', () => {
-
-	$dom.saveBackupPhrase.addEventListener('click', () => {
-		$dom.saveBackupPhrase.href = downloadHrefValue($dom.backupPhrase.value);
-	});
-
-	$dom.createWalletBtn.addEventListener('click', () => {
-		Swal.fire({
-			title: 'Are you sure you saved the phrase?',
-			html: 'They are not saved anywhere, so you can\'t get them anywhere else!',
-			icon: 'question',
-			showCancelButton: true,
-			customClass: {
-				actions: 'btn-group',
-				confirmButton: 'btn btn-success btn-lg',
-				cancelButton: 'btn btn-outline-danger btn-lg',
-			},
-			showCloseButton: true,
-		}).then((result) => {
-			if ( ! result.value) return;
-
-			window.location.hash = locationDefault;
-		});
-	});
-
-});
-
 const generateAddress = (entropy, indexAddress = 0) => {
 	const mnemonic = jsbgl.entropyToMnemonic(entropy);
 	const wallet = new jsbgl.Wallet({ from: mnemonic });
@@ -55,6 +28,29 @@ const goCreateWalletScreen = () => {
 	show($dom.createWallet);
 	createWallet();
 };
+
+$dom.saveBackupPhrase.addEventListener('click', () => {
+	$dom.saveBackupPhrase.href = downloadHrefValue($dom.backupPhrase.value);
+});
+
+$dom.createWalletBtn.addEventListener('click', () => {
+	Swal.fire({
+		title: 'Are you sure you saved the phrase?',
+		html: 'They are not saved anywhere, so you can\'t get them anywhere else!',
+		icon: 'question',
+		showCancelButton: true,
+		customClass: {
+			actions: 'btn-group',
+			confirmButton: 'btn btn-success btn-lg',
+			cancelButton: 'btn btn-outline-danger btn-lg',
+		},
+		showCloseButton: true,
+	}).then((result) => {
+		if ( ! result.value) return;
+
+		window.location.hash = locationDefault;
+	});
+});
 
 window.navigateCreateWallet = () => {
 	if ( ! window.localPassword) {
