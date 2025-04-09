@@ -7,12 +7,13 @@ import '@fortawesome/fontawesome-free/css/solid.min.css';
 import { isTwa, setItem, getItem } from './twa';
 import { getCoinInfo } from './api';
 import { Swal, camelCase, initHtmlElements, hide, show } from './utils';
+import packageJson from '../package.json';
 import './custom.css';
 
 const jsbgl = {};
 window.jsbtc.asyncInit(jsbgl);
 
-const version = '0.9.8';
+const version = packageJson.version;
 const locationDefault = 'dashboard';
 
 window.storage = {
