@@ -14,6 +14,7 @@
     "DIST_FOLDER": "../bitgesell-wallet-dist"
   },
   "scripts": {
+    "prepare": "husky",
     "eslint": "eslint 'src/**/*.js' --ignore-pattern 'src/assets/**'",
     "start": "npm run eslint && IP=$npm_package_config_IP PORT=$npm_package_config_PORT node dev",
     "build": "npm run eslint && node build $npm_package_config_DIST_FOLDER",
@@ -25,11 +26,6 @@
   },
   "alias": {
     "dayjs": "dayjs/esm/index.js"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run eslint"
-    }
   },
   "devDependencies": {
     "chokidar": "^4.0.3",
