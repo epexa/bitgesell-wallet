@@ -1,10 +1,11 @@
 {
   "compress": {
     "drop_console": true,
+    "toplevel": true,
     "passes": 3
   },
   "mangle": {
     "toplevel": true,
-    "reserved": ["jsbtc", "QRCode"]
+    "reserved": ["QRCode"]
   }
 }

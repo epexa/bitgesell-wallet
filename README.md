@@ -40,7 +40,7 @@ It also has a desktop version (desktop-app) for Linux, macOS, Windows and a mobi
 ------------
 
 ## Technical advantages
-- Use Bitgesell JavaScript library [“jsbgl”](https://github.com/bitaps-com/jsbgl).
+- Use [BitcoinJS libraries with the Bitgesell](https://github.com/epexa/bitgesell-bitcoinjs).
 - It is written without using JS frontend frameworks (React, Vue.JS, etc.), which is why it has a very simple and clear codebase and code architecture.
 - Not used by third-party API. Used only [RPC node](https://rpc.bglwallet.io) and [Explorer API](https://bgl.bitaps.com).
 

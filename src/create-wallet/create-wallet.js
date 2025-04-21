@@ -1,12 +1,24 @@
 import { hide, show, Swal } from '../utils';
-import { locationDefault, getBalanceSum, saveToCryptoStorage, downloadHrefValue, jsbgl } from '../app';
+import { locationDefault, getBalanceSum, saveToCryptoStorage, downloadHrefValue, NETWORK } from '../app';
+import { entropyToMnemonic, mnemonicToSeedSync, generateMnemonic, mnemonicToEntropy } from 'bip39';
+import { payments as Payments } from 'bitcoinjs-lib';
+import BIP32Factory from 'bip32';
+import * as ecc from '@bitcoinerlab/secp256k1';
+import { Buffer } from 'buffer';
+
+const bip32 = BIP32Factory(ecc);
 
 const generateAddress = (entropy, indexAddress = 0) => {
-	const mnemonic = jsbgl.entropyToMnemonic(entropy);
-	const wallet = new jsbgl.Wallet({ from: mnemonic });
-	const address = wallet.getAddress(indexAddress);
+	const mnemonic = entropyToMnemonic(entropy);
+	const seed = mnemonicToSeedSync(mnemonic);
+	const root = bip32.fromSeed(seed, NETWORK);
+	const child = root.derivePath(`m/84'/0'/0'/0/${indexAddress}`);
+	const address = Payments.p2wpkh({
+		pubkey: Buffer.from(child.publicKey),
+		network: NETWORK,
+	});
 	window.storage.addresses[address.address] = {
-		private: address.privateKey,
+		private: child.toWIF(),
 		balance: 0,
 		input_count: 0,
 	};
@@ -16,11 +28,12 @@ const generateAddress = (entropy, indexAddress = 0) => {
 };
 
 const createWallet = () => {
-	const entropy = jsbgl.generateEntropy();
+	const mnemonic = generateMnemonic(256);
+	const entropy = mnemonicToEntropy(mnemonic).toString('hex');
 	window.storage.entropy = entropy;
 	window.storage.addresses = {};
-	const newAddress = generateAddress(entropy, 0);
-	$dom.backupPhrase.value = newAddress.mnemonic;
+	generateAddress(entropy, 0);
+	$dom.backupPhrase.value = mnemonic;
 };
 
 const goCreateWalletScreen = () => {

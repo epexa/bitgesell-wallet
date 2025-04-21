@@ -1,3 +1,7 @@
+import ECPairFactory from 'ecpair';
+import * as ecc from '@bitcoinerlab/secp256k1';
+import { payments as Payments } from 'bitcoinjs-lib';
+import { Buffer } from 'buffer';
 import * as bootstrap from 'bootstrap';
 import DataTable from 'datatables.net-bs5';
 import 'datatables.net-responsive-bs5';
@@ -5,8 +9,28 @@ import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css';
 import 'datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css';
 
 import { hide, show, dataTableParams, formHandler, Swal } from '../utils';
-import { generateQRCode, humanAmountFormat, hideDataTablePagingIfOnlyOnePage, copyToBuffer, getBalanceSum, saveToCryptoStorage, jsbgl } from '../app';
+import { generateQRCode, humanAmountFormat, hideDataTablePagingIfOnlyOnePage, copyToBuffer, getBalanceSum, saveToCryptoStorage, NETWORK } from '../app';
 import { getAddressesBalance } from '../api';
+
+const ECPair = ECPairFactory(ecc);
+
+const isValidWif = (wif) => {
+	try {
+		ECPair.fromWIF(wif, NETWORK);
+		return true;
+	}
+	catch {
+		return false;
+	}
+};
+
+const importWalletFromWif = (wif) => {
+	const keyPair = ECPair.fromWIF(wif, NETWORK);
+	return Payments.p2wpkh({
+		network: NETWORK,
+		pubkey: Buffer.from(keyPair.publicKey),
+	});
+};
 
 const importAddressModal = new bootstrap.Modal($dom.importAddressModal);
 
@@ -120,7 +144,7 @@ $dom.importAddressBtn.addEventListener('click', () => {
 });
 
 formHandler($dom.importAddressModal.querySelector('form'), (data) => {
-	if ( ! jsbgl.isWifValid(data.wif)) {
+	if ( ! isValidWif(data.wif)) {
 		Swal.fire({
 			showCloseButton: true,
 			icon: 'error',
@@ -136,7 +160,7 @@ formHandler($dom.importAddressModal.querySelector('form'), (data) => {
 		return;
 	}
 
-	const address = new jsbgl.Address(data.wif);
+	const address = importWalletFromWif(data.wif);
 
 	if (window.storage.addresses[address.address]) {
 		Swal.fire({

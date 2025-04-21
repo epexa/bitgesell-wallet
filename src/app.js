@@ -1,3 +1,4 @@
+import { BITGESELL_MAINNET as NETWORK } from 'bitgesell-bitcoinjs';
 import aes4js from 'aes4js';
 import sb from 'satoshi-bitcoin';
 import * as bootstrap from 'bootstrap';
@@ -9,9 +10,6 @@ import { getCoinInfo } from './api';
 import { Swal, camelCase, autoInitHtmlElements, hide, show } from './utils';
 import packageJson from '../package.json';
 import './custom.css';
-
-const jsbgl = {};
-window.jsbtc.asyncInit(jsbgl);
 
 const version = packageJson.version;
 const locationDefault = 'dashboard';
@@ -349,7 +347,7 @@ export {
 	encryptedMimeType,
 	humanAmountFormat,
 	copyToBuffer,
-	jsbgl,
+	NETWORK,
 	replacesInnerText,
 	downloadHrefValue,
 	coinPrice,

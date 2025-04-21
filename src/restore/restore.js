@@ -1,11 +1,13 @@
+import { validateMnemonic, mnemonicToEntropy } from 'bip39';
+
 import { hide, show, formHandler, Swal } from '../utils';
-import { locationDefault, jsbgl } from '../app';
+import { locationDefault } from '../app';
 import { generateAddress } from '../create-wallet/create-wallet';
 
 const $form = $dom.restore.querySelector('form');
 
 formHandler($form, (data) => {
-	if ( ! jsbgl.isMnemonicCheckSumValid(data.phrase)) {
+	if ( ! validateMnemonic(data.phrase)) {
 		Swal.fire({
 			showCloseButton: true,
 			icon: 'error',
@@ -21,7 +23,7 @@ formHandler($form, (data) => {
 		return;
 	}
 
-	const entropy = jsbgl.mnemonicToEntropy(data.phrase);
+	const entropy = mnemonicToEntropy(data.phrase);
 	window.storage.entropy = entropy;
 	window.storage.addresses = {};
 	generateAddress(entropy, 0);

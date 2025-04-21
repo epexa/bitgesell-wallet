@@ -1,8 +1,23 @@
+import { address as Address, Psbt } from 'bitcoinjs-lib';
+import ECPairFactory from 'ecpair';
+import * as ecc from '@bitcoinerlab/secp256k1';
 import sb from 'satoshi-bitcoin';
 
 import { hide, show, formHandler, Swal } from '../utils';
-import { getBalanceSum, saveToCryptoStorage, coinPrice, jsbgl } from '../app';
+import { getBalanceSum, saveToCryptoStorage, coinPrice, NETWORK } from '../app';
 import { fetchQuery, getAddressUtxo } from '../api';
+
+const ECPair = ECPairFactory(ecc);
+
+const isValidAddress = (address) => {
+	try {
+		Address.toOutputScript(address, NETWORK);
+		return true;
+	}
+	catch {
+		return false;
+	}
+};
 
 let sendParams = {};
 let apiAddressUtxo;
@@ -12,17 +27,20 @@ const generateTransaction = () => {
 	const fromPublicAddress = $dom.sendFromVal.value;
 	const toPublicAddress = $dom.sendToVal.value;
 	const privateKey = window.storage.addresses[fromPublicAddress].private;
+	const keyPair = ECPair.fromWIF(privateKey, NETWORK);
 	// console.log('send tx', privateKey, fromPublicAddress, toPublicAddress, sendParams.fromAmount, sendParams.toAmount, sendParams.feeAmount, sendParams.newFromAmount);
-	const tx = new jsbgl.Transaction();
+	const tx = new Psbt({ network: NETWORK });
 
-	if ( ! toPublicAddress || ! apiAddressUtxo) return;
+	if ( ! toPublicAddress || ! apiAddressUtxo?.length) return;
 
-	for (const key in apiAddressUtxo) {
-		const utxo = apiAddressUtxo[key];
+	for (const utxo of apiAddressUtxo) {
 		tx.addInput({
-			txId: utxo.txId,
-			vOut: utxo.vOut,
-			address: fromPublicAddress,
+			hash: utxo.txId,
+			index: utxo.vOut,
+			witnessUtxo: {
+				script: Address.toOutputScript(fromPublicAddress, NETWORK),
+				value: utxo.amount,
+			},
 		});
 	}
 	tx.addOutput({
@@ -35,16 +53,13 @@ const generateTransaction = () => {
 			address: fromPublicAddress,
 		});
 	}
-	let utxoCount = 0;
-	for (const key in apiAddressUtxo) {
-		const utxo = apiAddressUtxo[key];
-		tx.signInput(utxoCount, {
-			privateKey: privateKey,
-			value: utxo.amount,
-		});
-		utxoCount++;
+
+	for (let i = 0; i < apiAddressUtxo.length; i++) {
+		tx.signInput(i, keyPair);
 	}
-	newTx = tx.serialize();
+
+	tx.finalizeAllInputs();
+	newTx = tx.extractTransaction().toHex();
 };
 
 const calcAmountSpent = () => {
@@ -213,7 +228,7 @@ const send = () => {
 $dom.sendFromVal.addEventListener('change', addressBalance);
 
 $dom.sendToVal.addEventListener('change', () => {
-	const isValid = jsbgl.isAddressValid($dom.sendToVal.value);
+	const isValid = isValidAddress($dom.sendToVal.value);
 	if (isValid) {
 		$dom.sendToVal.classList.remove('is-invalid');
 		$dom.sendToVal.classList.add('is-valid');

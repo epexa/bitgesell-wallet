@@ -1,8 +1,10 @@
+import { entropyToMnemonic } from 'bip39';
+
 import { hide, show, Swal } from '../utils';
-import { locationDefault, downloadHrefValue, jsbgl } from '../app';
+import { locationDefault, downloadHrefValue } from '../app';
 
 const exportWallet = () => {
-	$dom.exportPhrase.value = jsbgl.entropyToMnemonic(window.storage.entropy);
+	$dom.exportPhrase.value = entropyToMnemonic(window.storage.entropy);
 };
 
 const goExportWalletScreen = () => {

@@ -37,13 +37,19 @@
     "svgo": "^3.3.2"
   },
   "dependencies": {
+    "@bitcoinerlab/secp256k1": "^1.2.0",
     "@fortawesome/fontawesome-free": "^6.7.2",
     "aes4js": "^1.0.0",
+    "bip32": "^5.0.0-rc.0",
+    "bip39": "^3.1.0",
+    "bitcoinjs-lib": "^6.1.7",
+    "bitgesell-bitcoinjs": "^1.0.5",
     "bootstrap": "^5.3.3",
+    "buffer": "^6.0.3",
     "datatables.net-bs5": "^2.2.2",
     "datatables.net-responsive-bs5": "^3.0.4",
     "dayjs": "^1.11.13",
-    "jsbgl": "^1.0.17",
+    "ecpair": "^3.0.0",
     "satoshi-bitcoin": "^1.0.5",
     "sweetalert2": "^11.17.2"
   }
