@@ -35,6 +35,7 @@ It also has a desktop version (desktop-app) for Linux, macOS, Windows and a mobi
 - Dist repo for run wallet from browser https://github.com/epexa/bitgesell-wallet-dist
 - Electron repo for OS desktop wallet builds https://github.com/epexa/bitgesell-wallet-desktop-app
 - Cordova repo for mobile wallet builds https://github.com/epexa/bitgesell-wallet-mobile-app
+- WebExtensions repo for browser extension wallet builds https://github.com/epexa/bitgesell-wallet-webextensions
 - Pre-landing repo for beautiful all links https://github.com/epexa/bglwallet.io
 
 ------------

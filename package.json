@@ -18,6 +18,7 @@
     "eslint": "eslint 'src/**/*.js' --ignore-pattern 'src/assets/**'",
     "start": "npm run eslint && IP=$npm_package_config_IP PORT=$npm_package_config_PORT node dev",
     "build": "npm run eslint && node build $npm_package_config_DIST_FOLDER",
+    "build-webextension": "npm run eslint && node build ../bitgesell-wallet-webextensions",
     "dist-start": "serve $npm_package_config_DIST_FOLDER -l tcp://$npm_package_config_IP:$npm_package_config_PORT",
     "ngrok": "ngrok http $npm_package_config_PORT"
   },
