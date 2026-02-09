@@ -282,6 +282,23 @@ document.querySelectorAll('.version').forEach(($version) => {
 	$version.innerText = version;
 });
 
+document.querySelectorAll('.toggle-password').forEach(($btn) => {
+	$btn.addEventListener('click', (e) => {
+		e.preventDefault();
+		const $input = $btn.closest('.input-group').querySelector('input');
+		if ($input.getAttribute('type') === 'password') {
+			$input.setAttribute('type', 'text');
+			$btn.querySelector('i').classList.remove('fa-eye');
+			$btn.querySelector('i').classList.add('fa-eye-slash');
+		}
+		else {
+			$input.setAttribute('type', 'password');
+			$btn.querySelector('i').classList.remove('fa-eye-slash');
+			$btn.querySelector('i').classList.add('fa-eye');
+		}
+	});
+});
+
 window.navigateMobileMenu = () => {
 	hide($dom.dashboard, $dom.myAddresses, $dom.send, $dom.setPassword, $dom.welcome, $dom.newAddress, $dom.transactions, $dom.createWallet, $dom.exportWallet);
 	show($dom.main, $dom.mobileMenu);
