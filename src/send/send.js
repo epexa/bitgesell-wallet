@@ -1,7 +1,8 @@
-import { address as Address, Psbt } from 'bitcoinjs-lib';
+import { address as Address, Psbt, script, opcodes } from 'bitcoinjs-lib';
 import ECPairFactory from 'ecpair';
 import * as ecc from '@bitcoinerlab/secp256k1';
 import sb from 'satoshi-bitcoin';
+import { Buffer } from 'buffer';
 
 import { hide, show, formHandler, Swal } from '../utils';
 import { getBalanceSum, saveToCryptoStorage, coinPrice, NETWORK } from '../app';
@@ -26,9 +27,10 @@ let newTx;
 const generateTransaction = () => {
 	const fromPublicAddress = $dom.sendFromVal.value;
 	const toPublicAddress = $dom.sendToVal.value;
+	const opReturn = $dom.sendOpReturn.value;
 	const privateKey = window.storage.addresses[fromPublicAddress].private;
 	const keyPair = ECPair.fromWIF(privateKey, NETWORK);
-	// console.log('send tx', privateKey, fromPublicAddress, toPublicAddress, sendParams.fromAmount, sendParams.toAmount, sendParams.feeAmount, sendParams.newFromAmount);
+	// console.log('send tx', privateKey, fromPublicAddress, toPublicAddress, sendParams.fromAmount, sendParams.toAmount, sendParams.feeAmount, sendParams.newFromAmount, opReturn);
 	const tx = new Psbt({ network: NETWORK });
 
 	if ( ! toPublicAddress || ! apiAddressUtxo?.length) return;
@@ -51,6 +53,16 @@ const generateTransaction = () => {
 		tx.addOutput({
 			value: sendParams.newFromAmount,
 			address: fromPublicAddress,
+		});
+	}
+
+	if (opReturn) {
+		const dataBuffer = Buffer.from(opReturn, 'utf8');
+		const embedScript = script.compile([ opcodes.OP_RETURN, dataBuffer ]);
+
+		tx.addOutput({
+			value: 0,
+			script: embedScript,
 		});
 	}
 
@@ -254,6 +266,22 @@ $dom.sendAmountMax.addEventListener('click', () => {
 
 	if ( ! sendParams.feeAmount) sendParams.feeAmount = sb.toSatoshi($dom.sendFeeVal.value);
 	$dom.sendAmountVal.value = sb.toBitcoin(sendParams.fromAmount - sendParams.feeAmount);
+	calcAmountSpent();
+});
+
+$dom.sendOpReturn.addEventListener('input', () => {
+	const MAX_BYTES = 80;
+	const buffer = Buffer.from($dom.sendOpReturn.value, 'utf8');
+	const bytesRemaining = MAX_BYTES - buffer.length;
+	const isValid = bytesRemaining >= 0;
+	if (isValid) {
+		$dom.sendOpReturn.classList.remove('is-invalid');
+		$dom.sendFormBtn.disabled = false;
+	}
+	else {
+		$dom.sendOpReturn.classList.add('is-invalid');
+		$dom.sendFormBtn.disabled = true;
+	}
 	calcAmountSpent();
 });
 

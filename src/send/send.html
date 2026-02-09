@@ -37,6 +37,11 @@
 				<label for="send-amount-val">Fee:</label>
 				<input type="number" class="form-control form-control-lg" id="send-fee-val" name="fee" required="" placeholder="0.00010000" value="0.00010000" min="0.00000001" step="0.00000001">
 			</div>
+			<div class="form-group d-grid">
+				<label for="send-op-return">Public comment (optional): <span role="button" tabindex="0" class="text-info float-end" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="click" data-bs-html="true" title="⚠️ This text is <b>unencrypted</b> and sent in plain text. It will be <b>permanently stored on blockchain</b>, and <u><b>anyone can read it!</b></u><br><a target='_blank' href='https://learnmeabitcoin.com/technical/script/return/'>Read more</a>"><i class="fa-solid fa-circle-question"></i></span></label>
+				<input type="text" class="form-control form-control-lg" id="send-op-return" name="op-return" placeholder="Visible to everyone">
+				<div class="invalid-feedback">Length exceeded</div>
+			</div>
 			<button type="submit" class="btn btn-success btn-lg" id="send-form-btn">Send BGL</button>
 			<small class="form-text text-info h6 d-none" id="send-new-balance">
 				Balance after sending: <span class="badge bg-info"></span> BGL

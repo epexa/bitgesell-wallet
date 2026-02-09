@@ -299,6 +299,18 @@ document.querySelectorAll('.toggle-password').forEach(($btn) => {
 	});
 });
 
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+
+tooltipTriggerList.forEach((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl));
+
+document.addEventListener('click', (e) => {
+	tooltipTriggerList.forEach((el) => {
+		const tooltipInstance = bootstrap.Tooltip.getInstance(el);
+
+		if (tooltipInstance && tooltipInstance._isShown() && ! el.contains(e.target)) tooltipInstance.hide();
+	});
+});
+
 window.navigateMobileMenu = () => {
 	hide($dom.dashboard, $dom.myAddresses, $dom.send, $dom.setPassword, $dom.welcome, $dom.newAddress, $dom.transactions, $dom.createWallet, $dom.exportWallet);
 	show($dom.main, $dom.mobileMenu);
