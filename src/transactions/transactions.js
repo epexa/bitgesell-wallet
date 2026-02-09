@@ -57,7 +57,7 @@ const transactionsTable = new DataTable($dom.transactionsTable,
 			{ data: 'rbf', className: 'none', render: (data) => (data ? 'Yes' : 'No') },
 			{ data: 'coinbase', className: 'none', render: (data) => (data ? 'Yes' : 'No') },
 			{ data: 'tx_id', render: (data) => (
-				`<a class="btn btn-warning btn-sm d-inline-flex" target="_blank" href="https://bgl.bitaps.com/${data}"><i class="fa-solid fa-binoculars mt-1"></i><span class="hidden-sr ms-1">Explorer</span></a>`
+				`<a class="btn btn-outline-secondary btn-sm d-inline-flex" target="_blank" href="https://bgl.bitaps.com/${data}"><i class="fa-solid fa-binoculars mt-1"></i><span class="hidden-sr ms-1">Explorer</span></a>`
 			), className: 'd-flex justify-content-end' },
 		],
 		drawCallback: (oSettings) => {

@@ -57,10 +57,10 @@ window.addEventButtons = (oSettings) => {
 };
 
 const optionsButtonHtml = (address) => (
-	`<a class="btn btn-danger btn-sm" href="#send/${address}"><i class="fa-solid fa-paper-plane visible-sr"></i><span class="hidden-sr">Send</span></a>` +
-	`<button class="btn btn-info btn-sm qr-code-btn" data-address="${address}"><i class="fa-solid fa-download visible-sr"></i><span class="hidden-sr">Receive</span></button>` +
-	`<a class="btn btn-warning btn-sm" target="_blank" href="https://bgl.bitaps.com/${address}"><i class="fa-solid fa-binoculars visible-sr"></i><span class="hidden-sr">Explorer</span></a>` +
-	`<a class="btn btn-success btn-sm" href="#transactions/${address}"><i class="fa-solid fa-circle-nodes visible-sr"></i><span class="hidden-sr">Transactions</span></a>`
+	`<a class="btn btn-outline-success btn-sm" href="#send/${address}"><i class="fa-solid fa-paper-plane visible-sr"></i><span class="hidden-sr">Send</span></a>` +
+	`<button class="btn btn-outline-info btn-sm qr-code-btn" data-address="${address}"><i class="fa-solid fa-download visible-sr"></i><span class="hidden-sr">Receive</span></button>` +
+	`<a class="btn btn-outline-primary btn-sm" href="#transactions/${address}"><i class="fa-solid fa-circle-nodes visible-sr"></i><span class="hidden-sr">Transactions</span></a>` +
+	`<a class="btn btn-outline-secondary btn-sm" target="_blank" href="https://bgl.bitaps.com/${address}"><i class="fa-solid fa-binoculars visible-sr"></i><span class="hidden-sr">Explorer</span></a>`
 );
 
 window.myAddressesTable = new DataTable($dom.myAddressesTable,
