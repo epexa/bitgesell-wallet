@@ -138,7 +138,11 @@ window.qrCodeModal = new bootstrap.Modal('#qr-code-modal');
 
 const $nodeAddressInput = $dom.nodeAddress.querySelector('.form-control[name="node-address"]');
 
-if (window.localStorage.nodeAddress) $nodeAddressInput.value = window.localStorage.nodeAddress;
+if (window.localStorage.nodeAddress) {
+	if (window.localStorage.nodeAddress === 'https://rpc.bglwallet.io') window.localStorage.nodeAddress = 'https://rpc.bitgesell.app';
+	if (window.localStorage.nodeAddress === 'https://rpc2.bglwallet.io') window.localStorage.nodeAddress = 'https://rpc2.bitgesell.app';
+	$nodeAddressInput.value = window.localStorage.nodeAddress;
+}
 else window.localStorage.nodeAddress = $nodeAddressInput.value;
 
 const nodeAddressModal = new bootstrap.Modal($dom.nodeAddressModal);
