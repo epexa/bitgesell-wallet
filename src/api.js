@@ -4,7 +4,7 @@ import { Swal } from './utils';
 const explorerApi = 'https://api.bitaps.com/bgl/v1/blockchain';
 
 const fetchQuery = (url, callback, fetchParams = null, errorFunc = null, callbackAlways = null) => {
-	window.fetch(url, fetchParams)
+	return window.fetch(url, fetchParams)
 			.then((response) => { return response.json(); })
 			.then((responseJson) => {
 				// console.log(responseJson);
@@ -83,13 +83,32 @@ const getAddressUnconfirmedInfo = (address, callback) => {
 }; */
 
 const getAddressesBalance = (addresses, callback) => {
-	const url = `${explorerApi}/addresses/state/by/address?list=${addresses.join(',')}`;
-	fetchQuery(url, (responseJson) => {
-		callback(responseJson.data);
-	}, null, () => {
-		return {
-			title: `Error in get addresses balance query: <a target="_blank" href="${url}">${url}</a>`,
-		};
+	const chunks = [];
+	const chunkSize = 50;
+
+	if (addresses.length === 0) {
+		callback({});
+		return;
+	}
+
+	for (let i = 0; i < addresses.length; i += chunkSize) {
+		chunks.push(addresses.slice(i, i + chunkSize));
+	}
+
+	const result = {};
+	const promises = chunks.map((chunk) => {
+		const url = `${explorerApi}/addresses/state/by/address?list=${chunk.join(',')}`;
+		return fetchQuery(url, (responseJson) => {
+			if (responseJson && responseJson.data) Object.assign(result, responseJson.data);
+		}, null, () => {
+			return {
+				title: `Error in get addresses balance query: <a target="_blank" href="${url}">${url}</a>`,
+			};
+		});
+	});
+
+	Promise.all(promises).then(() => {
+		callback(result);
 	});
 };
 
